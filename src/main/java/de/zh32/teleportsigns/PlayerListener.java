@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.zh32.lobbyplugin;
+package de.zh32.teleportsigns;
 
-import de.zh32.lobbyplugin.ping.Ping;
+import de.zh32.teleportsigns.ping.Ping;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

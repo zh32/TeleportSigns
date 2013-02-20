@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.zh32.lobbyplugin.ping;
+package de.zh32.teleportsigns.ping;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class Ping {
     }
     
     public void loadConfig() {
-        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("LobbyPlugin");
+        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("TeleportSigns");
         configfile = new File(plugin.getDataFolder(), "ping.yml");        
         if (!configfile.exists()) {
             plugin.saveResource("ping.yml", false);

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.zh32.lobbyplugin.ping;
+package de.zh32.teleportsigns.ping;
 
 import java.util.Map;
 import java.util.Map.Entry;

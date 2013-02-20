@@ -1,4 +1,4 @@
-package de.zh32.lobbyplugin.ping;
+package de.zh32.teleportsigns.ping;
 
 import java.io.*;
 import java.net.InetSocketAddress;

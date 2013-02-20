@@ -11,7 +11,8 @@
   <url>http://zh32.de</url>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.class>de.zh32.teleportsigns.TeleportSigns</main.class>
   </properties>
 
   <repositories>

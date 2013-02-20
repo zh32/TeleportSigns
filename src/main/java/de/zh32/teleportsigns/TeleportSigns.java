@@ -1,6 +1,6 @@
-package de.zh32.lobbyplugin;
+package de.zh32.teleportsigns;
 
-import de.zh32.lobbyplugin.ping.Ping;
+import de.zh32.teleportsigns.ping.Ping;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
