@@ -64,7 +64,7 @@ class Update implements Runnable {
                                 s.update();
                             }
                             else {
-                                s.setLine(0, plugin.getConfig().getString("first-line"));
+                                s.setLine(0, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("first-line")));
                                 s.setLine(1, e.getKey());
                                 s.setLine(2, ChatColor.BOLD + "-/-");
                                 s.setLine(3, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("offline-line")));
