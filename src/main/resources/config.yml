@@ -8,4 +8,4 @@ offline-message: '&cServer is offline!'
 #display name from config or motd
 use-motd: true
 #create sign with:
-initial-line: '[server]'
+create-line: '[server]'
