@@ -6,3 +6,7 @@ author: zh32
 main: ${main.class}
 
 database: true
+
+permissions:
+  lobby.teleport:
+    description: Use TeleportSigns

@@ -47,7 +47,7 @@ class PlayerListener implements Listener {
     private void onBlockBreak(BlockBreakEvent e) {
         if (e.getBlock().getState() instanceof Sign) {
             Sign s = (Sign) e.getBlock().getState();
-            if (s.getLine(0).equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("first-line")))) {
+            if (s.getLine(0).equalsIgnoreCase("[server]") || s.getLine(0).equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("first-line")))) {
                 TeleportSign ts = plugin.getDatabase().find(TeleportSign.class).where().
                         eq("x", e.getBlock().getLocation().getX()).
                         eq("y", e.getBlock().getLocation().getY()).
