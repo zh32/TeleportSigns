@@ -1,0 +1,9 @@
+first-line: '&bTeleport to:'
+online-line: '&aOnline'
+offline-line: '&cOffline'
+#colorcode for playercount
+playercountcolor: '&f&l'
+#message when a player tries to connect to offline server
+offline-message: '&cServer is offline!'
+#display name from config or motd
+use-motd: true

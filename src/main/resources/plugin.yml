@@ -1,0 +1,8 @@
+name: ${project.name}
+version: ${project.version}-b${BUILD_NUMBER}
+description: ${project.description}
+author: zh32
+
+main: ${main.class}
+
+database: true

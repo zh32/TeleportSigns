@@ -1,0 +1,4 @@
+#same as bungee config
+servers:
+  pvp: 127.0.0.1:1338
+  survival: 127.0.0.1:1337
