@@ -5,7 +5,6 @@
 package de.zh32.teleportsigns;
 
 import com.avaje.ebean.validation.NotEmpty;
-import com.avaje.ebean.validation.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;

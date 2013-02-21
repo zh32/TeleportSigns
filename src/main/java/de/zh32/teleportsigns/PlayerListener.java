@@ -67,12 +67,12 @@ class PlayerListener implements Listener {
             for (Entry<String, Location> ee : plugin.locs.entrySet()) {
                 if (ee.getValue().equals(e.getClickedBlock().getLocation())) {
                     if (Ping.getInstance().results != null) {
-                        if (!Ping.getInstance().results.get(ee.getKey()).equalsIgnoreCase("off")) {
+                        if (!Ping.getInstance().results.get(plugin.getServerName(ee.getKey())).equalsIgnoreCase("off")) {
                             ByteArrayOutputStream b = new ByteArrayOutputStream();
                             DataOutputStream out = new DataOutputStream(b);
                             try {
                                 out.writeUTF("Connect");
-                                out.writeUTF(ee.getKey());
+                                out.writeUTF(plugin.getServerName(ee.getKey()));
                             } catch (IOException eee) {
                                 Bukkit.getLogger().info("You'll never see me!");
                             }

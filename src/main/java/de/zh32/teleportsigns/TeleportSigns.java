@@ -38,7 +38,7 @@ public class TeleportSigns extends JavaPlugin {
     public void loadSigns() {
         List<TeleportSign> ts = this.getDatabase().find(TeleportSign.class).findList();
         for (TeleportSign t : ts) {
-            locs.put(t.getServer(), t.getLocation());
+            locs.put(String.valueOf(locs.size()) + "#" + t.getServer(), t.getLocation());
         }
     }
 
@@ -49,5 +49,9 @@ public class TeleportSigns extends JavaPlugin {
             Bukkit.getLogger().log(Level.INFO, "Installing database for {0} due to first time usage", getDescription().getName());
             installDDL();
         }
+    }
+    
+    public String getServerName(String s) {
+        return s.split("#")[1];
     }
 }

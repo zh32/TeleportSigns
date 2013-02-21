@@ -43,8 +43,8 @@ class Update implements Runnable {
 
                     if (b.getState() instanceof Sign) {
                         Sign s = (Sign) b.getState();
-                        if (results.get(e.getKey()) != null) {
-                            String res = results.get(e.getKey());
+                        if (results.get(plugin.getServerName(e.getKey())) != null) {
+                            String res = results.get(plugin.getServerName(e.getKey()));
                             if (!res.equalsIgnoreCase("off")) {
                                 String[] sl = res.split("#@#");
                                 String npl = sl[0];
@@ -56,7 +56,7 @@ class Update implements Runnable {
                                     s.setLine(1, motd);
                                 }
                                 else {
-                                    s.setLine(1, e.getKey());
+                                    s.setLine(1, plugin.getServerName(e.getKey()));
                                 }
                                 
                                 s.setLine(2, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("playercountcolor")) + npl + "/" + mpl);
@@ -65,7 +65,7 @@ class Update implements Runnable {
                             }
                             else {
                                 s.setLine(0, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("first-line")));
-                                s.setLine(1, e.getKey());
+                                s.setLine(1, plugin.getServerName(e.getKey()));
                                 s.setLine(2, ChatColor.BOLD + "-/-");
                                 s.setLine(3, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("offline-line")));
                                 s.update();
