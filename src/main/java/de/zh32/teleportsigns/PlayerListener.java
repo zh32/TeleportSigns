@@ -66,7 +66,7 @@ class PlayerListener implements Listener {
         if (e.hasBlock() && e.getClickedBlock().getState() instanceof Sign && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().hasPermission("lobby.teleport")) {
             for (Entry<String, Location> ee : plugin.locs.entrySet()) {
                 if (ee.getValue().equals(e.getClickedBlock().getLocation())) {
-                    if (Ping.getInstance().results != null) {
+                    if (Ping.getInstance().results != null && Ping.getInstance().results.get(plugin.getServerName(ee.getKey())) != null) {
                         if (!Ping.getInstance().results.get(plugin.getServerName(ee.getKey())).equalsIgnoreCase("off")) {
                             ByteArrayOutputStream b = new ByteArrayOutputStream();
                             DataOutputStream out = new DataOutputStream(b);
