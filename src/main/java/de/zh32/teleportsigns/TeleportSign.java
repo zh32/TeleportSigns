@@ -5,6 +5,7 @@
 package de.zh32.teleportsigns;
 
 import com.avaje.ebean.validation.NotEmpty;
+import com.avaje.ebean.validation.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -28,13 +29,13 @@ public class TeleportSign {
     @NotEmpty
     private String worldName;
     
-    @NotEmpty
+    @NotNull
     private double x;
 
-    @NotEmpty
+    @NotNull
     private double y;
 
-    @NotEmpty
+    @NotNull
     private double z;
     
     public int getId() {

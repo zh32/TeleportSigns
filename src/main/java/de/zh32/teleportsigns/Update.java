@@ -45,8 +45,8 @@ class Update implements Runnable {
                         Sign s = (Sign) b.getState();
                         if (results.get(plugin.getServerName(e.getKey())) != null) {
                             String res = results.get(plugin.getServerName(e.getKey()));
-                            if (!res.equalsIgnoreCase("off")) {
-                                String[] sl = res.split("#@#");
+                            String[] sl = res.split("#@#");
+                            if (sl.length == 3) {
                                 String npl = sl[0];
                                 String mpl = sl[1];
                                 String motd = sl[2];
