@@ -77,11 +77,9 @@ class PlayerListener implements Listener {
                                 Bukkit.getLogger().info("You'll never see me!");
                             }
                             e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
-                            break;
                         }
                         else {
                             e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("offline-message")));
-                            break;
                         }
                     }
                 }
