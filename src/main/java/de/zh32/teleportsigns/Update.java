@@ -56,7 +56,7 @@ class Update implements Runnable {
                                     s.setLine(1, motd);
                                 }
                                 else {
-                                    s.setLine(1, plugin.getServerName(e.getKey()));
+                                    s.setLine(1, ChatColor.translateAlternateColorCodes('&', Ping.getInstance().display.get(plugin.getServerName(e.getKey()))));
                                 }
                                 
                                 s.setLine(2, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("playercountcolor")) + npl + "/" + mpl);
@@ -65,8 +65,8 @@ class Update implements Runnable {
                             }
                             else {
                                 s.setLine(0, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("first-line")));
-                                s.setLine(1, plugin.getServerName(e.getKey()));
-                                s.setLine(2, ChatColor.BOLD + "-/-");
+                                s.setLine(1, ChatColor.translateAlternateColorCodes('&', Ping.getInstance().display.get(plugin.getServerName(e.getKey()))));
+                                s.setLine(2, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("playercountcolor")) + "-/-");
                                 s.setLine(3, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("offline-line")));
                                 s.update();
                             }

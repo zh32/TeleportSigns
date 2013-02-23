@@ -6,11 +6,14 @@ package de.zh32.teleportsigns.ping;
 
 import java.io.File;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -25,8 +28,9 @@ public class Ping {
     FileConfiguration config;
     public Map<String, String> results = new ConcurrentHashMap<String,String>();
     public Map<String, String> pinglist = new ConcurrentHashMap<String,String>();
+    public HashMap<String, String> display = new HashMap<String, String>();
 
-    
+    public ConfigurationSection servers;
     public static Ping getInstance() {
         if(Ping._instance == null) {
             Ping._instance = new Ping();
@@ -42,10 +46,14 @@ public class Ping {
             plugin.saveResource("ping.yml", false);
         }
         config = YamlConfiguration.loadConfiguration(configfile);
-        Map<String, Object> akk = config.getConfigurationSection("servers").getValues(false);
-        for (Entry<String, Object> e : akk.entrySet()) {
-            pinglist.put(e.getKey(), (String)e.getValue());
+        servers = config.getConfigurationSection("servers");
+        Set<String> keys = servers.getKeys(false);
+        for (String s : keys) {
+            ConfigurationSection cs = servers.getConfigurationSection(s);
+            pinglist.put(s, cs.getString("address"));
+            display.put(s, cs.getString("displayname"));
         }
+        System.out.println(display);
     }
     
     public void startPing() {
