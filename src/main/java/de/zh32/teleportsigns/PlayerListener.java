@@ -65,21 +65,23 @@ class PlayerListener implements Listener {
     private void onClick(PlayerInteractEvent e) {
         if (e.hasBlock() && e.getClickedBlock().getState() instanceof Sign && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().hasPermission("lobby.teleport")) {
             for (TeleportSign ts : plugin.signs) {
-                if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
-                    if (Ping.getInstance().results.get(ts.getServer()) != null) {
-                        if (Ping.getInstance().results.get(ts.getServer()).isOnline()) {
-                            ByteArrayOutputStream b = new ByteArrayOutputStream();
-                            DataOutputStream out = new DataOutputStream(b);
-                            try {
-                                out.writeUTF("Connect");
-                                out.writeUTF(ts.getServer());
-                            } catch (IOException eee) {
-                                Bukkit.getLogger().info("You'll never see me!");
+                if (ts != null) {
+                    if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
+                        if (Ping.getInstance().results.get(ts.getServer()) != null) {
+                            if (Ping.getInstance().results.get(ts.getServer()).isOnline()) {
+                                ByteArrayOutputStream b = new ByteArrayOutputStream();
+                                DataOutputStream out = new DataOutputStream(b);
+                                try {
+                                    out.writeUTF("Connect");
+                                    out.writeUTF(ts.getServer());
+                                } catch (IOException eee) {
+                                    Bukkit.getLogger().info("You'll never see me!");
+                                }
+                                e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
                             }
-                            e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
-                        }
-                        else {
-                            e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("offline-message")));
+                            else {
+                                e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("offline-message")));
+                            }
                         }
                     }
                 }

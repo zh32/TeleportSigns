@@ -24,6 +24,7 @@ import org.bukkit.World;
 public class TeleportSign {
     
     @Getter
+    @Setter
     @Id
     private int id;
     
