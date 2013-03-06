@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class TeleportSigns extends JavaPlugin {
     
     public Map<String, Location> locs = new HashMap<String, Location>();
+    public List<TeleportSign> signs = new ArrayList<>();
     
     @Override
     public void onEnable() {
@@ -36,10 +37,7 @@ public class TeleportSigns extends JavaPlugin {
     }
 
     public void loadSigns() {
-        List<TeleportSign> ts = this.getDatabase().find(TeleportSign.class).findList();
-        for (TeleportSign t : ts) {
-            locs.put(String.valueOf(locs.size()) + "#" + t.getServer(), t.getLocation());
-        }
+        signs = this.getDatabase().find(TeleportSign.class).findList();
     }
 
     private void setupDB() {

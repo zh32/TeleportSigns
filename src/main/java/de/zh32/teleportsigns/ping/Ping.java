@@ -5,9 +5,8 @@
 package de.zh32.teleportsigns.ping;
 
 import java.io.File;
-import java.util.Map;
 import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,9 +25,9 @@ public class Ping {
     static Ping _instance = null;
     File configfile;
     FileConfiguration config;
-    public Map<String, String> results = new ConcurrentHashMap<String,String>();
-    public Map<String, String> pinglist = new ConcurrentHashMap<String,String>();
-    public HashMap<String, String> display = new HashMap<String, String>();
+    public Map<String, Result> results = new ConcurrentHashMap<>();
+    public Map<String, String> pinglist = new ConcurrentHashMap<>();
+    public HashMap<String, String> display = new HashMap<>();
 
     public ConfigurationSection servers;
     public static Ping getInstance() {
@@ -53,7 +52,6 @@ public class Ping {
             pinglist.put(s, cs.getString("address"));
             display.put(s, cs.getString("displayname"));
         }
-        System.out.println(display);
     }
     
     public void startPing() {
@@ -61,7 +59,7 @@ public class Ping {
     }
     
     public void startPing(Map<String, String> toping) {
-        final PingThread pt = new PingThread(results, toping);
+        final PingThread pt = new PingThread(toping);
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override

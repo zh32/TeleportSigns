@@ -9,6 +9,8 @@ import com.avaje.ebean.validation.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -20,62 +22,35 @@ import org.bukkit.World;
 @Entity()
 @Table(name="lobby_teleportsigns")
 public class TeleportSign {
+    
+    @Getter
     @Id
     private int id;
     
+    @Getter
+    @Setter
     @NotEmpty
     private String server;
     
+    @Getter
+    @Setter
     @NotEmpty
     private String worldName;
     
+    @Getter
+    @Setter
     @NotNull
     private double x;
-
+    
+    @Getter
+    @Setter
     @NotNull
     private double y;
-
+    
+    @Getter
+    @Setter
     @NotNull
     private double z;
-    
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    public String getWorldName() {
-        return worldName;
-    }
-
-    public void setWorldName(String worldName) {
-        this.worldName = worldName;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public double getZ() {
-        return z;
-    }
-
-    public void setZ(double z) {
-        this.z = z;
-    }
     
     public void setLocation(Location location) {
         this.worldName = location.getWorld().getName();
@@ -87,13 +62,5 @@ public class TeleportSign {
     public Location getLocation() {
         World welt = Bukkit.getServer().getWorld(worldName);
         return new Location(welt, x, y, z);
-    }
-    
-    public String getServer() {
-        return server;
-    }
-    
-    public void setServer(String server) {
-        this.server = server;
     }
 }

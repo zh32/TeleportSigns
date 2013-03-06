@@ -28,6 +28,12 @@
             <version>1.4.7-R0.2-SNAPSHOT</version>
             <type>jar</type>
       </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>0.11.6</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
   <build>
         <finalName>${project.name}</finalName>

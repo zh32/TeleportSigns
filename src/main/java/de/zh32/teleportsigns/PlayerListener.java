@@ -64,15 +64,15 @@ class PlayerListener implements Listener {
     @EventHandler
     private void onClick(PlayerInteractEvent e) {
         if (e.hasBlock() && e.getClickedBlock().getState() instanceof Sign && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().hasPermission("lobby.teleport")) {
-            for (Entry<String, Location> ee : plugin.locs.entrySet()) {
-                if (ee.getValue().equals(e.getClickedBlock().getLocation())) {
-                    if (Ping.getInstance().results.get(plugin.getServerName(ee.getKey())) != null) {
-                        if (!Ping.getInstance().results.get(plugin.getServerName(ee.getKey())).equalsIgnoreCase("off")) {
+            for (TeleportSign ts : plugin.signs) {
+                if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
+                    if (Ping.getInstance().results.get(ts.getServer()) != null) {
+                        if (Ping.getInstance().results.get(ts.getServer()).isOnline()) {
                             ByteArrayOutputStream b = new ByteArrayOutputStream();
                             DataOutputStream out = new DataOutputStream(b);
                             try {
                                 out.writeUTF("Connect");
-                                out.writeUTF(plugin.getServerName(ee.getKey()));
+                                out.writeUTF(ts.getServer());
                             } catch (IOException eee) {
                                 Bukkit.getLogger().info("You'll never see me!");
                             }
