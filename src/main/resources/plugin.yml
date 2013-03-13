@@ -8,5 +8,12 @@ main: ${main.class}
 database: true
 
 permissions:
-  lobby.teleport:
+  teleportsigns.teleport:
     description: Use TeleportSigns
+    default: true
+  teleportsigns.create:
+    description: Create TeleportSigns
+    default: op
+  teleportsigns.destroy:
+    description: Destroy TeleportSigns
+    default: op

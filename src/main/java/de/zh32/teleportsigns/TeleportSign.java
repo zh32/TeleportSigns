@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.zh32.teleportsigns;
 
 import com.avaje.ebean.validation.NotEmpty;

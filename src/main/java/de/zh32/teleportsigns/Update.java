@@ -1,11 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.ping.Ping;
-import de.zh32.teleportsigns.ping.Result;
+import de.zh32.teleportsigns.ping.ServerInfo;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -36,30 +32,30 @@ class Update implements Runnable {
                     Block b = l.getBlock();
                     if (b.getState() instanceof Sign) {
                         Sign s = (Sign) b.getState();
-                        Result res = Ping.getInstance().results.get(ts.getServer());
-                        if (res != null) {
-                            if (res.isOnline()) {
-                                String npl = String.valueOf(res.getPlayersOnline());
-                                String mpl = String.valueOf(res.getMaxPlayers());
-                                String motd = res.getMotd();
+                        ServerInfo sinfo = Ping.getInstance().serverinfos.get(ts.getServer());
+                        if (sinfo != null) {
+                            if (sinfo.isOnline()) {
+                                String npl = String.valueOf(sinfo.getPlayersOnline());
+                                String mpl = String.valueOf(sinfo.getMaxPlayers());
+                                String motd = sinfo.getMotd();
 
-                                s.setLine(0, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("first-line")));
-                                if (plugin.getConfig().getBoolean("use-motd")) {
+                                s.setLine(0, ChatColor.translateAlternateColorCodes('&', plugin.config.first_line));
+                                if (plugin.config.usemotd) {
                                     s.setLine(1, motd);
                                 }
                                 else {
-                                    s.setLine(1, ChatColor.translateAlternateColorCodes('&', Ping.getInstance().display.get(ts.getServer())));
+                                    s.setLine(1, ChatColor.translateAlternateColorCodes('&', sinfo.getDisplayname()));
                                 }
 
-                                s.setLine(2, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("playercountcolor")) + npl + "/" + mpl);
-                                s.setLine(3, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("online-line")));
+                                s.setLine(2, ChatColor.translateAlternateColorCodes('&', plugin.config.playercountcolor) + npl + "/" + mpl);
+                                s.setLine(3, ChatColor.translateAlternateColorCodes('&', plugin.config.online_line));
                                 s.update();
                             }
                             else {
-                                s.setLine(0, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("first-line")));
-                                s.setLine(1, ChatColor.translateAlternateColorCodes('&', Ping.getInstance().display.get(ts.getServer())));
-                                s.setLine(2, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("playercountcolor")) + "-/-");
-                                s.setLine(3, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("offline-line")));
+                                s.setLine(0, ChatColor.translateAlternateColorCodes('&', plugin.config.first_line));
+                                s.setLine(1, ChatColor.translateAlternateColorCodes('&', sinfo.getDisplayname()));
+                                s.setLine(2, ChatColor.translateAlternateColorCodes('&', plugin.config.playercountcolor) + "-/-");
+                                s.setLine(3, ChatColor.translateAlternateColorCodes('&', plugin.config.offline_line));
                                 s.update();
                             }
                         }

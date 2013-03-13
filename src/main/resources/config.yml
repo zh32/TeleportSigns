@@ -7,5 +7,3 @@ playercountcolor: '&f&l'
 offline-message: '&cServer is offline!'
 #display name from config or motd
 use-motd: true
-#create sign with:
-create-line: '[server]'
