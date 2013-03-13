@@ -8,6 +8,7 @@
   <packaging>jar</packaging>
 
   <name>TeleportSigns</name>
+  <description>TeleportSigns</description>
   <url>http://zh32.de</url>
 
   <properties>
@@ -20,6 +21,10 @@
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public</url>
         </repository>
+        <repository>
+            <id>Plugin Metrics</id>
+            <url>http://repo.mcstats.org/content/repositories/public</url>
+        </repository>
   </repositories>  
   <dependencies>
       <dependency>
@@ -28,11 +33,17 @@
             <version>1.4.7-R0.2-SNAPSHOT</version>
             <type>jar</type>
       </dependency>
+      <dependency>
+        <groupId>org.mcstats.bukkit</groupId>
+        <artifactId>metrics-lite</artifactId>
+        <version>R6</version>
+        <scope>compile</scope>
+    </dependency>   
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>0.11.6</version>
-      <type>jar</type>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
@@ -52,6 +63,28 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <artifactSet>
+				<includes>
+                                    <include>org.projectlombok:lombok</include>
+                                    <include>org.mcstats.bukkit:metrics-lite</include>
+				</includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

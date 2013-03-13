@@ -5,8 +5,11 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
  
 public final class MCPing {
     @Setter
@@ -101,7 +104,6 @@ public final class MCPing {
 
             inputStreamReader.close();
             inputStream.close();
-
             socket.close();
         } catch (SocketException exception) {
                 return false;

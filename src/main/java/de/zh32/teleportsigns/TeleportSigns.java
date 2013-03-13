@@ -1,12 +1,15 @@
 package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.ping.Ping;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import javax.persistence.PersistenceException;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.MetricsLite;
 
 /**
  *
@@ -21,7 +24,10 @@ public class TeleportSigns extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-        this.saveResource("ebean.properties", false);
+        File ebean = new File(this.getDataFolder(), "ebean.properties");
+        if (!ebean.exists()) {
+            this.saveResource("ebean.properties", false);
+        }
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Update(this), 60L, 100L);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -29,7 +35,13 @@ public class TeleportSigns extends JavaPlugin {
         Ping.getInstance().loadConfig();
         Ping.getInstance().startPing();
         setupDB();
-        loadSigns();        
+        loadSigns();
+        try {
+            MetricsLite metrics = new MetricsLite(this);
+            metrics.start();
+        } catch (IOException e) {
+            // Failed to submit the stats :-(
+        }
     }
     
     @Override
