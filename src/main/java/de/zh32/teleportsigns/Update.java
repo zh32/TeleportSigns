@@ -32,7 +32,7 @@ class Update implements Runnable {
                     Block b = l.getBlock();
                     if (b.getState() instanceof Sign) {
                         Sign s = (Sign) b.getState();
-                        ServerInfo sinfo = Ping.getInstance().serverinfos.get(ts.getServer());
+                        ServerInfo sinfo = Ping.getInstance().getServer(ts.getServer());
                         if (sinfo != null) {
                             if (sinfo.isOnline()) {
                                 String npl = String.valueOf(sinfo.getPlayersOnline());

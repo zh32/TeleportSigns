@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -98,7 +97,11 @@ public final class MCPing {
                     this.playersOnline = Integer.parseInt(data[1]);
                     this.maxPlayers = Integer.parseInt(data[2]);
             }
-
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Bukkit.getLogger().log(Level.SEVERE, null, ex);
+            }
             dataOutputStream.close();
             outputStream.close();
 

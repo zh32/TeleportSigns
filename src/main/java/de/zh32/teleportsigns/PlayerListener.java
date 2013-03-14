@@ -1,6 +1,7 @@
 package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.ping.Ping;
+import de.zh32.teleportsigns.ping.ServerInfo;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -28,12 +29,15 @@ class PlayerListener implements Listener {
     @EventHandler
     private void onSignChange(SignChangeEvent e) {
         if (e.getLine(0).equalsIgnoreCase("[tsigns]") && e.getPlayer().hasPermission("teleportsigns.create")) {
-            TeleportSign ts = new TeleportSign();
-            ts.setServer(e.getLine(1));
-            ts.setLocation(e.getBlock().getLocation());
-            plugin.getDatabase().save(ts);
-            plugin.loadSigns();
-            e.getPlayer().sendMessage(ChatColor.GREEN + "Sign created.");
+            ServerInfo info = Ping.getInstance().getServer(e.getLine(0));
+            if (info != null) {
+                plugin.getDatabase().save(new TeleportSign(e.getLine(1), e.getBlock().getLocation()));
+                plugin.loadSigns();
+                e.getPlayer().sendMessage(ChatColor.GREEN + "Sign created.");
+            }
+            else {
+                e.getPlayer().sendMessage(ChatColor.RED + "This server is not set in ping.yml");
+            }
         }
     }
     
@@ -59,8 +63,9 @@ class PlayerListener implements Listener {
             for (TeleportSign ts : plugin.signs) {
                 if (ts != null) {
                     if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
-                        if (Ping.getInstance().serverinfos.get(ts.getServer()) != null) {
-                            if (Ping.getInstance().serverinfos.get(ts.getServer()).isOnline()) {
+                        ServerInfo info = Ping.getInstance().getServer(ts.getServer());
+                        if (info != null) {
+                            if (info.isOnline()) {
                                 ByteArrayOutputStream b = new ByteArrayOutputStream();
                                 DataOutputStream out = new DataOutputStream(b);
                                 try {

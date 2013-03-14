@@ -5,8 +5,7 @@ import com.avaje.ebean.validation.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -15,41 +14,38 @@ import org.bukkit.World;
  *
  * @author zh32
  */
+@Data
 @Entity()
 @Table(name="lobby_teleportsigns")
 public class TeleportSign {
     
-    @Getter
-    @Setter
     @Id
     private int id;
     
-    @Getter
-    @Setter
     @NotEmpty
     private String server;
     
-    @Getter
-    @Setter
     @NotEmpty
     private String worldName;
     
-    @Getter
-    @Setter
     @NotNull
     private double x;
     
-    @Getter
-    @Setter
     @NotNull
     private double y;
     
-    @Getter
-    @Setter
     @NotNull
     private double z;
+
+    public TeleportSign() {
+    }
     
-    public void setLocation(Location location) {
+    public TeleportSign(String server, Location loc) {
+        this.server = server;
+        setLocation(loc);
+    }
+    
+    private void setLocation(Location location) {
         this.worldName = location.getWorld().getName();
         this.x = location.getX();
         this.y = location.getY();

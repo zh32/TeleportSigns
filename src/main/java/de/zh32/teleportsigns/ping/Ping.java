@@ -2,11 +2,11 @@ package de.zh32.teleportsigns.ping;
 
 import java.io.File;
 import java.net.InetSocketAddress;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ConcurrentHashMap;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,15 +18,26 @@ import org.bukkit.plugin.Plugin;
  * @author zh32
  */
 public class Ping {
-      
-    public Map<String, ServerInfo> serverinfos = new ConcurrentHashMap<>();
+    
+    @Getter
+    private List<ServerInfo> servers = new ArrayList<>();
     static Ping _instance = null;
+    private MCPing mcping = new MCPing();
     
     public static Ping getInstance() {
         if(Ping._instance == null) {
             Ping._instance = new Ping();
         }
         return Ping._instance;
+    }
+    
+    public ServerInfo getServer(String server) {
+        for (ServerInfo info : servers) {
+            if (info.getName().equals(server)) {
+                return info;
+            }
+        }
+        return null;
     }
     
     public void loadConfig() {
@@ -36,24 +47,22 @@ public class Ping {
             plugin.saveResource("ping.yml", false);
         }
         FileConfiguration config = YamlConfiguration.loadConfiguration(configfile);
-        ConfigurationSection servers = config.getConfigurationSection("servers");
-        for (String servername : servers.getKeys(false)) {
-            ConfigurationSection cs = servers.getConfigurationSection(servername);
+        ConfigurationSection server = config.getConfigurationSection("servers");
+        for (String servername : server.getKeys(false)) {
+            ConfigurationSection cs = server.getConfigurationSection(servername);
             String displayname = cs.getString("displayname");
             String[] addre = cs.getString("address").split(":");
             InetSocketAddress address = new InetSocketAddress(addre[0], Integer.parseInt(addre[1]));
             ServerInfo si = new ServerInfo(servername, address, displayname);
-            serverinfos.put(servername, si);
+            servers.add(si);
         }
     }
     
     public void startPing() {       
         TimerTask task = new TimerTask() {
-            private MCPing mcping = new MCPing();
             @Override
             public void run() {
-                for (Entry<String, ServerInfo> e : serverinfos.entrySet()) {
-                    ServerInfo info = e.getValue();
+                for (ServerInfo info : servers) {
                     mcping.setAddress(info.getAddress());
                     if (mcping.fetchData()) {
                         info.setOnline(true);
