@@ -29,7 +29,7 @@ class PlayerListener implements Listener {
     @EventHandler
     private void onSignChange(SignChangeEvent e) {
         if (e.getLine(0).equalsIgnoreCase("[tsigns]") && e.getPlayer().hasPermission("teleportsigns.create")) {
-            ServerInfo info = Ping.getInstance().getServer(e.getLine(0));
+            ServerInfo info = Ping.getInstance().getServer(e.getLine(1));
             if (info != null) {
                 plugin.getDatabase().save(new TeleportSign(e.getLine(1), e.getBlock().getLocation()));
                 plugin.loadSigns();
