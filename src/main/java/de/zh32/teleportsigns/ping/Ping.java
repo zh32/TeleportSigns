@@ -69,7 +69,10 @@ public class Ping {
                         info.setMotd(mcping.getMotd());
                         info.setPlayersOnline(mcping.getPlayersOnline());
                         info.setMaxPlayers(mcping.getMaxPlayers());
-                    }                    
+                    }
+                    else {
+                        info.setOnline(false);
+                    }
                 }
             }
         };
