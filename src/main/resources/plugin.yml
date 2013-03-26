@@ -8,7 +8,7 @@ main: ${main.class}
 database: true
 
 permissions:
-  teleportsigns.teleport:
+  teleportsigns.use:
     description: Use TeleportSigns
     default: true
   teleportsigns.create:
