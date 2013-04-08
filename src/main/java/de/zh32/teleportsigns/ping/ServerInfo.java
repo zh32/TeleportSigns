@@ -1,32 +1,21 @@
 package de.zh32.teleportsigns.ping;
 
 import java.net.InetSocketAddress;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  *
  * @author zh32
  */
+@Data
 public class ServerInfo {
-    @Getter
-    private String name;
-    @Getter
-    @Setter
+    private final String name;
     private int playersOnline;
-    @Getter
-    @Setter
     private int maxPlayers;
-    @Getter
-    @Setter
     private String motd;
-    @Getter
-    @Setter
     private boolean online;
-    @Getter
-    private InetSocketAddress address;
-    @Getter
-    private String displayname;
+    private final InetSocketAddress address;
+    private final String displayname;
 
     public ServerInfo(String servername, InetSocketAddress address, String displayname) {
         this.name = servername;

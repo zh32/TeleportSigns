@@ -22,7 +22,7 @@ public class Ping {
     @Getter
     private List<ServerInfo> servers = new ArrayList<>();
     static Ping _instance = null;
-    private MCPing mcping = new MCPing();
+    private final MCPing mcping = new MCPing();
     
     public static Ping getInstance() {
         if(Ping._instance == null) {

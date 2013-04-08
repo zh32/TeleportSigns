@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
- 
+
 public final class MCPing {
     @Setter
     @Getter
