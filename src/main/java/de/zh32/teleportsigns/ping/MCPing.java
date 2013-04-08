@@ -100,7 +100,7 @@ public final class MCPing {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, null, ex);
+                Bukkit.getLogger().log(Level.SEVERE, "[TeleportSigns] Something is wrong here!", ex);
             }
             dataOutputStream.close();
             outputStream.close();
