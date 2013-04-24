@@ -13,14 +13,7 @@ public class ServerInfo {
     private int playersOnline;
     private int maxPlayers;
     private String motd;
-    private boolean online;
+    private boolean online = false;
     private final InetSocketAddress address;
     private final String displayname;
-
-    public ServerInfo(String servername, InetSocketAddress address, String displayname) {
-        this.name = servername;
-        this.address = address;
-        this.displayname = displayname;
-        this.online = false;
-    }
 }
