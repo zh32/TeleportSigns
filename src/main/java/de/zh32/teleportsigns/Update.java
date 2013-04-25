@@ -2,6 +2,8 @@ package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.ping.Ping;
 import de.zh32.teleportsigns.ping.ServerInfo;
+import java.util.logging.Level;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -27,41 +29,46 @@ class Update implements Runnable {
     private void updateSigns() {
         if (plugin.signs != null) {
             for (TeleportSign ts : plugin.signs) {
-                Location l = ts.getLocation();
-                if (l.getWorld().getChunkAt(l).isLoaded()) {
-                    Block b = l.getBlock();
-                    if (b.getState() instanceof Sign) {
-                        Sign s = (Sign) b.getState();
-                        ServerInfo sinfo = Ping.getInstance().getServer(ts.getServer());
-                        if (sinfo != null) {
-                            if (sinfo.isOnline()) {
-                                String npl = String.valueOf(sinfo.getPlayersOnline());
-                                String mpl = String.valueOf(sinfo.getMaxPlayers());
-                                String motd = sinfo.getMotd();
-
-                                s.setLine(0, ChatColor.translateAlternateColorCodes('&', plugin.config.first_line));
-                                if (plugin.config.usemotd) {
-                                    s.setLine(1, motd);
-                                }
-                                else {
-                                    s.setLine(1, ChatColor.translateAlternateColorCodes('&', sinfo.getDisplayname()));
-                                }
-
-                                s.setLine(2, ChatColor.translateAlternateColorCodes('&', plugin.config.playercountcolor) + npl + "/" + mpl);
-                                s.setLine(3, ChatColor.translateAlternateColorCodes('&', plugin.config.online_line));
-                                s.update();
-                            }
-                            else {
-                                s.setLine(0, ChatColor.translateAlternateColorCodes('&', plugin.config.first_line));
-                                s.setLine(1, ChatColor.translateAlternateColorCodes('&', sinfo.getDisplayname()));
-                                s.setLine(2, ChatColor.translateAlternateColorCodes('&', plugin.config.playercountcolor) + "-/-");
-                                s.setLine(3, ChatColor.translateAlternateColorCodes('&', plugin.config.offline_line));
-                                s.update();
-                            }
-                        }
+                updateSign(ts);
+            }
+        }
+    }
+    
+    public void updateSign(TeleportSign sign) { 
+        Location l = sign.getLocation();
+        if (l.getWorld().getChunkAt(l).isLoaded()) {
+            Block b = l.getBlock();
+            if (b.getState() instanceof Sign) {
+                ServerInfo sinfo = Ping.getInstance().getServer(sign.getServer());
+                SignLayout layout = plugin.getLayout(sign.getLayout());
+                if (layout != null) {
+                    Sign s = (Sign) b.getState();
+                    for (int i = 0; i < 4; i++) {
+                        s.setLine(i, replaceInfo(sinfo, layout, layout.getLines().get(i)));
                     }
+                    s.update();
+                }
+                else {
+                    Bukkit.getLogger().log(Level.WARNING, "[TeleportSigns] can't find layout '" + sign.getLayout() + "'");
                 }
             }
         }
+    }
+    
+    private String replaceInfo(ServerInfo sinfo, SignLayout layout, String str) {
+        String erg = str;
+        erg = erg.replace("%numpl%", String.valueOf(sinfo.getPlayersOnline()));
+        erg = erg.replace("%maxpl%", String.valueOf(sinfo.getMaxPlayers()));
+        erg = erg.replace("%motd%", sinfo.getMotd());
+        erg = erg.replace("%displayname%", sinfo.getDisplayname());
+        
+        if (sinfo.isOnline()) {
+            erg = erg.replace("%isonline%", layout.getOnline());
+        }
+        else {
+            erg = erg.replace("%isonline%", layout.getOffline());
+        }
+        return ChatColor.translateAlternateColorCodes('&', erg);
+        
     }
 }

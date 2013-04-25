@@ -72,6 +72,7 @@ public class Ping {
                     }
                     else {
                         info.setOnline(false);
+                        info.setMotd("");
                     }
                 }
             }

@@ -26,6 +26,9 @@ public class TeleportSign {
     private String server;
     
     @NotEmpty
+    private String layout;
+    
+    @NotEmpty
     private String worldName;
     
     @NotNull
@@ -40,9 +43,10 @@ public class TeleportSign {
     public TeleportSign() {
     }
     
-    public TeleportSign(String server, Location loc) {
+    public TeleportSign(String server, Location loc, String layout) {
         this.server = server;
         setLocation(loc);
+        this.layout = layout;
     }
     
     private void setLocation(Location location) {

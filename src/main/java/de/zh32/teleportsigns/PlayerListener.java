@@ -30,13 +30,22 @@ class PlayerListener implements Listener {
     private void onSignChange(SignChangeEvent e) {
         if (e.getLine(0).equalsIgnoreCase("[tsigns]") && e.getPlayer().hasPermission("teleportsigns.create")) {
             ServerInfo info = Ping.getInstance().getServer(e.getLine(1));
-            if (info != null) {
-                plugin.getDatabase().save(new TeleportSign(e.getLine(1), e.getBlock().getLocation()));
-                plugin.loadSigns();
-                e.getPlayer().sendMessage(ChatColor.GREEN + "Sign created.");
+            String layout = e.getLine(2);
+            if (plugin.getLayout(layout) != null) {
+                if (layout.equalsIgnoreCase("")) {
+                    layout = "default";
+                }
+                if (info != null) {
+                    plugin.getDatabase().save(new TeleportSign(e.getLine(1), e.getBlock().getLocation(), layout));
+                    plugin.loadSigns();
+                    e.getPlayer().sendMessage(ChatColor.GREEN + "Sign created.");
+                }
+                else {
+                    e.getPlayer().sendMessage(ChatColor.RED + "Can't find this server!");
+                }
             }
             else {
-                e.getPlayer().sendMessage(ChatColor.RED + "This server is not set in ping.yml");
+                e.getPlayer().sendMessage(ChatColor.RED + "Can't find this layout!");
             }
         }
     }
@@ -65,19 +74,21 @@ class PlayerListener implements Listener {
                     if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
                         ServerInfo info = Ping.getInstance().getServer(ts.getServer());
                         if (info != null) {
-                            if (info.isOnline()) {
-                                ByteArrayOutputStream b = new ByteArrayOutputStream();
-                                DataOutputStream out = new DataOutputStream(b);
-                                try {
-                                    out.writeUTF("Connect");
-                                    out.writeUTF(ts.getServer());
-                                } catch (IOException eee) {
-                                    Bukkit.getLogger().info("You'll never see me!");
+                            if (plugin.getLayout(ts.getLayout()).isTeleport()) {
+                                if (info.isOnline()) {
+                                    ByteArrayOutputStream b = new ByteArrayOutputStream();
+                                    DataOutputStream out = new DataOutputStream(b);
+                                    try {
+                                        out.writeUTF("Connect");
+                                        out.writeUTF(ts.getServer());
+                                    } catch (IOException eee) {
+                                        Bukkit.getLogger().info("You'll never see me!");
+                                    }
+                                    e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
                                 }
-                                e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
-                            }
-                            else {
-                                e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.offline_message));
+                                else {
+                                    e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.offline_message));
+                                }
                             }
                         }
                     }
