@@ -54,7 +54,6 @@ public class ConfigurationData {
             SignLayout signLayout = new SignLayout(layout, online, offline, lines, teleport);
             signLayouts.put(layout, signLayout);
         }
-        System.out.println(signLayouts);
     }
 
     private void loadServers() {

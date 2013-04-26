@@ -17,7 +17,7 @@ public class Ping {
     }
     
     public void startPing() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable(){
 
             @Override
             public void run() {
