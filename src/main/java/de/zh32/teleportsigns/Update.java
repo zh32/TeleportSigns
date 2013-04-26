@@ -1,6 +1,5 @@
 package de.zh32.teleportsigns;
 
-import de.zh32.teleportsigns.ping.Ping;
 import de.zh32.teleportsigns.ping.ServerInfo;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
@@ -39,8 +38,8 @@ class Update implements Runnable {
         if (l.getWorld().getChunkAt(l).isLoaded()) {
             Block b = l.getBlock();
             if (b.getState() instanceof Sign) {
-                ServerInfo sinfo = Ping.getInstance().getServer(sign.getServer());
-                SignLayout layout = plugin.getLayout(sign.getLayout());
+                ServerInfo sinfo = plugin.getConfigData().getServer(sign.getServer());
+                SignLayout layout = plugin.getConfigData().getLayout(sign.getLayout());
                 if (layout != null) {
                     Sign s = (Sign) b.getState();
                     for (int i = 0; i < 4; i++) {

@@ -1,6 +1,8 @@
 #message when a player tries to connect to offline server
 offline-message: '&cServer is offline!'
-#display name from config or motd
+
+#time between pings/signupdate in seconds
+interval: 5
 
 #specify layouts here...
 #%numpl% = online players
@@ -9,7 +11,7 @@ offline-message: '&cServer is offline!'
 #%displayname% = displayname specified in ping.yml
 #%isonline% whether the server is online or offline
 layouts:
-  #don't delete the default layout!
+  #you can change the default layout but don't delete it!
   default:
     teleport: true
     layout:
@@ -19,3 +21,11 @@ layouts:
       - '%isonline%'
     online: 'Online'
     offline: 'Offline'
+    
+servers:
+  pvp:
+    address: '127.0.0.1:1338'
+    displayname: '&cPVP'
+  survival:
+    address: '127.0.0.1:1337'
+    displayname: '&aSurvival'

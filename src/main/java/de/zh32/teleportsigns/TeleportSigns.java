@@ -4,14 +4,14 @@ import de.zh32.teleportsigns.ping.Ping;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import javax.persistence.PersistenceException;
+import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.MetricsLite;
 
@@ -23,26 +23,28 @@ public class TeleportSigns extends JavaPlugin {
     
     public List<TeleportSign> signs = new ArrayList<>();
     
-    public String offline_message;
+    @Getter
+    private Ping ping;
     
-    private Map<String, SignLayout> signLayouts = new HashMap<>();
+    @Getter
+    private ConfigurationData configData;
     
     @Override
     public void onEnable() {
-        this.saveDefaultConfig();
-        this.offline_message = getConfig().getString("offline-message");
+        configData = new ConfigurationData(this);
+        configData.loadConfig();
+        setupDB();
+        loadSigns();
         File ebean = new File(this.getDataFolder(), "ebean.properties");
         if (!ebean.exists()) {
             this.saveResource("ebean.properties", false);
         }
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Update(this), 60L, 100L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Update(this), 60L, configData.getPingDelay() * 20L);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        Ping.getInstance().loadConfig();
-        Ping.getInstance().startPing();
-        setupDB();
-        loadLayouts();
-        loadSigns();
+        ping = new Ping(this);
+        ping.startPing();
+        
         try {
             MetricsLite metrics = new MetricsLite(this);
             metrics.start();
@@ -71,22 +73,18 @@ public class TeleportSigns extends JavaPlugin {
         }
     }
 
-    public SignLayout getLayout(String layout) {
-        return signLayouts.get(layout);
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (command.getName().equalsIgnoreCase("tsreload")) {
+            if (sender.hasPermission("teleportsigns.reload")) {
+                sender.sendMessage(ChatColor.GREEN + "Reloading configuration from disk");
+                getConfigData().reloadConfig();
+            }
+            return true;
+        }
+        return false;
     }
     
-    public void loadLayouts() {
-        FileConfiguration config = this.getConfig();
-        ConfigurationSection layouts = config.getConfigurationSection("layouts");
-        for (String layout : layouts.getKeys(false)) {
-            ConfigurationSection cs = layouts.getConfigurationSection(layout);
-            String online = cs.getString("online");
-            String offline = cs.getString("offline");
-            List<String> lines = cs.getStringList("layout");
-            boolean teleport = cs.getBoolean("teleport");
-            SignLayout signLayout = new SignLayout(layout, online, offline, lines, teleport);
-            signLayouts.put(layout, signLayout);
-        }
-        
-    }
+    
+    
 }

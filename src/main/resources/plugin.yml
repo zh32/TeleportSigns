@@ -7,6 +7,11 @@ main: ${main.class}
 
 database: true
 
+commands:
+  tsreload:
+    description: Reload config from disk
+    permission: teleportsigns.reload
+
 permissions:
   teleportsigns.use:
     description: Use TeleportSigns
@@ -16,4 +21,7 @@ permissions:
     default: op
   teleportsigns.destroy:
     description: Destroy TeleportSigns
+    default: op
+  teleportsigns.reload:
+    description: Reload config from disk
     default: op

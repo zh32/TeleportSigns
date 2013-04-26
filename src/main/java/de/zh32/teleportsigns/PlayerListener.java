@@ -1,6 +1,5 @@
 package de.zh32.teleportsigns;
 
-import de.zh32.teleportsigns.ping.Ping;
 import de.zh32.teleportsigns.ping.ServerInfo;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -29,12 +28,13 @@ class PlayerListener implements Listener {
     @EventHandler
     private void onSignChange(SignChangeEvent e) {
         if (e.getLine(0).equalsIgnoreCase("[tsigns]") && e.getPlayer().hasPermission("teleportsigns.create")) {
-            ServerInfo info = Ping.getInstance().getServer(e.getLine(1));
+            ServerInfo info = plugin.getConfigData().getServer(e.getLine(1));
             String layout = e.getLine(2);
-            if (plugin.getLayout(layout) != null) {
-                if (layout.equalsIgnoreCase("")) {
-                    layout = "default";
-                }
+            if (layout.equalsIgnoreCase("")) {
+                layout = "default";
+            }
+            if (plugin.getConfigData().getLayout(layout) != null) {
+                
                 if (info != null) {
                     plugin.getDatabase().save(new TeleportSign(e.getLine(1), e.getBlock().getLocation(), layout));
                     plugin.loadSigns();
@@ -72,9 +72,9 @@ class PlayerListener implements Listener {
             for (TeleportSign ts : plugin.signs) {
                 if (ts != null) {
                     if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
-                        ServerInfo info = Ping.getInstance().getServer(ts.getServer());
+                        ServerInfo info = plugin.getConfigData().getServer(ts.getServer());
                         if (info != null) {
-                            if (plugin.getLayout(ts.getLayout()).isTeleport()) {
+                            if (plugin.getConfigData().getLayout(ts.getLayout()).isTeleport()) {
                                 if (info.isOnline()) {
                                     ByteArrayOutputStream b = new ByteArrayOutputStream();
                                     DataOutputStream out = new DataOutputStream(b);
@@ -87,7 +87,7 @@ class PlayerListener implements Listener {
                                     e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
                                 }
                                 else {
-                                    e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.offline_message));
+                                    e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfigData().getOfflineMessage()));
                                 }
                             }
                         }

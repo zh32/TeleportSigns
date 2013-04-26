@@ -1,8 +1,0 @@
-#same as bungee config
-servers:
-  pvp:
-    address: '127.0.0.1:1338'
-    displayname: '&cPVP'
-  survival:
-    address: '127.0.0.1:1337'
-    displayname: '&aSurvival'
