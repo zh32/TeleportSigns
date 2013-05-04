@@ -1,22 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>de.zh32</groupId>
-  <artifactId>TeleportSigns</artifactId>
-  <version>1.0</version>
-  <packaging>jar</packaging>
+    <groupId>de.zh32</groupId>
+    <artifactId>TeleportSigns</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
 
-  <name>TeleportSigns</name>
-  <description>TeleportSigns</description>
-  <url>http://zh32.de</url>
+    <name>TeleportSigns</name>
+    <description>TeleportSigns</description>
+    <url>http://zh32.de</url>
 
-  <properties>
+    <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.class>de.zh32.teleportsigns.TeleportSigns</main.class>
-  </properties>
+    </properties>
 
-  <repositories>
+    <repositories>
         <repository>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public</url>
@@ -25,28 +25,28 @@
             <id>Plugin Metrics</id>
             <url>http://repo.mcstats.org/content/repositories/public</url>
         </repository>
-  </repositories>  
-  <dependencies>
-      <dependency>
-        <groupId>org.mcstats.bukkit</groupId>
-        <artifactId>metrics-lite</artifactId>
-        <version>R6</version>
-        <scope>compile</scope>
-    </dependency>   
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>0.11.6</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>bukkit</artifactId>
-      <version>1.5.1-R0.2</version>
-      <type>jar</type>
-    </dependency>
-  </dependencies>
-  <build>
+    </repositories>  
+    <dependencies>   
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>0.11.6</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.5.2-R0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.mcstats.bukkit</groupId>
+            <artifactId>metrics-lite</artifactId>
+            <version>R6</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+    <build>
         <finalName>${project.name}</finalName>
         <resources>
             <resource>
@@ -77,10 +77,10 @@
                         <configuration>
                             <minimizeJar>true</minimizeJar>
                             <artifactSet>
-				<includes>
+                                <includes>
                                     <include>org.projectlombok:lombok</include>
                                     <include>org.mcstats.bukkit:metrics-lite</include>
-				</includes>
+                                </includes>
                             </artifactSet>
                         </configuration>
                     </execution>
