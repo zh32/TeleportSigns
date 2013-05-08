@@ -15,30 +15,30 @@ layouts:
   default:
     teleport: true
     layout:
-      - 'Teleport to:'
+      - '&bTeleport to:'
       - '%motd%'
-      - '%numpl%/%maxpl%'
+      - '&f&l%numpl%/%maxpl%'
       - '%isonline%'
-    online: 'Online'
-    offline: 'Offline'
+    online: '&aOnline'
+    offline: '&cOffline'
   info:
     teleport: false
     layout:
       - '%displayname%'
       - '&c%numpl%&a/&c%maxpl%'
-      - '&6infosign'
+      - '&6&fInfosign'
       - ''
     online: 'Online'
     offline: 'Offline'
   game:
     teleport: true
     layout:
-      - '&nPvP-Match'
+      - '&n&fPvP-Match'
       - '%motd%'
       - '&1%numpl%&a/&1%maxpl%'
       - '%isonline%'
-    online: '+++'
-    offline: '---'
+    online: '&a+++'
+    offline: '&c---'
     
 servers:
   pvp:
