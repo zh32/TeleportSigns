@@ -8,7 +8,7 @@ interval: 5
 #%numpl% = online players
 #%maxpl% = max players
 #%motd% = motd
-#%displayname% = displayname specified in ping.yml
+#%displayname% = displayname
 #%isonline% whether the server is online or offline
 layouts:
   #you can change the default layout but don't delete it!
@@ -21,11 +21,29 @@ layouts:
       - '%isonline%'
     online: 'Online'
     offline: 'Offline'
+  info:
+    teleport: false
+    layout:
+      - '%displayname%'
+      - '&c%numpl%&a/&c%maxpl%'
+      - '&6infosign'
+      - ''
+    online: 'Online'
+    offline: 'Offline'
+  game:
+    teleport: true
+    layout:
+      - '&nPvP-Match'
+      - '%motd%'
+      - '&1%numpl%&a/&1%maxpl%'
+      - '%isonline%'
+    online: '+++'
+    offline: '---'
     
 servers:
   pvp:
-    address: '127.0.0.1:1338'
+    address: '127.0.0.1:25566'
     displayname: '&cPVP'
   survival:
-    address: '127.0.0.1:1337'
+    address: '127.0.0.1:25567'
     displayname: '&aSurvival'

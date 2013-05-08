@@ -1,5 +1,6 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.converter.Converter;
 import de.zh32.teleportsigns.ping.Ping;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,11 @@ public class TeleportSigns extends JavaPlugin {
     
     @Getter
     private ConfigurationData configData;
+
+    @Override
+    public void onLoad() {
+        Converter.convert(this);
+    }
     
     @Override
     public void onEnable() {
