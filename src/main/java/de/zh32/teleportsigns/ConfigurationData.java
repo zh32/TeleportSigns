@@ -51,7 +51,8 @@ public class ConfigurationData {
             String offline = cs.getString("offline");
             List<String> lines = cs.getStringList("layout");
             boolean teleport = cs.getBoolean("teleport");
-            SignLayout signLayout = new SignLayout(layout, online, offline, lines, teleport);
+            String offlineInteger = cs.getString("offline-int");
+            SignLayout signLayout = new SignLayout(layout, online, offline, lines, teleport, offlineInteger);
             signLayouts.put(layout, signLayout);
         }
     }

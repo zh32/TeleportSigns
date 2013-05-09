@@ -21,6 +21,7 @@ layouts:
       - '%isonline%'
     online: '&aOnline'
     offline: '&cOffline'
+    offline-int: '-'
   info:
     teleport: false
     layout:
@@ -30,6 +31,7 @@ layouts:
       - ''
     online: 'Online'
     offline: 'Offline'
+    offline-int: '-'
   game:
     teleport: true
     layout:
@@ -39,6 +41,7 @@ layouts:
       - '%isonline%'
     online: '&a+++'
     offline: '&c---'
+    offline-int: '-'
     
 servers:
   pvp:

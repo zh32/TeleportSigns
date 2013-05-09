@@ -14,4 +14,5 @@ class SignLayout {
     private final String offline;
     private final List<String> lines;
     private final boolean teleport;
+    private final String offlineInteger;
 }

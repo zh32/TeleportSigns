@@ -56,18 +56,21 @@ class Update implements Runnable {
     
     private String replaceInfo(ServerInfo sinfo, SignLayout layout, String str) {
         String erg = str;
-        erg = erg.replace("%numpl%", String.valueOf(sinfo.getPlayersOnline()));
-        erg = erg.replace("%maxpl%", String.valueOf(sinfo.getMaxPlayers()));
+        
         erg = erg.replace("%motd%", sinfo.getMotd());
         erg = erg.replace("%displayname%", sinfo.getDisplayname());
         
         if (sinfo.isOnline()) {
             erg = erg.replace("%isonline%", layout.getOnline());
             erg = erg.replace("%motd/displayname%", sinfo.getMotd());
+            erg = erg.replace("%numpl%", String.valueOf(sinfo.getPlayersOnline()));
+            erg = erg.replace("%maxpl%", String.valueOf(sinfo.getMaxPlayers()));
         }
         else {
             erg = erg.replace("%isonline%", layout.getOffline());
             erg = erg.replace("%motd/displayname%", sinfo.getDisplayname());
+            erg = erg.replace("%numpl%", String.valueOf(layout.getOfflineInteger()));
+            erg = erg.replace("%maxpl%", String.valueOf(layout.getOfflineInteger()));
         }
         return ChatColor.translateAlternateColorCodes('&', erg);
         
