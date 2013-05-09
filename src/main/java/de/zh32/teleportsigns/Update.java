@@ -63,9 +63,11 @@ class Update implements Runnable {
         
         if (sinfo.isOnline()) {
             erg = erg.replace("%isonline%", layout.getOnline());
+            erg = erg.replace("%motd/displayname%", sinfo.getMotd());
         }
         else {
             erg = erg.replace("%isonline%", layout.getOffline());
+            erg = erg.replace("%motd/displayname%", sinfo.getDisplayname());
         }
         return ChatColor.translateAlternateColorCodes('&', erg);
         
