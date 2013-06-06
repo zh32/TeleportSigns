@@ -1,7 +1,9 @@
 package de.zh32.teleportsigns.ping;
 
-import java.net.InetSocketAddress;
 import lombok.Data;
+
+import java.net.InetSocketAddress;
+import java.util.List;
 
 /**
  *
@@ -10,9 +12,9 @@ import lombok.Data;
 @Data
 public class ServerInfo {
     private final String name;
-    private int playersOnline;
-    private int maxPlayers;
-    private String motd = "";
+    private int playersOnline = 0;
+    private int maxPlayers = 0;
+    private String[] motd;
     private boolean online = false;
     private final InetSocketAddress address;
     private final String displayname;

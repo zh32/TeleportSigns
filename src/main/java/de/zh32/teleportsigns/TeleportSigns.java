@@ -21,7 +21,8 @@ import org.mcstats.MetricsLite;
  * @author zh32
  */
 public class TeleportSigns extends JavaPlugin {
-    
+
+    private static TeleportSigns instance;
     public List<TeleportSign> signs = new ArrayList<>();
     
     @Getter
@@ -29,6 +30,14 @@ public class TeleportSigns extends JavaPlugin {
     
     @Getter
     private ConfigurationData configData;
+
+    public TeleportSigns() {
+        instance = this;
+    }
+
+    public static TeleportSigns getInstance() {
+        return instance;
+    }
 
     @Override
     public void onLoad() {
@@ -45,7 +54,7 @@ public class TeleportSigns extends JavaPlugin {
         if (!ebean.exists()) {
             this.saveResource("ebean.properties", false);
         }
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Update(this), 60L, configData.getPingDelay() * 20L);
+
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         ping = new Ping(this);
@@ -57,6 +66,14 @@ public class TeleportSigns extends JavaPlugin {
         } catch (IOException e) {
             // Failed to submit the stats :-(
         }
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+                for (TeleportSign ts : signs) {
+                    ts.updateSign();
+                }
+            }
+        }, 40L, configData.getPingDelay() * 20L);
     }
     
     @Override
