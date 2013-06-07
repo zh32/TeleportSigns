@@ -4,7 +4,17 @@ offline-message: '&cServer is offline!'
 #time between pings/signupdate in seconds
 interval: 5
 
-#specify layouts here...
+#specify your servers here
+servers:
+  pvp:
+    address: '127.0.0.1:25566'
+    displayname: '&cPVP'
+  survival:
+    address: '127.0.0.1:25567'
+    displayname: '&aSurvival'
+
+
+#placeholders:
 #%numpl% = online players
 #%maxpl% = max players
 #%motd% = motd
@@ -42,11 +52,3 @@ layouts:
     online: '&a+++'
     offline: '&c---'
     offline-int: '-'
-    
-servers:
-  pvp:
-    address: '127.0.0.1:25566'
-    displayname: '&cPVP'
-  survival:
-    address: '127.0.0.1:25567'
-    displayname: '&aSurvival'

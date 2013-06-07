@@ -4,7 +4,7 @@
 
     <groupId>de.zh32</groupId>
     <artifactId>TeleportSigns</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>TeleportSigns</name>
