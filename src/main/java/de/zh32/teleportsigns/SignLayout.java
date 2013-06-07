@@ -39,8 +39,8 @@ class SignLayout {
             }
             else {
                 line = line.replace("%isonline%", offline);
-                line = line.replace("%numpl%", String.valueOf(offlineInteger));
-                line = line.replace("%maxpl%", String.valueOf(offlineInteger));
+                line = line.replace("%numpl%", offlineInteger);
+                line = line.replace("%maxpl%", offlineInteger);
                 line = line.replace("%motd%", "");
             }
             laa.add(ChatColor.translateAlternateColorCodes('&', line));
