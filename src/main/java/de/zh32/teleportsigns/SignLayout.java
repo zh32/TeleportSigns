@@ -30,11 +30,15 @@ class SignLayout {
                 line = line.replace("%numpl%", String.valueOf(sinfo.getPlayersOnline()));
                 line = line.replace("%maxpl%", String.valueOf(sinfo.getMaxPlayers()));
                 if (line.contains("%motd%")) {
-                    String motd = sinfo.getMotd()[motdCount];
-                    if (motd != null) {
-                        line = line.replace("%motd%", motd);
+                    if (sinfo.getMotd().length < motdCount) {
+                        String motd = sinfo.getMotd()[motdCount];
+                        if (motd != null) {
+                            line = line.replace("%motd%", motd);
+                        }
+                        motdCount++;
+                    } else {
+                        line = line.replace("%motd%", "");
                     }
-                    motdCount++;
                 }
             }
             else {

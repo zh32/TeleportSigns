@@ -4,7 +4,7 @@
 
     <groupId>de.zh32</groupId>
     <artifactId>TeleportSigns</artifactId>
-    <version>1.2</version>
+    <version>1.2.1</version>
     <packaging>jar</packaging>
 
     <name>TeleportSigns</name>
@@ -33,17 +33,11 @@
             <version>0.11.6</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mcstats.bukkit</groupId>
             <artifactId>metrics-lite</artifactId>
             <version>R6</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.5.2-R0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
