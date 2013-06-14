@@ -37,7 +37,7 @@ class SignLayout {
                         }
                         motdCount++;
                     } else {
-                        line = line.replace("%motd%", " ");
+                        line = line.replace("%motd%", "");
                     }
                 }
             }
