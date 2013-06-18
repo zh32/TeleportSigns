@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.zh32.teleportsigns.ping.ServerInfo;
 import lombok.Data;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.bukkit.ChatColor;
 
 /**
@@ -33,7 +34,7 @@ class SignLayout {
                     if (motdCount < sinfo.getMotd().length) {
                         String motd = sinfo.getMotd()[motdCount];
                         if (motd != null) {
-                            line = line.replace("%motd%", motd);
+                            line = line.replace("%motd%", StringEscapeUtils.escapeJava(motd));
                         }
                         motdCount++;
                     } else {
