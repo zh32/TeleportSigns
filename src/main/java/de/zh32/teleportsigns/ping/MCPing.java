@@ -16,7 +16,7 @@ public final class MCPing {
     private InetSocketAddress address;
     @Setter
     @Getter
-    private int timeout = 1500;
+    private int timeout = 200;
     @Getter
     private int pingVersion = -1;
     @Getter

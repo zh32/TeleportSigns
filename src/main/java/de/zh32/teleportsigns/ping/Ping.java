@@ -3,8 +3,6 @@ package de.zh32.teleportsigns.ping;
 import de.zh32.teleportsigns.TeleportSigns;
 import org.bukkit.Bukkit;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -14,6 +12,7 @@ public class Ping {
     
     private final MCPing mcping = new MCPing();
     private TeleportSigns plugin;
+    private boolean run;
 
     public Ping(TeleportSigns plugin) {
         this.plugin = plugin;
@@ -21,9 +20,14 @@ public class Ping {
     
     public void startPing() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable(){
+            
 
             @Override
             public void run() {
+                if (run) {
+                    return;
+                }
+                run = true;
                 for (ServerInfo info : plugin.getConfigData().getServers()) {
                     mcping.setAddress(info.getAddress());
                     if (mcping.fetchData()) {
@@ -37,6 +41,7 @@ public class Ping {
                         info.setMotd(null);
                     }
                 }
+                run = false;
             }
         }, 100L, plugin.getConfigData().getPingDelay() * 20L);
     }
