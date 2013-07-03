@@ -73,17 +73,17 @@ public class TeleportSign {
             Block b = location.getBlock();
             if (b.getState() instanceof Sign) {
                 ServerInfo sinfo = TeleportSigns.getInstance().getConfigData().getServer(this.server);
-                SignLayout layout = TeleportSigns.getInstance().getConfigData().getLayout(this.layout);
-                if (layout != null) {
+                SignLayout signLayout = TeleportSigns.getInstance().getConfigData().getLayout(this.layout);
+                if (signLayout != null) {
                     Sign s = (Sign) b.getState();
-                    List<String> jau = layout.parseLayout(sinfo);
-                    for (int i = 0; i < layout.getLines().size(); i++) {
-                        s.setLine(i, jau.get(i));
+                    List<String> lines = signLayout.parseLayout(sinfo);
+                    for (int i = 0; i < signLayout.getLines().size(); i++) {
+                        s.setLine(i, lines.get(i));
                     }
                     s.update();
                 }
                 else {
-                    Bukkit.getLogger().log(Level.WARNING, "[TeleportSigns] can't find layout '" + this.layout + "'");
+                    Bukkit.getLogger().log(Level.WARNING, "[TeleportSigns] can't find layout '{0}'", this.layout);
                 }
             }
         }

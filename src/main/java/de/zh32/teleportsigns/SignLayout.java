@@ -34,7 +34,7 @@ class SignLayout {
                     if (motdCount < sinfo.getMotd().length) {
                         String motd = sinfo.getMotd()[motdCount];
                         if (motd != null) {
-                            line = line.replace("%motd%", StringEscapeUtils.escapeJava(motd));
+                            line = line.replace("%motd%", motd);
                         }
                         motdCount++;
                     } else {

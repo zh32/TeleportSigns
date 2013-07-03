@@ -50,9 +50,19 @@ public final class MCPing {
 
             dataOutputStream.write(new byte[]{
                     (byte) 0xFE,
-                    (byte) 0x01
+                    (byte) 0x01,
+                    (byte) 0xFA
+                    
             });
-
+            
+            dataOutputStream.writeShort(11);
+            dataOutputStream.write("MC|PingHost".getBytes("UTF-16BE"));
+            dataOutputStream.writeShort( (address.getHostString().length() * 2) + 7);
+            dataOutputStream.write(73);
+            dataOutputStream.writeShort(address.getHostString().length());
+            dataOutputStream.write(address.getHostString().getBytes("UTF-16BE"));
+            dataOutputStream.writeInt(address.getPort());
+            
             int packetId = inputStream.read();
 
             if (packetId == -1) {
@@ -115,5 +125,5 @@ public final class MCPing {
         }
 
         return true;
-}
+    }
 }
