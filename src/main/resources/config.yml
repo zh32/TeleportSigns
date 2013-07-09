@@ -4,6 +4,8 @@ offline-message: '&cServer is offline!'
 #time between pings/signupdate in seconds
 interval: 5
 
+timeout: 2500
+
 #specify your servers here
 servers:
   pvp:

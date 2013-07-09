@@ -10,12 +10,13 @@ import org.bukkit.Bukkit;
  */
 public class Ping {
     
-    private final MCPing mcping = new MCPing();
+    private final MCPing mcping;
     private TeleportSigns plugin;
     private boolean run;
 
     public Ping(TeleportSigns plugin) {
         this.plugin = plugin;
+        mcping = new MCPing();
     }
     
     public void startPing() {
@@ -30,6 +31,7 @@ public class Ping {
                 run = true;
                 for (ServerInfo info : plugin.getConfigData().getServers()) {
                     mcping.setAddress(info.getAddress());
+                    mcping.setTimeout(plugin.getConfigData().getTimeout());
                     if (mcping.fetchData()) {
                         info.setOnline(true);
                         info.setMotd(mcping.getMotd().split("(?<=\\G.{15})"));

@@ -16,7 +16,7 @@ public final class MCPing {
     private InetSocketAddress address;
     @Setter
     @Getter
-    private int timeout = 200;
+    private int timeout = 2500;
     @Getter
     private int pingVersion = -1;
     @Getter
@@ -55,10 +55,9 @@ public final class MCPing {
                     
             });
             
-            dataOutputStream.writeShort(11);
             dataOutputStream.write("MC|PingHost".getBytes("UTF-16BE"));
             dataOutputStream.writeShort( (address.getHostString().length() * 2) + 7);
-            dataOutputStream.write(73);
+            dataOutputStream.write(74);
             dataOutputStream.writeShort(address.getHostString().length());
             dataOutputStream.write(address.getHostString().getBytes("UTF-16BE"));
             dataOutputStream.writeInt(address.getPort());
@@ -106,11 +105,6 @@ public final class MCPing {
                     this.motd = data[0];
                     this.playersOnline = Integer.parseInt(data[1]);
                     this.maxPlayers = Integer.parseInt(data[2]);
-            }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
-                Bukkit.getLogger().log(Level.SEVERE, "[TeleportSigns] Something is wrong here!", ex);
             }
             dataOutputStream.close();
             outputStream.close();

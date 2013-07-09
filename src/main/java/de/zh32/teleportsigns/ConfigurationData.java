@@ -3,7 +3,6 @@ package de.zh32.teleportsigns;
 import de.zh32.teleportsigns.ping.ServerInfo;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,31 +19,33 @@ public class ConfigurationData {
     private TeleportSigns plugin;
     private FileConfiguration config;
     private String offlineMessage;
-    private List<ServerInfo> servers = Collections.synchronizedList(new ArrayList());
-    private Map<String, SignLayout> signLayouts = new HashMap<>();
+    private List<ServerInfo> servers;
+    private Map<String, SignLayout> signLayouts;
     private int pingDelay;
+    private int timeout;
     
     public ConfigurationData(TeleportSigns plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
+        config.options().copyDefaults(true);
+        plugin.saveConfig();
     }
     public void loadConfig() {
-        plugin.saveDefaultConfig();
-        plugin.reloadConfig();
         this.config = plugin.getConfig();
         this.offlineMessage = config.getString("offline-message");
         this.pingDelay = config.getInt("interval");
-        loadLayouts();
-        loadServers();
+        this.timeout = config.getInt("timeout");
+        signLayouts = loadLayouts();
+        servers = loadServers();
     }
     
     public void reloadConfig() {
-        servers.clear();
-        signLayouts.clear();
+        plugin.reloadConfig();
         loadConfig();
     }
 
-    private void loadLayouts() {
+    private Map<String, SignLayout> loadLayouts() {
+        Map<String, SignLayout> layoutMap = new HashMap<>();
         ConfigurationSection layouts = config.getConfigurationSection("layouts");
         for (String layout : layouts.getKeys(false)) {
             ConfigurationSection cs = layouts.getConfigurationSection(layout);
@@ -54,11 +55,13 @@ public class ConfigurationData {
             boolean teleport = cs.getBoolean("teleport");
             String offlineInteger = cs.getString("offline-int");
             SignLayout signLayout = new SignLayout(layout, online, offline, lines, teleport, offlineInteger);
-            signLayouts.put(layout, signLayout);
+            layoutMap.put(layout, signLayout);
         }
+        return layoutMap;
     }
 
-    private void loadServers() {
+    private List<ServerInfo> loadServers() {
+        List<ServerInfo> list = new ArrayList<>();
         ConfigurationSection server = config.getConfigurationSection("servers");
         for (String servername : server.getKeys(false)) {
             ConfigurationSection cs = server.getConfigurationSection(servername);
@@ -66,8 +69,9 @@ public class ConfigurationData {
             String[] addre = cs.getString("address").split(":");
             InetSocketAddress address = new InetSocketAddress(addre[0], Integer.parseInt(addre[1]));
             ServerInfo si = new ServerInfo(servername, address, displayname);
-            servers.add(si);
+            list.add(si);
         }
+        return list;
     }
     
     public SignLayout getLayout(String layout) {
