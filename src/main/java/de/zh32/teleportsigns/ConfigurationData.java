@@ -3,6 +3,7 @@ package de.zh32.teleportsigns;
 import de.zh32.teleportsigns.ping.ServerInfo;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class ConfigurationData {
     private TeleportSigns plugin;
     private FileConfiguration config;
     private String offlineMessage;
-    private List<ServerInfo> servers = new ArrayList<>();
+    private List<ServerInfo> servers = Collections.synchronizedList(new ArrayList());
     private Map<String, SignLayout> signLayouts = new HashMap<>();
     private int pingDelay;
     
