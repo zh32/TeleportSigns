@@ -5,7 +5,6 @@ import java.util.List;
 
 import de.zh32.teleportsigns.ping.ServerInfo;
 import lombok.Data;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.bukkit.ChatColor;
 
 /**

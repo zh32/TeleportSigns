@@ -87,7 +87,9 @@ class PlayerListener implements Listener {
                                     e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
                                 }
                                 else {
-                                    e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfigData().getOfflineMessage()));
+                                    if (plugin.getConfigData().isShowOfflineMsg()) {
+                                        e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfigData().getOfflineMessage()));
+                                    }
                                 }
                             }
                         }

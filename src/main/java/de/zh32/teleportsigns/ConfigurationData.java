@@ -23,6 +23,7 @@ public class ConfigurationData {
     private Map<String, SignLayout> signLayouts;
     private int pingDelay;
     private int timeout;
+    private boolean showOfflineMsg;
     
     public ConfigurationData(TeleportSigns plugin) {
         this.plugin = plugin;
@@ -33,6 +34,7 @@ public class ConfigurationData {
     public void loadConfig() {
         this.config = plugin.getConfig();
         this.offlineMessage = config.getString("offline-message");
+        this.showOfflineMsg = config.getBoolean("show-offline-message");
         this.pingDelay = config.getInt("interval");
         this.timeout = config.getInt("timeout");
         signLayouts = loadLayouts();
