@@ -14,6 +14,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.MetricsLite;
 
 /**
  *
@@ -59,12 +60,12 @@ public class TeleportSigns extends JavaPlugin {
         ping = new Ping(this);
         ping.startPing();
         
-        /*try {
+        try {
             MetricsLite metrics = new MetricsLite(this);
             metrics.start();
         } catch (IOException e) {
             // Failed to submit the stats :-(
-        }*/
+        }
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
