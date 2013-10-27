@@ -12,7 +12,6 @@ public class Ping {
     
     private final MCPing mcping;
     private TeleportSigns plugin;
-    private boolean run;
 
     public Ping(TeleportSigns plugin) {
         this.plugin = plugin;

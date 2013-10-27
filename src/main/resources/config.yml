@@ -1,6 +1,6 @@
 #message when a player tries to connect to offline server
 offline-message: '&cServer is offline!'
-
+show-offline-message: true
 #time between pings/signupdate in seconds
 interval: 5
 
