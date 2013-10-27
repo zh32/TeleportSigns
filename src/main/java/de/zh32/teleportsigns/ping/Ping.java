@@ -15,10 +15,12 @@ public class Ping implements Runnable {
     
     private final MCPing mcping;
     private TeleportSigns plugin;
+    private int signsPerTick;
 
     public Ping(TeleportSigns plugin) {
         this.plugin = plugin;
         mcping = new MCPing();
+        signsPerTick = plugin.getConfigData().getSignsPerTick();
     }
 
     @Override
@@ -46,10 +48,10 @@ public class Ping implements Runnable {
             }
             int size = tempList.size();
             int offset = 0;
-            while (size > 10) {
-                plugin.updateSigns(tempList.subList(offset, offset + 10));
-                size -= 10;
-                offset += 10;
+            while (size > signsPerTick) {
+                plugin.updateSigns(tempList.subList(offset, offset + signsPerTick));
+                size -= signsPerTick;
+                offset += signsPerTick;
             }         
             plugin.updateSigns(tempList.subList(offset, offset + size));
         }
