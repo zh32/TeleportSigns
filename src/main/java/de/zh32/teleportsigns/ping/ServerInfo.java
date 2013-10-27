@@ -3,7 +3,6 @@ package de.zh32.teleportsigns.ping;
 import lombok.Data;
 
 import java.net.InetSocketAddress;
-import java.util.List;
 
 /**
  *

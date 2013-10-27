@@ -5,29 +5,20 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.Charset;
-import java.util.logging.Level;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
 
+@Getter
 public final class MCPing {
     @Setter
-    @Getter
     private InetSocketAddress address;
     @Setter
-    @Getter
     private int timeout = 2500;
-    @Getter
     private int pingVersion = -1;
-    @Getter
     private int protocolVersion = -1;
-    @Getter
     private String gameVersion;
-    @Getter
     private String motd;
-    @Getter
     private int playersOnline = -1;
-    @Getter
     private int maxPlayers = -1;
 
     public boolean fetchData() {

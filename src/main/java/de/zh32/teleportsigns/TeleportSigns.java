@@ -58,7 +58,22 @@ public class TeleportSigns extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         ping = new Ping(this);
-        ping.startPing();
+        final Runnable callback = new Runnable() {
+
+            @Override
+            public void run() {
+                for (TeleportSign ts : signs) {
+                    ts.updateSign();
+                }
+            }
+        };
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+
+            @Override
+            public void run() {
+                ping.runPing(callback);
+            }
+        }, 20L, configData.getInterval() * 20);
         
         try {
             MetricsLite metrics = new MetricsLite(this);
@@ -66,14 +81,6 @@ public class TeleportSigns extends JavaPlugin {
         } catch (IOException e) {
             // Failed to submit the stats :-(
         }
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-            @Override
-            public void run() {
-                for (TeleportSign ts : signs) {
-                    ts.updateSign();
-                }
-            }
-        }, 40L, configData.getPingDelay() * 20L);
     }
     
     @Override

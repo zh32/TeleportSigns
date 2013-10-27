@@ -19,32 +19,21 @@ public class Ping {
         mcping = new MCPing();
     }
     
-    public void startPing() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable(){
-            
-
-            @Override
-            public void run() {
-                if (run) {
-                    return;
-                }
-                run = true;
-                for (ServerInfo info : plugin.getConfigData().getServers()) {
-                    mcping.setAddress(info.getAddress());
-                    mcping.setTimeout(plugin.getConfigData().getTimeout());
-                    if (mcping.fetchData()) {
-                        info.setOnline(true);
-                        info.setMotd(mcping.getMotd().split("(?<=\\G.{15})"));
-                        info.setPlayersOnline(mcping.getPlayersOnline());
-                        info.setMaxPlayers(mcping.getMaxPlayers());
-                    }
-                    else {
-                        info.setOnline(false);
-                        info.setMotd(null);
-                    }
-                }
-                run = false;
+    public void runPing(final Runnable callback) {
+        for (ServerInfo info : plugin.getConfigData().getServers()) {
+            mcping.setAddress(info.getAddress());
+            mcping.setTimeout(plugin.getConfigData().getTimeout());
+            if (mcping.fetchData()) {
+                info.setOnline(true);
+                info.setMotd(mcping.getMotd().split("(?<=\\G.{15})"));
+                info.setPlayersOnline(mcping.getPlayersOnline());
+                info.setMaxPlayers(mcping.getMaxPlayers());
             }
-        }, 100L, plugin.getConfigData().getPingDelay() * 20L);
+            else {
+                info.setOnline(false);
+                info.setMotd(null);
+            }
+        }
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, callback);
     }
 }
