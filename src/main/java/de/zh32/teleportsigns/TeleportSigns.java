@@ -5,6 +5,7 @@ import de.zh32.teleportsigns.ping.Ping;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import javax.persistence.PersistenceException;
@@ -21,22 +22,21 @@ import org.mcstats.MetricsLite;
  * @author zh32
  */
 public class TeleportSigns extends JavaPlugin {
-
-    private static TeleportSigns instance;
-    public List<TeleportSign> signs = new ArrayList<>();
-    
+  
     @Getter
-    private Ping ping;
-    
+    private List<TeleportSign> signs;   
+    @Getter
+    private Ping ping;  
     @Getter
     private ConfigurationData configData;
+    @Getter
+    private static TeleportSigns instance;
+    private long lastUpdate = System.currentTimeMillis();
+    private int ticksAhead = 0;
+    
 
     public TeleportSigns() {
         instance = this;
-    }
-
-    public static TeleportSigns getInstance() {
-        return instance;
     }
 
     @Override
@@ -79,7 +79,28 @@ public class TeleportSigns extends JavaPlugin {
     public void loadSigns() {
         signs = this.getDatabase().find(TeleportSign.class).findList();
     }
+    
+    public void updateSigns(final List<TeleportSign> list) {      
+        long now = System.currentTimeMillis();
+        if (now - lastUpdate < 50) {
+            ticksAhead++;
+        }
+        else {
+            ticksAhead = 1;
+        }
+        lastUpdate = now;
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
 
+            @Override
+            public void run() {
+                Iterator<TeleportSign> tempIterator = list.iterator();
+                while (tempIterator.hasNext()) {
+                    tempIterator.next().updateSign();
+                }
+            }
+        }, ticksAhead);  
+    }
+    
     private void setupDB() {
         try {
             getDatabase().find(TeleportSign.class).findRowCount();

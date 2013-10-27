@@ -1,12 +1,14 @@
 package de.zh32.teleportsigns.ping;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.nio.charset.Charset;
+import java.util.logging.Level;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 
 @Getter
 public final class MCPing {
@@ -99,16 +101,15 @@ public final class MCPing {
             }
             dataOutputStream.close();
             outputStream.close();
-
+            
             inputStreamReader.close();
             inputStream.close();
             socket.close();
-        } catch (SocketException exception) {
-                return false;
-        } catch (IOException exception) {
-                return false;
+        } catch (Exception exception) {
+            if (!(exception instanceof ConnectException))
+                Bukkit.getLogger().log(Level.SEVERE, "Error fetching data from server " + address.toString(), exception);
+            return false;
         }
-
         return true;
     }
 }
