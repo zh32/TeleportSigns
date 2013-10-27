@@ -3,8 +3,10 @@ offline-message: '&cServer is offline!'
 show-offline-message: true
 #time between pings/signupdate in seconds
 interval: 5
-
-timeout: 2500
+#signs updates per tick
+sign-updates: 20
+#connect timeout
+timeout: 1500
 
 #specify your servers here
 servers:

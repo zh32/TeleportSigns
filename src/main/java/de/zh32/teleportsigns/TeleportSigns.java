@@ -58,22 +58,8 @@ public class TeleportSigns extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         ping = new Ping(this);
-        final Runnable callback = new Runnable() {
-
-            @Override
-            public void run() {
-                for (TeleportSign ts : signs) {
-                    ts.updateSign();
-                }
-            }
-        };
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
-
-            @Override
-            public void run() {
-                ping.runPing(callback);
-            }
-        }, 20L, configData.getInterval() * 20);
+        
+        Bukkit.getScheduler().runTaskAsynchronously(this, ping);
         
         try {
             MetricsLite metrics = new MetricsLite(this);
