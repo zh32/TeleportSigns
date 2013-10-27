@@ -7,7 +7,8 @@ interval: 5
 sign-updates: 20
 #connect timeout
 timeout: 1500
-
+#cooldown for being teleported (milliseconds)
+cooldown: 2000
 #specify your servers here
 servers:
   pvp:

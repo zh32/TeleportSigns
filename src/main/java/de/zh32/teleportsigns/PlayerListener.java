@@ -4,6 +4,8 @@ import de.zh32.teleportsigns.ping.ServerInfo;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
@@ -21,8 +23,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 class PlayerListener implements Listener {
 
     private TeleportSigns plugin;
+    private Map<String, Long> cooldowns;
+    
     public PlayerListener(TeleportSigns plugin) {
         this.plugin = plugin;
+        this.cooldowns = new HashMap<>();
     }
     
     @EventHandler
@@ -69,26 +74,28 @@ class PlayerListener implements Listener {
     @EventHandler
     private void onClick(PlayerInteractEvent e) {
         if (e.hasBlock() && e.getClickedBlock().getState() instanceof Sign && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().hasPermission("teleportsigns.use")) {
-            for (TeleportSign ts : plugin.getSigns()) {
-                if (ts != null) {
-                    if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
-                        ServerInfo info = plugin.getConfigData().getServer(ts.getServer());
-                        if (info != null) {
-                            if (plugin.getConfigData().getLayout(ts.getLayout()).isTeleport()) {
-                                if (info.isOnline()) {
-                                    ByteArrayOutputStream b = new ByteArrayOutputStream();
-                                    DataOutputStream out = new DataOutputStream(b);
-                                    try {
-                                        out.writeUTF("Connect");
-                                        out.writeUTF(ts.getServer());
-                                    } catch (IOException eee) {
-                                        Bukkit.getLogger().info("You'll never see me!");
+            if (!hasCooldown(e.getPlayer().getName())) {
+                for (TeleportSign ts : plugin.getSigns()) {
+                    if (ts != null) {
+                        if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
+                            ServerInfo info = plugin.getConfigData().getServer(ts.getServer());
+                            if (info != null) {
+                                if (plugin.getConfigData().getLayout(ts.getLayout()).isTeleport()) {
+                                    if (info.isOnline()) {
+                                        ByteArrayOutputStream b = new ByteArrayOutputStream();
+                                        DataOutputStream out = new DataOutputStream(b);
+                                        try {
+                                            out.writeUTF("Connect");
+                                            out.writeUTF(ts.getServer());
+                                        } catch (IOException eee) {
+                                            Bukkit.getLogger().info("You'll never see me!");
+                                        }
+                                        e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
                                     }
-                                    e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
-                                }
-                                else {
-                                    if (plugin.getConfigData().isShowOfflineMsg()) {
-                                        e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfigData().getOfflineMessage()));
+                                    else {
+                                        if (plugin.getConfigData().isShowOfflineMsg()) {
+                                            e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfigData().getOfflineMessage()));
+                                        }
                                     }
                                 }
                             }
@@ -97,5 +104,16 @@ class PlayerListener implements Listener {
                 }
             }
         }      
+    }
+    
+    private boolean hasCooldown(String name) {
+        long now = System.currentTimeMillis();
+        if (cooldowns.containsKey(name)) {
+            if (now - cooldowns.get(name) < plugin.getConfigData().getCooldown()) {
+                return true;
+            }
+        }
+        cooldowns.put(name, now);
+        return false;
     }
 }

@@ -25,6 +25,7 @@ public class ConfigurationData {
     private int timeout;
     private int signsPerTick;
     private boolean showOfflineMsg;
+    private int cooldown;
     
     public ConfigurationData(TeleportSigns plugin) {
         this.plugin = plugin;
@@ -39,6 +40,7 @@ public class ConfigurationData {
         this.interval = config.getInt("interval");
         this.timeout = config.getInt("timeout");
         this.signsPerTick = config.getInt("sign-updates");
+        this.cooldown = config.getInt("cooldown");
         signLayouts = loadLayouts();
         servers = loadServers();
     }
