@@ -107,7 +107,7 @@ public final class MCPing {
             socket.close();
         } catch (Exception exception) {
             if (!(exception instanceof ConnectException))
-                Bukkit.getLogger().log(Level.SEVERE, "Error fetching data from server " + address.toString(), exception);
+                Bukkit.getLogger().log(Level.SEVERE, "[TeleportSigns] Error fetching data from server " + address.toString());
             return false;
         }
         return true;
