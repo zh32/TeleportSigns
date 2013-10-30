@@ -24,17 +24,15 @@ public final class MCPing {
     private int maxPlayers = -1;
 
     public boolean fetchData() {
+        Socket socket = new Socket();  
         try {
-            Socket socket = new Socket();
+            socket.setSoTimeout(this.timeout);
+
+            socket.connect(address,this.getTimeout());
             OutputStream outputStream;
             DataOutputStream dataOutputStream;
             InputStream inputStream;
             InputStreamReader inputStreamReader;
-
-            socket.setSoTimeout(this.timeout);
-
-            socket.connect(address,this.getTimeout());
-
             outputStream = socket.getOutputStream();
             dataOutputStream = new DataOutputStream(outputStream);
 
@@ -99,16 +97,16 @@ public final class MCPing {
                     this.playersOnline = Integer.parseInt(data[1]);
                     this.maxPlayers = Integer.parseInt(data[2]);
             }
-            dataOutputStream.close();
-            outputStream.close();
-            
-            inputStreamReader.close();
-            inputStream.close();
-            socket.close();
         } catch (Exception exception) {
             if (!(exception instanceof ConnectException))
                 Bukkit.getLogger().log(Level.SEVERE, "[TeleportSigns] Error fetching data from server " + address.toString());
             return false;
+        }
+        finally {
+            try {
+                if (socket != null)
+                    socket.close();
+            } catch (IOException ex) {}
         }
         return true;
     }
