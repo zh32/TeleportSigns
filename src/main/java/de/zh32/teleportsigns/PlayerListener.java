@@ -72,7 +72,7 @@ class PlayerListener implements Listener {
         }
     }
     
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     private void onClick(PlayerInteractEvent e) {
         if (e.hasBlock() && e.getClickedBlock().getState() instanceof Sign && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().hasPermission("teleportsigns.use")) {
             if (!hasCooldown(e.getPlayer().getName())) {
