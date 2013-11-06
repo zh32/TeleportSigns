@@ -9,6 +9,7 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,6 +17,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  *
@@ -74,7 +79,8 @@ class PlayerListener implements Listener {
     
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     private void onClick(PlayerInteractEvent e) {
-        if (e.hasBlock() && e.getClickedBlock().getState() instanceof Sign && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().hasPermission("teleportsigns.use")) {
+        if (e.hasBlock() && e.getClickedBlock().getState() instanceof Sign && 
+                e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().hasPermission("teleportsigns.use")) {
             if (!hasCooldown(e.getPlayer().getName())) {
                 for (TeleportSign ts : plugin.getSigns()) {
                     if (ts != null) {
@@ -83,19 +89,24 @@ class PlayerListener implements Listener {
                             if (info != null) {
                                 if (plugin.getConfigData().getLayout(ts.getLayout()).isTeleport()) {
                                     if (info.isOnline()) {
-                                        ByteArrayOutputStream b = new ByteArrayOutputStream();
-                                        DataOutputStream out = new DataOutputStream(b);
-                                        try {
-                                            out.writeUTF("Connect");
-                                            out.writeUTF(ts.getServer());
-                                        } catch (IOException eee) {
-                                            Bukkit.getLogger().info("You'll never see me!");
-                                        }
-                                        e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
+                                        ProxyTeleportEvent proxyTeleportEvent = new ProxyTeleportEvent(e.getPlayer(), ts.getServer());
+                                        plugin.getServer().getPluginManager().callEvent(proxyTeleportEvent);
+                                        if (!proxyTeleportEvent.isCancelled()) {
+                                            ByteArrayOutputStream b = new ByteArrayOutputStream();
+                                            DataOutputStream out = new DataOutputStream(b);
+                                            try {
+                                                out.writeUTF("Connect");
+                                                out.writeUTF(proxyTeleportEvent.getServerName());
+                                            } catch (IOException eee) {
+                                                Bukkit.getLogger().info("You'll never see me!");
+                                            }
+                                            e.getPlayer().sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
+                                        }                                    
                                     }
                                     else {
                                         if (plugin.getConfigData().isShowOfflineMsg()) {
-                                            e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfigData().getOfflineMessage()));
+                                            e.getPlayer().sendMessage(
+                                                    ChatColor.translateAlternateColorCodes('&', plugin.getConfigData().getOfflineMessage()));
                                         }
                                     }
                                 }
@@ -117,4 +128,22 @@ class PlayerListener implements Listener {
         cooldowns.put(name, now);
         return false;
     }
+    @EventHandler
+	public void onPlayerJoin(PlayerJoinEvent e) {
+		Player p = e.getPlayer();
+		
+		if (p == Bukkit.getWorld("world")) {
+                    System.out.println("WTF");
+			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 2));
+		} 
+	}
+	
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent e) {
+		Player p = e.getPlayer();
+		
+		if (p == Bukkit.getWorld("Weltname")) {
+			p.getActivePotionEffects().remove(PotionEffectType.SPEED);
+		} 
+	}
 }
