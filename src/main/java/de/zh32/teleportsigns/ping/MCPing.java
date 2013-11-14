@@ -41,17 +41,9 @@ public final class MCPing {
 
             dataOutputStream.write(new byte[]{
                     (byte) 0xFE,
-                    (byte) 0x01,
-                    (byte) 0xFA
+                    (byte) 0x01
                     
             });
-            
-            dataOutputStream.write("MC|PingHost".getBytes("UTF-16BE"));
-            dataOutputStream.writeShort( (address.getHostString().length() * 2) + 7);
-            dataOutputStream.write(74);
-            dataOutputStream.writeShort(address.getHostString().length());
-            dataOutputStream.write(address.getHostString().getBytes("UTF-16BE"));
-            dataOutputStream.writeInt(address.getPort());
             
             int packetId = inputStream.read();
 
