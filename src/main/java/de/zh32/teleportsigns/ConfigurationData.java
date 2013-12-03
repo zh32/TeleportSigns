@@ -30,8 +30,7 @@ public class ConfigurationData {
     public ConfigurationData(TeleportSigns plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
-        config.options().copyDefaults(true);
-        plugin.saveConfig();
+        plugin.saveDefaultConfig();
     }
     public void loadConfig() {
         this.config = plugin.getConfig();
