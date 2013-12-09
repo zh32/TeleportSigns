@@ -1,5 +1,6 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.ping.ServerInfo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ public class ProxyTeleportEvent extends Event implements Cancellable {
 
     private boolean cancelled;
     private final Player player;
-    private String serverName;
+    private final ServerInfo serverInfo;
     private static final HandlerList handlers = new HandlerList();
 
     public HandlerList getHandlers() {
@@ -27,10 +28,4 @@ public class ProxyTeleportEvent extends Event implements Cancellable {
     public static HandlerList getHandlerList() {
             return handlers;
     }
-
-    public ProxyTeleportEvent(Player player, String serverName) {
-            this.player = player;
-            this.serverName = serverName;
-    }
-
 }

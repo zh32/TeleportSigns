@@ -89,14 +89,14 @@ class PlayerListener implements Listener {
                             if (info != null) {
                                 if (plugin.getConfigData().getLayout(ts.getLayout()).isTeleport()) {
                                     if (info.isOnline()) {
-                                        ProxyTeleportEvent proxyTeleportEvent = new ProxyTeleportEvent(e.getPlayer(), ts.getServer());
+                                        ProxyTeleportEvent proxyTeleportEvent = new ProxyTeleportEvent(e.getPlayer(), info);
                                         plugin.getServer().getPluginManager().callEvent(proxyTeleportEvent);
                                         if (!proxyTeleportEvent.isCancelled()) {
                                             ByteArrayOutputStream b = new ByteArrayOutputStream();
                                             DataOutputStream out = new DataOutputStream(b);
                                             try {
                                                 out.writeUTF("Connect");
-                                                out.writeUTF(proxyTeleportEvent.getServerName());
+                                                out.writeUTF(proxyTeleportEvent.getServerInfo().getName());
                                             } catch (IOException eee) {
                                                 Bukkit.getLogger().info("You'll never see me!");
                                             }
