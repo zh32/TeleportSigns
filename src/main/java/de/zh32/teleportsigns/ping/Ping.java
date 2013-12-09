@@ -34,7 +34,7 @@ public class Ping implements Runnable {
             try {
                 StatusResponse data = mcping.fetchData();
                 info.setOnline(true);
-                info.setMotd(data.getDescription().replace("Â", "").split("(?<=\\G.{15})"));
+                info.setMotd(data.getDescription());
                 info.setPlayersOnline(data.getPlayers().getOnline());
                 info.setMaxPlayers(data.getPlayers().getMax());
             } catch (IOException ex) {
