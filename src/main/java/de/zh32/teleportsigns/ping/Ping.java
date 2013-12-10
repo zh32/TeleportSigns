@@ -43,7 +43,7 @@ public class Ping implements Runnable {
                 }
             }
             final ArrayList<TeleportSign> tempList = new ArrayList<>();
-            Iterator<TeleportSign> iterator = plugin.getSigns().iterator();
+            Iterator<TeleportSign> iterator = plugin.getData().getSigns().iterator();
             while (iterator.hasNext()) {
                 TeleportSign ts = iterator.next();
                 if (ts.getServer().equals(info.getName())) {

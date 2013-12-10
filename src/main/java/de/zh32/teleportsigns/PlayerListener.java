@@ -77,7 +77,7 @@ class PlayerListener implements Listener {
         if (e.hasBlock() && e.getClickedBlock().getState() instanceof Sign && 
                 e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().hasPermission("teleportsigns.use")) {
             if (!hasCooldown(e.getPlayer().getName())) {
-                for (TeleportSign ts : plugin.getSigns()) {
+                for (TeleportSign ts : plugin.getData().getSigns()) {
                     if (ts != null) {
                         if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
                             ServerInfo info = plugin.getData().getServer(ts.getServer());
