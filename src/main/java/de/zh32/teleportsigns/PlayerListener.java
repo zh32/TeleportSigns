@@ -9,7 +9,6 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -17,10 +16,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 /**
  *
@@ -28,27 +23,27 @@ import org.bukkit.potion.PotionEffectType;
  */
 class PlayerListener implements Listener {
 
-    private TeleportSigns plugin;
-    private Map<String, Long> cooldowns;
+    private final TeleportSignsPlugin plugin;
+    private final Map<String, Long> cooldowns;
     
-    public PlayerListener(TeleportSigns plugin) {
+    protected PlayerListener(TeleportSignsPlugin plugin) {
         this.plugin = plugin;
         this.cooldowns = new HashMap<>();
     }
     
     @EventHandler
-    private void onSignChange(SignChangeEvent e) {
+    public void onSignChange(SignChangeEvent e) {
         if (e.getLine(0).equalsIgnoreCase("[tsigns]") && e.getPlayer().hasPermission("teleportsigns.create")) {
-            ServerInfo info = plugin.getConfigData().getServer(e.getLine(1));
+            ServerInfo info = plugin.getData().getServer(e.getLine(1));
             String layout = e.getLine(2);
             if (layout.equalsIgnoreCase("")) {
                 layout = "default";
             }
-            if (plugin.getConfigData().getLayout(layout) != null) {
+            if (plugin.getData().getLayout(layout) != null) {
                 
                 if (info != null) {
                     plugin.getDatabase().save(new TeleportSign(e.getLine(1), e.getBlock().getLocation(), layout));
-                    plugin.loadSigns();
+                    plugin.getData().loadSigns();
                     e.getPlayer().sendMessage(ChatColor.GREEN + "Sign created.");
                 }
                 else {
@@ -62,7 +57,7 @@ class PlayerListener implements Listener {
     }
     
     @EventHandler
-    private void onBlockBreak(BlockBreakEvent e) {
+    public void onBlockBreak(BlockBreakEvent e) {
         if (e.getBlock().getState() instanceof Sign) {
             Sign s = (Sign) e.getBlock().getState();
             TeleportSign ts = plugin.getDatabase().find(TeleportSign.class).where().
@@ -71,23 +66,23 @@ class PlayerListener implements Listener {
                     eq("z", e.getBlock().getLocation().getZ()).findUnique();
             if (ts != null && e.getPlayer().hasPermission("teleportsigns.destroy")) {
                 plugin.getDatabase().delete(ts);
-                plugin.loadSigns();
+                plugin.getData().loadSigns();
                 e.getPlayer().sendMessage(ChatColor.GREEN + "Sign destroyed.");
             }
         }
     }
     
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
-    private void onClick(PlayerInteractEvent e) {
+    public void onClick(PlayerInteractEvent e) {
         if (e.hasBlock() && e.getClickedBlock().getState() instanceof Sign && 
                 e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().hasPermission("teleportsigns.use")) {
             if (!hasCooldown(e.getPlayer().getName())) {
                 for (TeleportSign ts : plugin.getSigns()) {
                     if (ts != null) {
                         if (ts.getLocation().equals(e.getClickedBlock().getLocation())) {
-                            ServerInfo info = plugin.getConfigData().getServer(ts.getServer());
+                            ServerInfo info = plugin.getData().getServer(ts.getServer());
                             if (info != null) {
-                                if (plugin.getConfigData().getLayout(ts.getLayout()).isTeleport()) {
+                                if (plugin.getData().getLayout(ts.getLayout()).isTeleport()) {
                                     if (info.isOnline()) {
                                         ProxyTeleportEvent proxyTeleportEvent = new ProxyTeleportEvent(e.getPlayer(), info);
                                         plugin.getServer().getPluginManager().callEvent(proxyTeleportEvent);
@@ -104,9 +99,9 @@ class PlayerListener implements Listener {
                                         }                                    
                                     }
                                     else {
-                                        if (plugin.getConfigData().isShowOfflineMsg()) {
+                                        if (plugin.getData().isShowOfflineMsg()) {
                                             e.getPlayer().sendMessage(
-                                                    ChatColor.translateAlternateColorCodes('&', plugin.getConfigData().getOfflineMessage()));
+                                                    ChatColor.translateAlternateColorCodes('&', plugin.getData().getOfflineMessage()));
                                         }
                                     }
                                 }
@@ -121,29 +116,11 @@ class PlayerListener implements Listener {
     private boolean hasCooldown(String name) {
         long now = System.currentTimeMillis();
         if (cooldowns.containsKey(name)) {
-            if (now - cooldowns.get(name) < plugin.getConfigData().getCooldown()) {
+            if (now - cooldowns.get(name) < plugin.getData().getCooldown()) {
                 return true;
             }
         }
         cooldowns.put(name, now);
         return false;
     }
-    @EventHandler
-	public void onPlayerJoin(PlayerJoinEvent e) {
-		Player p = e.getPlayer();
-		
-		if (p == Bukkit.getWorld("world")) {
-                    System.out.println("WTF");
-			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 2));
-		} 
-	}
-	
-	@EventHandler
-	public void onPlayerQuit(PlayerQuitEvent e) {
-		Player p = e.getPlayer();
-		
-		if (p == Bukkit.getWorld("Weltname")) {
-			p.getActivePotionEffects().remove(PotionEffectType.SPEED);
-		} 
-	}
 }

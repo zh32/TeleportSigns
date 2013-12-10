@@ -17,7 +17,7 @@ import lombok.Data;
  * @author zh32 <zh32 at zh32.de>
  */
 @Data
-public class ServerListPing17 {
+class ServerListPing17 {
     
     private InetSocketAddress host;
     private int timeout = 7000;

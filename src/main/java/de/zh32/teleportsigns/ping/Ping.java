@@ -1,7 +1,7 @@
 package de.zh32.teleportsigns.ping;
 
 import de.zh32.teleportsigns.TeleportSign;
-import de.zh32.teleportsigns.TeleportSigns;
+import de.zh32.teleportsigns.TeleportSignsPlugin;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
@@ -17,20 +17,18 @@ import org.bukkit.Bukkit;
 public class Ping implements Runnable {
     
     private final ServerListPing17 mcping;
-    private final TeleportSigns plugin;
-    private final int signsPerTick;
+    private final TeleportSignsPlugin plugin;
 
-    public Ping(TeleportSigns plugin) {
+    public Ping(TeleportSignsPlugin plugin) {
         this.plugin = plugin;
         mcping = new ServerListPing17();
-        signsPerTick = plugin.getConfigData().getSignsPerTick();
     }
 
     @Override
     public void run() {
-        for (ServerInfo info : plugin.getConfigData().getServers()) {
+        for (ServerInfo info : plugin.getData().getServers()) {
             mcping.setHost(info.getAddress());
-            mcping.setTimeout(plugin.getConfigData().getTimeout());
+            mcping.setTimeout(plugin.getData().getTimeout());
             try {
                 StatusResponse data = mcping.fetchData();
                 info.setOnline(true);
@@ -52,15 +50,8 @@ public class Ping implements Runnable {
                     tempList.add(ts);
                 }
             }
-            int size = tempList.size();
-            int offset = 0;
-            while (size > signsPerTick) {
-                plugin.updateSigns(tempList.subList(offset, offset + signsPerTick));
-                size -= signsPerTick;
-                offset += signsPerTick;
-            }         
-            plugin.updateSigns(tempList.subList(offset, offset + size));
+            plugin.getUpdateUtil().updateAllSigns(tempList);
         }
-        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, this, plugin.getConfigData().getInterval() * 20);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, this, plugin.getData().getInterval() * 20);
     }
 }

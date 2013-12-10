@@ -1,5 +1,6 @@
 package de.zh32.teleportsigns;
 
+import com.avaje.ebean.EbeanServer;
 import de.zh32.teleportsigns.ping.ServerInfo;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -15,8 +16,8 @@ import org.bukkit.configuration.file.FileConfiguration;
  * @author zh32
  */
 @Data
-public class ConfigurationData {
-    private TeleportSigns plugin;
+public class PluginData {
+    private final TeleportSignsPlugin plugin;
     private FileConfiguration config;
     private String offlineMessage;
     private List<ServerInfo> servers;
@@ -26,13 +27,17 @@ public class ConfigurationData {
     private int signsPerTick;
     private boolean showOfflineMsg;
     private int cooldown;
+    private final EbeanServer database;
+    private List<TeleportSign> signs;
     
-    public ConfigurationData(TeleportSigns plugin) {
+    protected PluginData(TeleportSignsPlugin plugin) {
         this.plugin = plugin;
+        database = plugin.getDatabase();
         this.config = plugin.getConfig();
         plugin.saveDefaultConfig();
+        
     }
-    public void loadConfig() {
+    void loadConfig() {
         this.config = plugin.getConfig();
         this.offlineMessage = config.getString("offline-message");
         this.showOfflineMsg = config.getBoolean("show-offline-message");
@@ -44,7 +49,7 @@ public class ConfigurationData {
         servers = loadServers();
     }
     
-    public void reloadConfig() {
+    void reloadConfig() {
         plugin.reloadConfig();
         loadConfig();
     }
@@ -59,7 +64,7 @@ public class ConfigurationData {
             List<String> lines = cs.getStringList("layout");
             boolean teleport = cs.getBoolean("teleport");
             String offlineInteger = cs.getString("offline-int");
-            SignLayout signLayout = new SignLayout(layout, online, offline, lines, teleport, offlineInteger);
+            SignLayout signLayout = new TeleportSignLayout(layout, online, offline, lines, teleport, offlineInteger);
             layoutMap.put(layout, signLayout);
         }
         return layoutMap;
@@ -79,12 +84,16 @@ public class ConfigurationData {
         return list;
     }
     
-    public SignLayout getLayout(String layout) {
+    void loadSigns() {
+        signs = database.find(TeleportSign.class).findList();
+    }
+    
+    SignLayout getLayout(String layout) {
         return signLayouts.get(layout);
     }
     
-    public ServerInfo getServer(String server) {
-        for (ServerInfo info : plugin.getConfigData().getServers()) {
+    ServerInfo getServer(String server) {
+        for (ServerInfo info : plugin.getData().getServers()) {
             if (info.getName().equals(server)) {
                 return info;
             }

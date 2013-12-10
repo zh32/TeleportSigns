@@ -21,6 +21,7 @@ public class ProxyTeleportEvent extends Event implements Cancellable {
     private final ServerInfo serverInfo;
     private static final HandlerList handlers = new HandlerList();
 
+    @Override
     public HandlerList getHandlers() {
             return handlers;
     }
