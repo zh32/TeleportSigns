@@ -65,9 +65,9 @@ public class UpdateUtil {
             Block b = location.getBlock();
             if (b.getState() instanceof Sign) {
                 Sign s = (Sign) b.getState();
-                List<String> lines = layout.parseLayout(server);
-                for (int i = 0; i < lines.size(); i++) {
-                    s.setLine(i, lines.get(i));
+                String[] lines = layout.parseLayout(server);
+                for (int i = 0; i < lines.length; i++) {
+                    s.setLine(i, lines[i]);
                 }
                 s.update();
             }

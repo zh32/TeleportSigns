@@ -1,8 +1,6 @@
 package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.ping.ServerInfo;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Data;
 import org.bukkit.ChatColor;
 
@@ -15,16 +13,18 @@ class TeleportSignLayout implements SignLayout {
     private final String name;    
     private final String online;
     private final String offline;
-    private final List<String> layout;
+    private final String[] layout;
     private final boolean teleport;
     private final String offlineInteger;
 
     @Override
-    public List<String> parseLayout(ServerInfo sinfo) {
-        List<String> laa = new ArrayList<>();
+    public String[] parseLayout(ServerInfo sinfo) {
+        String[] laa = new String[layout.length];
         int motdCount = 0;
-        String[] splitMotd = sinfo.getMotd().split("(?<=\\G.{15})");
-        for (String line : layout) {
+        String tempMotd = sinfo.getMotd() == null ? "" : sinfo.getMotd();
+        String[] splitMotd = tempMotd.split("(?<=\\G.{15})");
+        for (int i = 0; i < layout.length; i++) {
+            String line = layout[i];
             line = line.replace("%displayname%", sinfo.getDisplayname());
             if (sinfo.isOnline()) {
                 line = line.replace("%isonline%", online);
@@ -48,7 +48,7 @@ class TeleportSignLayout implements SignLayout {
                 line = line.replace("%maxpl%", offlineInteger);
                 line = line.replace("%motd%", "");
             }
-            laa.add(ChatColor.translateAlternateColorCodes('&', line));
+            laa[i] = ChatColor.translateAlternateColorCodes('&', line);
         }
         return laa;
     }
