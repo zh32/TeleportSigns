@@ -43,7 +43,7 @@ public class TeleportSignsPlugin extends JavaPlugin {
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         ping = new Ping(this);
         
-        Bukkit.getScheduler().runTaskAsynchronously(this, ping);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(this, ping, 20);
         
         try {
             MetricsLite metrics = new MetricsLite(this);
