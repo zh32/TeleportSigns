@@ -64,7 +64,7 @@ public class PluginData {
             List<String> lines = cs.getStringList("layout");
             boolean teleport = cs.getBoolean("teleport");
             String offlineInteger = cs.getString("offline-int");
-            SignLayout signLayout = new TeleportSignLayout(layout, online, offline, (String[]) lines.toArray(), teleport, offlineInteger);
+            SignLayout signLayout = new TeleportSignLayout(layout, online, offline, lines.toArray(new String[0]), teleport, offlineInteger);
             layoutMap.put(layout, signLayout);
         }
         return layoutMap;

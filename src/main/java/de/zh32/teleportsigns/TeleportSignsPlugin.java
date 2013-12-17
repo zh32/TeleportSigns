@@ -20,7 +20,7 @@ import org.mcstats.MetricsLite;
  * @author zh32
  */
 @Getter
-public class TeleportSignsPlugin extends JavaPlugin {  
+public class TeleportSignsPlugin extends JavaPlugin {
     
     private Ping ping;  
     private PluginData data;
