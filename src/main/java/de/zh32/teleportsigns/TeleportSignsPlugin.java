@@ -28,11 +28,12 @@ public class TeleportSignsPlugin extends JavaPlugin {
     
     @Override
     public void onEnable() {
+        setupDB();
         data = new PluginData(this);
         data.loadConfig();
         data.loadSigns();
         updateUtil = new UpdateUtil(this);
-        setupDB();
+        
         new TeleportSigns(this);
         File ebean = new File(this.getDataFolder(), "ebean.properties");
         if (!ebean.exists()) {
