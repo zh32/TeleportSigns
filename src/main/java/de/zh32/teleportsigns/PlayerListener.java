@@ -59,15 +59,20 @@ class PlayerListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.getBlock().getState() instanceof Sign) {
-            Sign s = (Sign) e.getBlock().getState();
             TeleportSign ts = plugin.getDatabase().find(TeleportSign.class).where().
                     eq("x", e.getBlock().getLocation().getX()).
                     eq("y", e.getBlock().getLocation().getY()).
                     eq("z", e.getBlock().getLocation().getZ()).findUnique();
-            if (ts != null && e.getPlayer().hasPermission("teleportsigns.destroy")) {
-                plugin.getDatabase().delete(ts);
-                plugin.getData().loadSigns();
-                e.getPlayer().sendMessage(ChatColor.GREEN + "Sign destroyed.");
+            if (ts != null) {
+                if (e.getPlayer().hasPermission("teleportsigns.destroy")) {
+                    plugin.getDatabase().delete(ts);
+                    plugin.getData().loadSigns();
+                    e.getPlayer().sendMessage(ChatColor.GREEN + "Sign destroyed");
+                }
+                else {
+                    e.setCancelled(true);
+                    e.getPlayer().sendMessage(ChatColor.GREEN + "You can't destroy this Sign");
+                }
             }
         }
     }
