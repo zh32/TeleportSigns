@@ -3,7 +3,6 @@ package de.zh32.teleportsigns.ping;
 import de.zh32.teleportsigns.TeleportSign;
 import de.zh32.teleportsigns.TeleportSignsPlugin;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -16,12 +15,12 @@ import org.bukkit.Bukkit;
  */
 public class Ping implements Runnable {
     
-    private final ServerListPing17 mcping;
+    private final ServerListPing mcping;
     private final TeleportSignsPlugin plugin;
 
     public Ping(TeleportSignsPlugin plugin) {
         this.plugin = plugin;
-        mcping = new ServerListPing17();
+        mcping = new ServerListPing();
     }
 
     @Override
@@ -29,18 +28,21 @@ public class Ping implements Runnable {
         for (ServerInfo info : plugin.getData().getServers()) {
             mcping.setHost(info.getAddress());
             mcping.setTimeout(plugin.getData().getTimeout());
+            StatusResponse data = null;
             try {
-                StatusResponse data = mcping.fetchData();
+                data = mcping.fetchData();
+            } catch (IOException ex) {
+                Bukkit.getLogger().log(Level.SEVERE, null, ex);
+            }
+            if (data != null) {
                 info.setOnline(true);
                 info.setMotd(data.getDescription());
                 info.setPlayersOnline(data.getPlayers().getOnline());
                 info.setMaxPlayers(data.getPlayers().getMax());
-            } catch (IOException ex) {
+            }
+            else {
                 info.setOnline(false);
                 info.setMotd(null);
-                if (!(ex instanceof ConnectException)) {
-                    Bukkit.getLogger().log(Level.SEVERE, "[TeleportSigns] Error fetching data from server " + info.getAddress().toString(), ex);
-                }
             }
             final ArrayList<TeleportSign> tempList = new ArrayList<>();
             Iterator<TeleportSign> iterator = plugin.getData().getSigns().iterator();
