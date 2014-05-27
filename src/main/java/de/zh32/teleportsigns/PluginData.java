@@ -27,6 +27,7 @@ public class PluginData {
     private int signsPerTick;
     private boolean showOfflineMsg;
     private int cooldown;
+    private boolean debugmode;
     private final EbeanServer database;
     private List<TeleportSign> signs;
     
@@ -45,6 +46,7 @@ public class PluginData {
         this.timeout = config.getInt("timeout");
         this.signsPerTick = config.getInt("sign-updates");
         this.cooldown = config.getInt("cooldown");
+        this.debugmode = config.getBoolean("debug");
         signLayouts = loadLayouts();
         servers = loadServers();
     }

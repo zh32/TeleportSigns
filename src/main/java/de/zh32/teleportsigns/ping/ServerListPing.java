@@ -1,6 +1,7 @@
 package de.zh32.teleportsigns.ping;
 
 import com.google.gson.Gson;
+import de.zh32.teleportsigns.TeleportSignsPlugin;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -25,6 +26,11 @@ public class ServerListPing {
     @Setter
     private int timeout = 2000;
     private final static Gson gson = new Gson();
+    private final TeleportSignsPlugin plugin;
+
+    public ServerListPing(TeleportSignsPlugin plugin) {
+        this.plugin = plugin;
+    }
     
     public StatusResponse fetchData() throws IOException {
         Socket socket = null;
@@ -52,9 +58,7 @@ public class ServerListPing {
             dataOut.close();
             
         } catch (Exception ex) {
-            //if (!(ex instanceof ConnectException)) {
-                Bukkit.getLogger().log(Level.SEVERE, "[TeleportSigns] Can't check server " + host.toString(), ex);
-            //}
+            if (plugin.getData().isDebugmode()) Bukkit.getLogger().log(Level.SEVERE, "[TeleportSigns] Can't check server " + host.toString(), ex);
         } finally {
             if (oStr != null) {
                 oStr.close();

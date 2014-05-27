@@ -1,6 +1,5 @@
 package de.zh32.teleportsigns;
 
-import de.zh32.teleportsigns.ping.Ping;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.MetricsLite;
+import org.mcstats.Metrics;
 
 /**
  *
@@ -21,8 +20,7 @@ import org.mcstats.MetricsLite;
  */
 @Getter
 public class TeleportSignsPlugin extends JavaPlugin {
-    
-    private Ping ping;  
+      
     private PluginData data;
     private UpdateUtil updateUtil;
     
@@ -42,12 +40,29 @@ public class TeleportSignsPlugin extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        ping = new Ping(this);
         
-        Bukkit.getScheduler().runTaskLaterAsynchronously(this, ping, 20);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(this, updateUtil, 20);
         
         try {
-            MetricsLite metrics = new MetricsLite(this);
+            Metrics metrics = new Metrics(this);
+            Metrics.Graph signCount = metrics.createGraph("Sign count");
+            signCount.addPlotter(new Metrics.Plotter() {
+
+                @Override
+                public int getValue() {
+                    return data.getSigns().size();
+                }
+            });
+            
+            Metrics.Graph serverCount = metrics.createGraph("Server count");
+            serverCount.addPlotter(new Metrics.Plotter() {
+
+                @Override
+                public int getValue() {
+                    return data.getServers().size();
+                }
+            });
+            
             metrics.start();
         } catch (IOException e) {
             // Failed to submit the stats :-(
@@ -80,5 +95,5 @@ public class TeleportSignsPlugin extends JavaPlugin {
             return true;
         }
         return false;
-    }
+    }  
 }

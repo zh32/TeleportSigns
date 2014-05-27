@@ -8,7 +8,7 @@ import lombok.Data;
  * @author zh32 <zh32 at zh32.de>
  */
 @Data
-class StatusResponse {
+public class StatusResponse {
     private String description;
     private Players players;
     private Version version;

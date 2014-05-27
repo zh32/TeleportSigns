@@ -9,6 +9,8 @@ sign-updates: 20
 timeout: 1500
 #cooldown for being teleported (milliseconds)
 cooldown: 2000
+#debugmode
+debug: false
 #specify your servers here
 servers:
   pvp:
