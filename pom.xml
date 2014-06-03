@@ -85,7 +85,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>com.google.code.gson:gson</include>
-                                    <include>org.mcstats.bukkit:metrics-lite</include>
+                                    <include>org.mcstats:metrics</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
