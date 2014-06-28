@@ -19,11 +19,11 @@ import org.bukkit.block.Sign;
 public class UpdateUtil implements Runnable {
     
     private final Queue<TeleportSign> queue;
-    private final TeleportSignsPlugin plugin;
+    private final TeleportSigns plugin;
     private final ServerListPing mcping;
     private boolean firstRun;
 
-    public UpdateUtil(TeleportSignsPlugin plugin) {
+    public UpdateUtil(TeleportSigns plugin) {
         this.plugin = plugin;
         queue = new LinkedTransferQueue<>();
         mcping = new ServerListPing(plugin);

@@ -1,7 +1,7 @@
 package de.zh32.teleportsigns.ping;
 
 import com.google.gson.Gson;
-import de.zh32.teleportsigns.TeleportSignsPlugin;
+import de.zh32.teleportsigns.TeleportSigns;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -26,9 +26,9 @@ public class ServerListPing {
     @Setter
     private int timeout = 2000;
     private final static Gson gson = new Gson();
-    private final TeleportSignsPlugin plugin;
+    private final TeleportSigns plugin;
 
-    public ServerListPing(TeleportSignsPlugin plugin) {
+    public ServerListPing(TeleportSigns plugin) {
         this.plugin = plugin;
     }
     

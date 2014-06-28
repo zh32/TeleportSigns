@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import lombok.Data;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -17,7 +20,7 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 @Data
 public class PluginData {
-    private final TeleportSignsPlugin plugin;
+    private final TeleportSigns plugin;
     private FileConfiguration config;
     private String offlineMessage;
     private List<ServerInfo> servers;
@@ -31,14 +34,14 @@ public class PluginData {
     private final EbeanServer database;
     private List<TeleportSign> signs;
     
-    protected PluginData(TeleportSignsPlugin plugin) {
+    protected PluginData(TeleportSigns plugin) {
         this.plugin = plugin;
         database = plugin.getDatabase();
         this.config = plugin.getConfig();
         plugin.saveDefaultConfig();
         
     }
-    void loadConfig() {
+    void loadData() {
         this.config = plugin.getConfig();
         this.offlineMessage = config.getString("offline-message");
         this.showOfflineMsg = config.getBoolean("show-offline-message");
@@ -49,11 +52,13 @@ public class PluginData {
         this.debugmode = config.getBoolean("debug");
         signLayouts = loadLayouts();
         servers = loadServers();
+        loadSigns();
+        checkSigns();
     }
     
-    void reloadConfig() {
+    void reloadData() {
         plugin.reloadConfig();
-        loadConfig();
+        loadData();
     }
 
     private Map<String, SignLayout> loadLayouts() {
@@ -86,8 +91,19 @@ public class PluginData {
         return list;
     }
     
-    void loadSigns() {
+    private void loadSigns() {
         signs = database.find(TeleportSign.class).findList();
+    }
+    
+    private void checkSigns() {
+        for (TeleportSign s : signs) {
+            ServerInfo server = getServer(s.getServer());
+            SignLayout layout = getLayout(s.getLayout());
+            if (server == null || layout == null) {
+                Bukkit.getLogger().log(Level.SEVERE, "[TeleportSigns] Deleting TeleportSign at {0}", s.getLocation().toString());
+                removeSign(s);
+            }  
+        }
     }
     
     SignLayout getLayout(String layout) {
@@ -99,6 +115,27 @@ public class PluginData {
             if (info.getName().equals(server)) {
                 return info;
             }
+        }
+        return null;
+    }
+    
+    void addSign(TeleportSign ts) {
+        signs.add(ts);
+        database.save(ts);
+        if (debugmode)
+            Bukkit.getLogger().log(Level.INFO, "[TeleportSigns] Saved TeleportSign at {0}", ts.getLocation().toString());
+    }
+    
+    void removeSign(TeleportSign ts) {
+        signs.remove(ts);
+        database.delete(ts);
+        if (debugmode)
+            Bukkit.getLogger().log(Level.INFO, "[TeleportSigns] Removed TeleportSign at {0}", ts.getLocation().toString());
+    }
+    
+    TeleportSign getSignForLocation(Location loc) {
+        for (TeleportSign ts : plugin.getData().getSigns()) {
+            if (ts.getLocation().equals(loc)) return ts;
         }
         return null;
     }

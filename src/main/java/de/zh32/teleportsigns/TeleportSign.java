@@ -2,14 +2,14 @@ package de.zh32.teleportsigns;
 
 import com.avaje.ebean.validation.NotEmpty;
 import com.avaje.ebean.validation.NotNull;
-import lombok.Data;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 
 /**
  *
@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @Data
 @Entity()
 @Table(name="lobby_teleportsigns")
+@EqualsAndHashCode
 public class TeleportSign {
     
     @Id
