@@ -37,12 +37,20 @@ class PlayerListener implements Listener {
     @EventHandler
     public void onSignChange(SignChangeEvent e) {
         if (e.getLine(0).equalsIgnoreCase("[tsigns]") && e.getPlayer().hasPermission("teleportsigns.create")) {
-            ServerInfo info = data.getServer(e.getLine(1));
-            String layout = e.getLine(2).equals("") ? "default" : e.getLine(2);
-            if (data.getLayout(layout) != null) { 
+            final ServerInfo info = data.getServer(e.getLine(1));
+            String layoutName = e.getLine(2).equals("") ? "default" : e.getLine(2);
+            final SignLayout layout = data.getLayout(layoutName);
+            if (layout != null) { 
                 if (info != null) {
-                    TeleportSign ts = new TeleportSign(e.getLine(1), e.getBlock().getLocation(), layout);
-                    data.addSign(ts);
+                    final TeleportSign ts = new TeleportSign(e.getLine(1), e.getBlock().getLocation(), layoutName);
+                    data.addSign(ts);     
+                    Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+
+                        @Override
+                        public void run() {
+                            plugin.getUpdateUtil().updateSign(ts, layout, info);
+                        }
+                    }, 1L);
                     e.getPlayer().sendMessage(ChatColor.GREEN + "Sign created.");
                 }
                 else {

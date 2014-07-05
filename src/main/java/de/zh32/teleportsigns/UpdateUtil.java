@@ -56,7 +56,7 @@ public class UpdateUtil implements Runnable {
         }
     }
     
-    private void updateSign(TeleportSign sign, SignLayout layout, ServerInfo server) {
+    void updateSign(TeleportSign sign, SignLayout layout, ServerInfo server) {
         Location location = sign.getLocation();
         if (location.getWorld().getChunkAt(location).isLoaded()) {
             Block b = location.getBlock();
