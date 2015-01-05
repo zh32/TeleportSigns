@@ -53,7 +53,13 @@ public class PluginData {
         signLayouts = loadLayouts();
         servers = loadServers();
         loadSigns();
-        checkSigns();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+
+            @Override
+            public void run() {
+                checkSigns();
+            }
+        }, 5L);
     }
     
     void reloadData() {
