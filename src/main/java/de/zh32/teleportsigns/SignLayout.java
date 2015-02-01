@@ -1,7 +1,7 @@
 package de.zh32.teleportsigns;
 
 
-import de.zh32.teleportsigns.ping.ServerInfo;
+import de.zh32.teleportsigns.ping.GameServer;
 
 /**
  *
@@ -11,7 +11,7 @@ public interface SignLayout {
     
     public boolean isTeleport();
     
-    public String[] parseLayout(ServerInfo sinfo);
+    public String[] parseLayout(GameServer sinfo);
 
     public String getName();
 }

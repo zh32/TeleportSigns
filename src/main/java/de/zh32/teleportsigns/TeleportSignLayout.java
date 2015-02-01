@@ -1,7 +1,8 @@
 package de.zh32.teleportsigns;
 
-import de.zh32.teleportsigns.ping.ServerInfo;
+import de.zh32.teleportsigns.ping.GameServer;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.bukkit.ChatColor;
 
 /**
@@ -9,16 +10,17 @@ import org.bukkit.ChatColor;
  * @author zh32
  */
 @Data
+@Accessors(chain = true)
 class TeleportSignLayout implements SignLayout {
-    private final String name;    
-    private final String online;
-    private final String offline;
-    private final String[] layout;
-    private final boolean teleport;
-    private final String offlineInteger;
+    private String name;    
+    private String online;
+    private String offline;
+    private String[] layout;
+    private boolean teleport;
+    private String offlineInteger;
 
     @Override
-    public String[] parseLayout(ServerInfo sinfo) {
+    public String[] parseLayout(GameServer sinfo) {
         String[] laa = new String[layout.length];
         int motdCount = 0;
         String tempMotd = sinfo.getMotd() == null ? "" : sinfo.getMotd();

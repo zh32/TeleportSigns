@@ -3,26 +3,28 @@ package de.zh32.teleportsigns.ping;
 import java.net.InetSocketAddress;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  *
  * @author zh32
  */
 @Data
+@Accessors(chain = true)
 @EqualsAndHashCode
-public class ServerInfo implements Cloneable {
-    private final String name;
+public class GameServer implements Cloneable {
+    private String name;
     private int playersOnline = 0;
     private int maxPlayers = 0;
     private String motd;
     private boolean online = false;
-    private final InetSocketAddress address;
-    private final String displayname;
+    private InetSocketAddress address;
+    private String displayname;
 
     @Override
-    public ServerInfo clone() {
+    public GameServer clone() {
         try {
-            return (ServerInfo) super.clone();
+            return (GameServer) super.clone();
         }
         catch (CloneNotSupportedException e) {
             throw new InternalError();
