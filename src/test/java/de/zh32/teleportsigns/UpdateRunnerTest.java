@@ -3,6 +3,7 @@ package de.zh32.teleportsigns;
 import java.util.ArrayList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.mockito.invocation.InvocationOnMock;
@@ -13,26 +14,40 @@ import org.mockito.stubbing.Answer;
  * @author zh32
  */
 public class UpdateRunnerTest {
+	
+	private UpdateRunner testee;
+	private final int expectedRuns = 10;
+	private final int signUpdatesPerTick = 8;
+	private final int signsToUpdate = 80;
 
-	@Test
-	public void can_update_in_multiple_ticks() {
+	@Before
+	public void setup() {
 		final TeleportSign sign = mock(TeleportSign.class);
 		ArrayList<TeleportSign> teleportSigns = new ArrayList<>();
-		for (int i = 0; i < 80; i++) {
+		for (int i = 0; i < signsToUpdate; i++) {
 			teleportSigns.add(sign);
-		}		
-		final UpdateRunner testee = spy(new UpdateRunner(teleportSigns, 8, mock(Plugin.class)));
-		doAnswer(new Answer<BukkitTask>() {
+		}
+		
+		testee = spy(new UpdateRunner(teleportSigns, signUpdatesPerTick, mock(Plugin.class)));
+		doAnswer(withCallToRun()).when(testee).runTaskLater(any(Plugin.class), anyLong());
+	}
+	
+	@Test
+	public void can_update_in_multiple_ticks() {
+		testee.run();
+		verify(testee, times(expectedRuns)).run();
+		verify(testee, times(expectedRuns - 1)).runTaskLater(any(Plugin.class), eq(1L));
+	}
+
+	private Answer withCallToRun() {
+		return new Answer<BukkitTask>() {
 
 			@Override
 			public BukkitTask answer(InvocationOnMock invocation) throws Throwable {
 				testee.run();
 				return null;
 			}
-		}).when(testee).runTaskLater(any(Plugin.class), anyLong());
-		testee.run();
-		verify(testee, times(10)).run();
-		verify(testee, times(9)).runTaskLater(any(Plugin.class), eq(1L));
+		};
 	}
-	
+
 }
