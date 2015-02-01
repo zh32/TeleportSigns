@@ -66,7 +66,7 @@ public class SignCreator implements Listener {
 		return TeleportSign.builder()
 				.layout(layout)
 				.server(gameServer)
-				.worldName(event.getBlock().getWorld().getName())
+				.location(event.getBlock().getLocation())
 				.build();
 	}
 

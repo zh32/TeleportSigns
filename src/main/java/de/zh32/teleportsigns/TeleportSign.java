@@ -23,40 +23,12 @@ import org.bukkit.block.Sign;
 @EqualsAndHashCode
 @Builder
 public class TeleportSign {
-
-	@Id
-	private int id;
-
-	@NotEmpty
+	
 	private GameServer server;
 
-	@NotEmpty
 	private SignLayout layout;
 
-	@NotEmpty
-	private String worldName;
-
-	@NotNull
-	private double x;
-
-	@NotNull
-	private double y;
-
-	@NotNull
-	private double z;
 	private Location location;
-
-	private void setLocation(Location location) {
-		this.worldName = location.getWorld().getName();
-		this.x = location.getX();
-		this.y = location.getY();
-		this.z = location.getZ();
-	}
-
-	public Location getLocation() {
-		World welt = Bukkit.getServer().getWorld(worldName);
-		return new Location(welt, x, y, z);
-	}
 
 	public void update() {
 		if (location.getWorld().getChunkAt(location).isLoaded()) {

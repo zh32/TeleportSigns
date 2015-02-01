@@ -11,7 +11,7 @@ import org.bukkit.ChatColor;
  */
 @Data
 @Accessors(chain = true)
-class TeleportSignLayout implements SignLayout {
+public class TeleportSignLayout implements SignLayout {
     private String name;    
     private String online;
     private String offline;
