@@ -1,83 +1,52 @@
 package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.utility.Cooldown;
-import de.zh32.teleportsigns.utility.MessageHelper;
-import de.zh32.teleportsigns.repository.TeleportSignRepository;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import org.bukkit.Bukkit;
-import org.bukkit.block.Sign;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.plugin.Plugin;
+import lombok.Data;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 /**
  *
  * @author zh32
  */
-public class ServerTeleporter implements Listener {
+@Getter
+public abstract class ServerTeleporter {
 
-	private static final String TELEPORT_PERMISSION = "teleportsigns.use";
-	private final Plugin plugin;
-	private final TeleportSignRepository signRepository;
 	private final Cooldown cooldown;
+	private final TeleportSignsPlugin plugin;
 
-	public ServerTeleporter(Plugin plugin, TeleportSignRepository signRepository) {
-		this.plugin = plugin;
-		this.signRepository = signRepository;
+	public ServerTeleporter(TeleportSignsPlugin plugin) {
 		this.cooldown = new Cooldown(2000);
+		this.plugin = plugin;
 	}
-
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
-	public void onClick(PlayerInteractEvent event) {
-		if (!isTeleportSignAction(event)) {
+	
+	public void teleportPlayer(PlayerTeleport teleport) {
+		if (cooldown.hasCooldown(teleport.getPlayer())) {
 			return;
 		}
-		if (!event.getPlayer().hasPermission(TELEPORT_PERMISSION)) {
-			event.getPlayer().sendMessage(MessageHelper.getMessage("sign.use.nopermission"));
+		cooldown.setDefaultCooldown(teleport.getPlayer());
+		GameServer server = plugin.signAt(teleport.getLocation());
+		if (server == null) {
 			return;
 		}
-		if (cooldown.hasCooldown(event.getPlayer())) {
-			return;
-		}
-		cooldown.setDefaultCooldown(event.getPlayer());
-		TeleportSign teleportSign = signRepository.byLocation(event.getClickedBlock().getLocation());
-		if (teleportSign == null) {
-			return;
-		}
-		if (teleportSign.getServer().isOnline()) {
-			ProxyTeleportEvent proxyTeleportEvent = new ProxyTeleportEvent(event.getPlayer(), teleportSign.getServer());
-			if (plugin != null) {
-				Bukkit.getServer().getPluginManager().callEvent(proxyTeleportEvent);
-			}
+		if (server.isOnline()) {
+			ProxyTeleportEvent proxyTeleportEvent = plugin.fireTeleportEvent(teleport.getPlayer(), server);
 			if (!proxyTeleportEvent.isCancelled()) {
-				teleportToServer(event.getPlayer(), teleportSign.getServer().getName());
+				teleportToServer(proxyTeleportEvent.getPlayer(), proxyTeleportEvent.getServerInfo().getName());
 			}
 		} else {
-			event.getPlayer().sendMessage(MessageHelper.getMessage("server.offline", teleportSign.getServer().getName()));
+			//event.getPlayer().sendMessage(MessageHelper.getMessage("server.offline", server.getName()));
+			//throw Exception
 		}
 	}
 
-	private boolean isTeleportSignAction(PlayerInteractEvent event) {
-		return event.hasBlock()
-				&& event.getClickedBlock().getState() instanceof Sign
-				&& event.getAction() == Action.RIGHT_CLICK_BLOCK;
-	}
+	abstract void teleportToServer(String player, String server);
 
-	private void teleportToServer(Player player, String serverName) {
-		ByteArrayOutputStream b = new ByteArrayOutputStream();
-		DataOutputStream out = new DataOutputStream(b);
-		try {
-			out.writeUTF("Connect");
-			out.writeUTF(serverName);
-		} catch (IOException eee) {
-			Bukkit.getLogger().info("You'll never see me!");
-		}
-		player.sendPluginMessage(plugin, "BungeeCord", b.toByteArray());
+	@Data
+	@Accessors(chain = true)
+	public static class PlayerTeleport {
+		private String player;
+		private TeleportSign.TeleportSignLocation location;
+		
 	}
 }

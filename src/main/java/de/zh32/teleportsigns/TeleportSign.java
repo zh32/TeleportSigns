@@ -1,26 +1,17 @@
 package de.zh32.teleportsigns;
 
-import com.avaje.ebean.validation.NotEmpty;
-import com.avaje.ebean.validation.NotNull;
-import de.zh32.teleportsigns.ping.GameServer;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import de.zh32.teleportsigns.SignLayout;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import lombok.experimental.Builder;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 
 /**
  *
  * @author zh32
  */
 @Data
-@EqualsAndHashCode
 @Builder
 public class TeleportSign {
 	
@@ -28,19 +19,29 @@ public class TeleportSign {
 
 	private SignLayout layout;
 
-	private Location location;
+	private TeleportSignLocation location;
 
-	public void update() {
-		if (location.getWorld().getChunkAt(location).isLoaded()) {
-			Block b = location.getBlock();
-			if (b.getState() instanceof Sign) {
-				Sign signBlock = (Sign) b.getState();
-				String[] lines = layout.parseLayout(server);
-				for (int i = 0; i < lines.length; i++) {
-					signBlock.setLine(i, lines[i]);
-				}
-				signBlock.update();
-			}
+	@Data
+	@Accessors(chain = true)
+	@AllArgsConstructor
+	@EqualsAndHashCode
+	public static class TeleportSignLocation {
+		private int x;
+		private int y;
+		private int z;
+		private String worldName;
+	}
+	
+	public boolean equals(Object object) {
+		if (!(object instanceof TeleportSign)) {
+			return false;
+			
+			
 		}
+		TeleportSign teleportSign = (TeleportSign) object;
+		if (teleportSign.getLocation().equals(this.location)) {
+			return true;
+		}
+		return false;
 	}
 }

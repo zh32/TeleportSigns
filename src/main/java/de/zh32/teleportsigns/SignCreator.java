@@ -1,73 +1,38 @@
 package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.utility.MessageHelper;
-import de.zh32.teleportsigns.repository.GameServerRepository;
-import de.zh32.teleportsigns.repository.SignLayoutRepository;
-import de.zh32.teleportsigns.repository.TeleportSignRepository;
-import de.zh32.teleportsigns.ping.GameServer;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.SignChangeEvent;
+
 
 /**
  *
  * @author zh32
  */
-public class SignCreator implements Listener {
-
-	public static final String CREATE_PERMISSION = "teleportsigns.create";
+public class SignCreator {
+	
 	public static final String IDENTIFIER = "[tsigns]";
-	private static final int IDENTIFIER_LINE = 0;
-	private static final int SERVER_LINE = 1;
-	private static final int LAYOUT_LINE = 2;
+	protected static final int IDENTIFIER_LINE = 0;
+	protected static final int SERVER_LINE = 1;
+	protected static final int LAYOUT_LINE = 2;	
+	private final TeleportSignsPlugin plugin;
 
-	private final GameServerRepository serverRepository;
-	private final SignLayoutRepository layoutRepository;
-	private final TeleportSignRepository signRepository;
-
-	public SignCreator(GameServerRepository serverRepository, SignLayoutRepository layoutRepository, TeleportSignRepository signRepository) {
-		this.serverRepository = serverRepository;
-		this.layoutRepository = layoutRepository;
-		this.signRepository = signRepository;
+	public SignCreator(TeleportSignsPlugin plugin) {
+		this.plugin = plugin;
 	}
 
-	@EventHandler
-	public void onSignChanged(SignChangeEvent event) {
-		if (!isTeleportSignCreated(event)) {
-			return;
-		}
-		if (!event.getPlayer().hasPermission(CREATE_PERMISSION)) {
-			event.getPlayer().sendMessage(MessageHelper.getMessage("sign.create.nopermission"));
-			return;
-		}
-		try {
-			TeleportSign teleportSign = createSignFromEvent(event);
-			signRepository.save(teleportSign);
-			//queue
-			event.getPlayer().sendMessage(MessageHelper.getMessage("sign.create.success"));
-		} catch (TeleportSignCreationException ex) {
-			event.getPlayer().sendMessage(MessageHelper.getMessage("sign.create.success", ex.getMessage()));
-		}
+	public boolean isTeleportSignCreated(String[] content) {
+		return content[IDENTIFIER_LINE].equals(IDENTIFIER);
 	}
 
-	private boolean isTeleportSignCreated(SignChangeEvent event) {
-		return event.getLine(IDENTIFIER_LINE).equals(IDENTIFIER);
-	}
-
-	private TeleportSign createSignFromEvent(SignChangeEvent event) throws TeleportSignCreationException {
-		GameServer gameServer = serverRepository.byName(event.getLine(SERVER_LINE));
+	public TeleportSign createSign(String[] content, TeleportSign.TeleportSignLocation location) throws TeleportSignCreationException {
+		GameServer gameServer = plugin.serverByName(content[SERVER_LINE]);
 		if (gameServer == null) {
 			throw new TeleportSignCreationException("server.notfound");
 		}
-		SignLayout layout = layoutRepository.byName(event.getLine(LAYOUT_LINE));
+		SignLayout layout = plugin.layoutByName(content[LAYOUT_LINE]);
 		if (layout == null) {
 			throw new TeleportSignCreationException("layout.notfound");
 		}
-		return TeleportSign.builder()
-				.layout(layout)
-				.server(gameServer)
-				.location(event.getBlock().getLocation())
-				.build();
+		return TeleportSign.builder().layout(layout).server(gameServer).location(location).build();
 	}
 
 	public static class TeleportSignCreationException extends Exception {

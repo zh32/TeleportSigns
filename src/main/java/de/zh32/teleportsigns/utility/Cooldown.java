@@ -2,7 +2,6 @@ package de.zh32.teleportsigns.utility;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.bukkit.entity.Player;
 
 /**
  *
@@ -17,13 +16,13 @@ public class Cooldown {
 		cooldowns = new HashMap<>();
 	}
 
-	public boolean hasCooldown(Player player) {
-		if (!cooldowns.containsKey(player.getName())) return false;
-		return (System.currentTimeMillis() - cooldowns.get(player.getName())) < cooldownTime;
+	public boolean hasCooldown(String player) {
+		if (!cooldowns.containsKey(player)) return false;
+		return (System.currentTimeMillis() - cooldowns.get(player)) < cooldownTime;
 	}
 
-	public void setDefaultCooldown(Player player) {
-		cooldowns.put(player.getName(), System.currentTimeMillis());
+	public void setDefaultCooldown(String player) {
+		cooldowns.put(player, System.currentTimeMillis());
 	}
 
 }

@@ -1,4 +1,4 @@
-package de.zh32.teleportsigns.ping;
+package de.zh32.teleportsigns;
 
 import java.net.InetSocketAddress;
 import lombok.Data;

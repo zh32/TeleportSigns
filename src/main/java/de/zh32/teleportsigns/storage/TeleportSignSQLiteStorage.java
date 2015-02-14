@@ -1,6 +1,7 @@
 package de.zh32.teleportsigns.storage;
 
 import de.zh32.teleportsigns.TeleportSign;
+import de.zh32.teleportsigns.TeleportSignsPlugin;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,8 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 
 /**
  *
@@ -20,6 +19,12 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 
 	public static final String TABLE_NAME = "teleportsign";
 	public static final String DATABASE_NAME = "teleportsigns.db";
+	
+	private final TeleportSignsPlugin plugin;
+
+	public TeleportSignSQLiteStorage(TeleportSignsPlugin plugin) {
+		this.plugin = plugin;
+	}
 
 	@Override
 	public List<TeleportSign> loadAll() {
@@ -52,10 +57,10 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 			stmt = c.prepareStatement(String.format("INSERT INTO %s(server, layout, x, y, z, world) VALUES(?,?,?,?,?,?);", TABLE_NAME));
 			stmt.setString(1, teleportSign.getServer().getName());
 			stmt.setString(2, teleportSign.getLayout().getName());
-			stmt.setInt(3, teleportSign.getLocation().getBlockX());
-			stmt.setInt(4, teleportSign.getLocation().getBlockY());
-			stmt.setInt(5, teleportSign.getLocation().getBlockZ());
-			stmt.setString(6, teleportSign.getLocation().getWorld().getName());
+			stmt.setInt(3, teleportSign.getLocation().getX());
+			stmt.setInt(4, teleportSign.getLocation().getY());
+			stmt.setInt(5, teleportSign.getLocation().getZ());
+			stmt.setString(6, teleportSign.getLocation().getWorldName());
 			stmt.executeUpdate();
 			stmt.close();
 			c.close();
@@ -71,10 +76,10 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 		try {
 			c = getConnection();
 			stmt = c.prepareStatement(String.format("DELETE FROM %s WHERE x = ? AND y = ? AND z = ? AND world = ?", TABLE_NAME));
-			stmt.setInt(1, teleportSign.getLocation().getBlockX());
-			stmt.setInt(2, teleportSign.getLocation().getBlockY());
-			stmt.setInt(3, teleportSign.getLocation().getBlockZ());
-			stmt.setString(4, teleportSign.getLocation().getWorld().getName());
+			stmt.setInt(1, teleportSign.getLocation().getX());
+			stmt.setInt(2, teleportSign.getLocation().getY());
+			stmt.setInt(3, teleportSign.getLocation().getZ());
+			stmt.setString(4, teleportSign.getLocation().getWorldName());
 			stmt.executeUpdate();
 			stmt.close();
 			c.close();
@@ -94,11 +99,13 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 		int y = rs.getInt("y");
 		int z = rs.getInt("z");
 		String world = rs.getString("world");
+		String layout = rs.getString("layout");
+		String server = rs.getString("server");
 		//TODO: get server and layout
 		return TeleportSign.builder()
-				.layout(null)
-				.server(null)
-				.location(new Location(Bukkit.getWorld(world), x, y, z))
+				.layout(plugin.layoutByName(layout))
+				.server(plugin.serverByName(server))
+				.location(new TeleportSign.TeleportSignLocation(x, y, z, world))
 				.build();
 	}
 
