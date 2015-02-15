@@ -1,6 +1,6 @@
-package de.zh32.teleportsigns;
+package de.zh32.teleportsigns.task;
 
-import de.zh32.teleportsigns.task.SignUpdateTask;
+import de.zh32.teleportsigns.TeleportSign;
 import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
  *
  * @author zh32
  */
-public class UpdateRunnerTest {
+public class SignUpdateTaskTest {
 	
 	private SignUpdateTask testee;
 	private final int expectedRuns = 10;
