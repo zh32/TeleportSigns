@@ -1,5 +1,6 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.server.GameServer;
 import org.junit.Test;
 import org.junit.Before;
 import static org.mockito.Matchers.any;

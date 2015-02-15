@@ -1,8 +1,8 @@
 package de.zh32.teleportsigns.task;
 
-import de.zh32.teleportsigns.GameServer;
-import de.zh32.teleportsigns.ping.ServerListPing;
-import de.zh32.teleportsigns.ping.StatusResponse;
+import de.zh32.teleportsigns.server.GameServer;
+import de.zh32.teleportsigns.server.status.ServerListPing;
+import de.zh32.teleportsigns.server.status.StatusResponse;
 import java.util.ArrayList;
 import java.util.List;
 

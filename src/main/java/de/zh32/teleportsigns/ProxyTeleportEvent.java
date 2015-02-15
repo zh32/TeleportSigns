@@ -1,6 +1,6 @@
 package de.zh32.teleportsigns;
 
-import de.zh32.teleportsigns.GameServer;
+import de.zh32.teleportsigns.server.GameServer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

@@ -1,4 +1,4 @@
-package de.zh32.teleportsigns.ping;
+package de.zh32.teleportsigns.server.status;
 
 import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;

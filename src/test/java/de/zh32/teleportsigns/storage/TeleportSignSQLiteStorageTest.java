@@ -2,7 +2,7 @@ package de.zh32.teleportsigns.storage;
 
 import de.zh32.teleportsigns.TestLayout;
 import de.zh32.teleportsigns.TeleportSign;
-import de.zh32.teleportsigns.GameServer;
+import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.TeleportSignsPlugin;
 import java.io.File;
 import java.io.IOException;

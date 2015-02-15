@@ -1,5 +1,7 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.server.GameServer;
+
 /**
  *
  * @author zh32
