@@ -1,19 +1,12 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.task.TaskFactory;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.storage.TeleportSignStorage;
-import de.zh32.teleportsigns.storage.TeleportSignSQLiteStorage;
-import de.zh32.teleportsigns.task.ServerUpdateTask;
-import de.zh32.teleportsigns.task.SignUpdateTask;
 import de.zh32.teleportsigns.server.status.ServerListPing;
-import de.zh32.teleportsigns.server.status.StatusResponse;
 import de.zh32.teleportsigns.task.Callback;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.Getter;
 
 /**
@@ -23,32 +16,33 @@ import lombok.Getter;
 @Getter
 public abstract class TeleportSignsPlugin {
 
+	private final TeleportSignStorage storage;
+	
+	private final TaskFactory taskFactory;
+	
+	private final ConfigurationAdapter configuration;
+	
 	private List<TeleportSign> teleportSigns;
 
 	private List<SignLayout> layouts;
 
 	private List<GameServer> servers;
 
-	private TeleportSignStorage storage;
-
-	public abstract List<SignLayout> loadLayouts();
-
-	public abstract List<GameServer> loadServers();
-
-	public abstract SignUpdateTask signUpdateTaskWith(List<TeleportSign> signs);
-
-	public abstract ServerUpdateTask serverUpdateTaskWith(List<GameServer> servers);
+	public TeleportSignsPlugin(TeleportSignStorage storage, TaskFactory taskFactory, ConfigurationAdapter configuration) {
+		this.storage = storage;
+		this.taskFactory = taskFactory;
+		this.configuration = configuration;
+	}
 
 	public abstract ProxyTeleportEvent fireTeleportEvent(String player, GameServer server);
 
 	protected void initialize() {
-		layouts = loadLayouts();
-		servers = loadServers();
-		storage = new TeleportSignSQLiteStorage(this);
+		layouts = configuration.loadLayouts();
+		servers = configuration.loadServers();
 		teleportSigns = storage.loadAll();
 		final ServerListPing ping = new ServerListPing();
 		//start ping
-		serverUpdateTaskWith(servers).onFinish(new Callback<List<GameServer>>() {
+		taskFactory.serverUpdateTaskWith(servers).onFinish(new Callback<List<GameServer>>() {
 
 			@Override
 			public void finish(List<GameServer> result) {
@@ -58,7 +52,7 @@ public abstract class TeleportSignsPlugin {
 						list.add(sign);
 					}
 				}
-				signUpdateTaskWith(list).execute();
+				taskFactory.signUpdateTaskWith(list).execute();
 			}
 
 		}).execute();
