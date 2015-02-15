@@ -38,7 +38,8 @@ public class ServerTeleporterTest {
 	public void can_teleport_player() {
 		TeleportSign.TeleportSignLocation teleportSignLocation = new TeleportSign.TeleportSignLocation(1, 1, 1, "world");
 		GameServer gameServer = new GameServer().setName("SERVER").setOnline(true);
-		when(plugin.signAt(teleportSignLocation)).thenReturn(gameServer);
+		TeleportSign teleportSign = new TeleportSign(gameServer, null, teleportSignLocation);
+		when(plugin.signAtLocation(teleportSignLocation)).thenReturn(teleportSign);
 		when(plugin.fireTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent().setCancelled(false).setServerInfo(gameServer).setPlayer("player"));
 		ServerTeleporter.PlayerTeleport teleportReq = new ServerTeleporter.PlayerTeleport().setPlayer("TESTER").setLocation(teleportSignLocation);
 		testee.teleportPlayer(teleportReq);
@@ -49,7 +50,8 @@ public class ServerTeleporterTest {
 	public void server_offline() {
 		TeleportSign.TeleportSignLocation teleportSignLocation = new TeleportSign.TeleportSignLocation(1, 1, 1, "world");
 		GameServer gameServer = new GameServer().setName("SERVER").setOnline(false);
-		when(plugin.signAt(teleportSignLocation)).thenReturn(gameServer);
+		TeleportSign teleportSign = new TeleportSign(gameServer, null, teleportSignLocation);
+		when(plugin.signAtLocation(teleportSignLocation)).thenReturn(teleportSign);
 		when(plugin.fireTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent().setCancelled(false).setServerInfo(gameServer).setPlayer("player"));
 		ServerTeleporter.PlayerTeleport teleportReq = new ServerTeleporter.PlayerTeleport().setPlayer("TESTER").setLocation(teleportSignLocation);
 		testee.teleportPlayer(teleportReq);
@@ -60,7 +62,8 @@ public class ServerTeleporterTest {
 	public void player_has_cooldown() {
 		TeleportSign.TeleportSignLocation teleportSignLocation = new TeleportSign.TeleportSignLocation(1, 1, 1, "world");
 		GameServer gameServer = new GameServer().setName("SERVER").setOnline(true);
-		when(plugin.signAt(teleportSignLocation)).thenReturn(gameServer);
+		TeleportSign teleportSign = new TeleportSign(gameServer, null, teleportSignLocation);
+		when(plugin.signAtLocation(teleportSignLocation)).thenReturn(teleportSign);
 		when(plugin.fireTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent().setCancelled(false).setServerInfo(gameServer).setPlayer("player"));
 		ServerTeleporter.PlayerTeleport teleportReq = new ServerTeleporter.PlayerTeleport().setPlayer("TESTER").setLocation(teleportSignLocation);
 		testee.teleportPlayer(teleportReq);

@@ -26,7 +26,7 @@ public abstract class ServerTeleporter {
 			return;
 		}
 		cooldown.setDefaultCooldown(teleport.getPlayer());
-		GameServer server = plugin.signAt(teleport.getLocation());
+		GameServer server = plugin.signAtLocation(teleport.getLocation()).getServer();
 		if (server == null) {
 			return;
 		}

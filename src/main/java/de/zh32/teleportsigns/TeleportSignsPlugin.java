@@ -40,8 +40,6 @@ public abstract class TeleportSignsPlugin {
 		layouts = configuration.loadLayouts();
 		servers = configuration.loadServers();
 		teleportSigns = storage.loadAll();
-		final ServerListPing ping = new ServerListPing();
-		//start ping
 		taskFactory.serverUpdateTaskWith(servers).onFinish(new Callback<List<GameServer>>() {
 
 			@Override
@@ -59,10 +57,10 @@ public abstract class TeleportSignsPlugin {
 
 	}
 
-	public GameServer signAt(TeleportSign.TeleportSignLocation location) {
+	public TeleportSign signAtLocation(TeleportSign.TeleportSignLocation location) {
 		for (TeleportSign sign : teleportSigns) {
 			if (sign.getLocation().equals(location)) {
-				return sign.getServer();
+				return sign;
 			}
 		}
 		return null;
