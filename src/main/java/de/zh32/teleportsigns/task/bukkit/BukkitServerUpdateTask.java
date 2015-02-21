@@ -19,7 +19,6 @@ public class BukkitServerUpdateTask extends ServerUpdateTask implements Runnable
 
 	@Override
 	public void run() {
-		System.out.println("serverupdates");
 		this.execute();
 	}
 
