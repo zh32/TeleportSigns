@@ -9,8 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.Getter;
 
 /**
@@ -66,12 +64,14 @@ public class ServerListPing {
 			socket.connect(host, timeout);
 			inputStream = socket.getInputStream();
 			dataInputStream = new DataInputStream(inputStream);
-			dataOutputStream = new DataOutputStream(outputStream);
 			outputStream = socket.getOutputStream();
+			dataOutputStream = new DataOutputStream(outputStream);
 		}
 
-		private void disconnect() {
-			throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		private void disconnect() throws IOException {
+			dataInputStream.close();
+			dataOutputStream.close();
+			socket.close();
 		}
 
 		
