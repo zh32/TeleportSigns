@@ -5,8 +5,6 @@ author: zh32
 
 main: ${main.class}
 
-database: true
-
 commands:
   tsreload:
     description: Reload config from disk

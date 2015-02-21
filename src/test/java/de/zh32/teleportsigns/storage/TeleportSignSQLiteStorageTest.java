@@ -3,7 +3,7 @@ package de.zh32.teleportsigns.storage;
 import de.zh32.teleportsigns.TestLayout;
 import de.zh32.teleportsigns.TeleportSign;
 import de.zh32.teleportsigns.server.GameServer;
-import de.zh32.teleportsigns.TeleportSignsPlugin;
+import de.zh32.teleportsigns.TeleportSigns;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,12 +23,12 @@ import static org.mockito.Mockito.when;
  */
 public class TeleportSignSQLiteStorageTest {
 
-	private TeleportSignsPlugin plugin;
+	private TeleportSigns plugin;
 	private TeleportSignSQLiteStorage testee;
 
 	@Before
 	public void setup() throws IOException {
-		plugin = mock(TeleportSignsPlugin.class);
+		plugin = mock(TeleportSigns.class);
 		when(plugin.layoutByName("default")).thenReturn(new TestLayout());
 		when(plugin.serverByName("testserver")).thenReturn(new GameServer().setName("testserver"));
 		deleteTestDB();

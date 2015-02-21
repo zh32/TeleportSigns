@@ -11,4 +11,6 @@ public interface TeleportSignStorage {
 	List<TeleportSign> loadAll();
 	void save(TeleportSign teleportSign);
 	void delete(TeleportSign teleportSign);
+
+	public void initialize();
 }

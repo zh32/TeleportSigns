@@ -1,4 +1,4 @@
-package de.zh32.teleportsigns;
+package de.zh32.teleportsigns.event;
 
 import de.zh32.teleportsigns.server.GameServer;
 import lombok.Data;

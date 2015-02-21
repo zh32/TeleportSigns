@@ -1,10 +1,9 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.event.ProxyTeleportEvent;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.utility.Cooldown;
-import lombok.Data;
 import lombok.Getter;
-import lombok.experimental.Accessors;
 
 /**
  *
@@ -14,24 +13,24 @@ import lombok.experimental.Accessors;
 public abstract class ServerTeleporter {
 
 	private final Cooldown cooldown;
-	private final TeleportSignsPlugin plugin;
+	private final TeleportSigns plugin;
 
-	public ServerTeleporter(TeleportSignsPlugin plugin) {
-		this.cooldown = new Cooldown(2000);
+	public ServerTeleporter(TeleportSigns plugin) {
+		this.cooldown = new Cooldown(plugin.getConfiguration().getTeleportCooldown());
 		this.plugin = plugin;
 	}
 	
-	public void teleportPlayer(PlayerTeleport teleport) {
-		if (cooldown.hasCooldown(teleport.getPlayer())) {
+	public void teleportPlayer(String player, TeleportSign.TeleportSignLocation location) {
+		if (cooldown.hasCooldown(player)) {
 			return;
 		}
-		cooldown.setDefaultCooldown(teleport.getPlayer());
-		GameServer server = plugin.signAtLocation(teleport.getLocation()).getServer();
+		cooldown.setDefaultCooldown(player);
+		GameServer server = plugin.signAtLocation(location).getServer();
 		if (server == null) {
 			return;
 		}
 		if (server.isOnline()) {
-			ProxyTeleportEvent proxyTeleportEvent = plugin.fireTeleportEvent(teleport.getPlayer(), server);
+			ProxyTeleportEvent proxyTeleportEvent = plugin.fireTeleportEvent(player, server);
 			if (!proxyTeleportEvent.isCancelled()) {
 				teleportToServer(proxyTeleportEvent.getPlayer(), proxyTeleportEvent.getServerInfo().getName());
 			}
@@ -41,13 +40,5 @@ public abstract class ServerTeleporter {
 		}
 	}
 
-	abstract void teleportToServer(String player, String server);
-
-	@Data
-	@Accessors(chain = true)
-	public static class PlayerTeleport {
-		private String player;
-		private TeleportSign.TeleportSignLocation location;
-		
-	}
+	public abstract void teleportToServer(String player, String server);
 }

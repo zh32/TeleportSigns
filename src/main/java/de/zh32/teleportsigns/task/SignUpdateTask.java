@@ -8,12 +8,11 @@ import java.util.List;
  *
  * @author zh32
  */
-public abstract class SignUpdateTask implements Task {
+public abstract class SignUpdateTask extends Task {
 
 	private final int maxUpdatesPerTick;
 	private int updatesThisTick;
 	private final Iterator<TeleportSign> it;
-	private Callback callback;
 
 	public SignUpdateTask(List<TeleportSign> teleportSigns, int updatesPerTick) {
 		this.maxUpdatesPerTick = updatesPerTick;
@@ -30,19 +29,11 @@ public abstract class SignUpdateTask implements Task {
 		if (it.hasNext()) {
 			runTaskLater();
 		}
-		if (callback != null) {
-			callback.finish(null);
-		}
+		finish(null);
 	}
 
 	public abstract void runTaskLater();
 
 	public abstract void updateSign(TeleportSign next);
-
-	@Override
-	public Task onFinish(Callback callback) {
-		this.callback = callback;
-		return this;
-	}
 
 }

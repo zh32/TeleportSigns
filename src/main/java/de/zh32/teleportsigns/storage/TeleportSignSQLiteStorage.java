@@ -1,7 +1,7 @@
 package de.zh32.teleportsigns.storage;
 
 import de.zh32.teleportsigns.TeleportSign;
-import de.zh32.teleportsigns.TeleportSignsPlugin;
+import de.zh32.teleportsigns.TeleportSigns;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,9 +20,9 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 	public static final String TABLE_NAME = "teleportsign";
 	public static final String DATABASE_NAME = "teleportsigns.db";
 	
-	private final TeleportSignsPlugin plugin;
+	private final TeleportSigns plugin;
 
-	public TeleportSignSQLiteStorage(TeleportSignsPlugin plugin) {
+	public TeleportSignSQLiteStorage(TeleportSigns plugin) {
 		this.plugin = plugin;
 	}
 
@@ -129,6 +129,11 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void initialize() {
+		createTable();
 	}
 
 }

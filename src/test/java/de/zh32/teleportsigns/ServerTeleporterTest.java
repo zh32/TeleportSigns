@@ -1,5 +1,6 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.event.ProxyTeleportEvent;
 import de.zh32.teleportsigns.server.GameServer;
 import org.junit.Test;
 import org.junit.Before;
@@ -19,15 +20,16 @@ import static org.mockito.Mockito.when;
 public class ServerTeleporterTest {
 
 	private ServerTeleporter testee;
-	private TeleportSignsPlugin plugin;
+	private TeleportSigns plugin;
 
 	@Before
 	public void setup() {
-		plugin = mock(TeleportSignsPlugin.class);
+		plugin = mock(TeleportSigns.class);
+		when(plugin.getConfiguration()).thenReturn(new TestConfiguration());
 		testee = spy(new ServerTeleporter(plugin) {
 
 			@Override
-			void teleportToServer(String player, String server) {
+			public void teleportToServer(String player, String server) {
 
 			}
 		});
@@ -41,8 +43,7 @@ public class ServerTeleporterTest {
 		TeleportSign teleportSign = new TeleportSign(gameServer, null, teleportSignLocation);
 		when(plugin.signAtLocation(teleportSignLocation)).thenReturn(teleportSign);
 		when(plugin.fireTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent().setCancelled(false).setServerInfo(gameServer).setPlayer("player"));
-		ServerTeleporter.PlayerTeleport teleportReq = new ServerTeleporter.PlayerTeleport().setPlayer("TESTER").setLocation(teleportSignLocation);
-		testee.teleportPlayer(teleportReq);
+		testee.teleportPlayer("TESTER", teleportSignLocation);
 		verify(testee, times(1)).teleportToServer("player", "SERVER");
 	}
 
@@ -53,8 +54,7 @@ public class ServerTeleporterTest {
 		TeleportSign teleportSign = new TeleportSign(gameServer, null, teleportSignLocation);
 		when(plugin.signAtLocation(teleportSignLocation)).thenReturn(teleportSign);
 		when(plugin.fireTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent().setCancelled(false).setServerInfo(gameServer).setPlayer("player"));
-		ServerTeleporter.PlayerTeleport teleportReq = new ServerTeleporter.PlayerTeleport().setPlayer("TESTER").setLocation(teleportSignLocation);
-		testee.teleportPlayer(teleportReq);
+		testee.teleportPlayer("TESTER", teleportSignLocation);
 		verify(testee, never()).teleportToServer("player", "SERVER");
 	}
 
@@ -65,9 +65,8 @@ public class ServerTeleporterTest {
 		TeleportSign teleportSign = new TeleportSign(gameServer, null, teleportSignLocation);
 		when(plugin.signAtLocation(teleportSignLocation)).thenReturn(teleportSign);
 		when(plugin.fireTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent().setCancelled(false).setServerInfo(gameServer).setPlayer("player"));
-		ServerTeleporter.PlayerTeleport teleportReq = new ServerTeleporter.PlayerTeleport().setPlayer("TESTER").setLocation(teleportSignLocation);
-		testee.teleportPlayer(teleportReq);
-		testee.teleportPlayer(teleportReq);
+		testee.teleportPlayer("TESTER", teleportSignLocation);
+		testee.teleportPlayer("TESTER", teleportSignLocation);
 		verify(testee, times(1)).teleportToServer("player", "SERVER");
 	}
 

@@ -30,6 +30,6 @@ public class StatusResponse {
     @Data
     public class Version {
         private String name;
-        private String protocol;
+        private int protocol;
     }
 }

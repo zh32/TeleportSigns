@@ -2,6 +2,7 @@ package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.TeleportSign.TeleportSignLocation;
+import de.zh32.teleportsigns.storage.TeleportSignStorage;
 import static org.hamcrest.Matchers.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,14 +18,15 @@ import static org.mockito.Mockito.*;
 public class SignCreatorTest {
 
 	private SignCreator testee;
-	private TeleportSignsPlugin plugin;
+	private TeleportSigns plugin;
 	private TeleportSignLocation location;
 
 	@Before
 	public void setup() {
-		plugin = mock(TeleportSignsPlugin.class);
+		plugin = mock(TeleportSigns.class);
 		when(plugin.layoutByName("default")).thenReturn(new TestLayout());
 		when(plugin.serverByName("testserver")).thenReturn(new GameServer().setName("testserver"));
+		when(plugin.getStorage()).thenReturn(mock(TeleportSignStorage.class));
 		testee = new SignCreator(plugin);
 		location = new TeleportSign.TeleportSignLocation(1, 1, 1, "world");
 	}

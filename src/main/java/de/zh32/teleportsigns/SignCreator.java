@@ -2,6 +2,8 @@ package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.utility.MessageHelper;
+import java.util.Arrays;
+import lombok.Getter;
 
 
 /**
@@ -13,10 +15,11 @@ public class SignCreator {
 	public static final String IDENTIFIER = "[tsigns]";
 	protected static final int IDENTIFIER_LINE = 0;
 	protected static final int SERVER_LINE = 1;
-	protected static final int LAYOUT_LINE = 2;	
-	private final TeleportSignsPlugin plugin;
+	protected static final int LAYOUT_LINE = 2;
+	@Getter
+	private final TeleportSigns plugin;
 
-	public SignCreator(TeleportSignsPlugin plugin) {
+	public SignCreator(TeleportSigns plugin) {
 		this.plugin = plugin;
 	}
 
@@ -33,7 +36,10 @@ public class SignCreator {
 		if (layout == null) {
 			throw new TeleportSignCreationException("layout.notfound");
 		}
-		return TeleportSign.builder().layout(layout).server(gameServer).location(location).build();
+		TeleportSign teleportSign = TeleportSign.builder().layout(layout).server(gameServer).location(location).build();
+		plugin.getTeleportSigns().add(teleportSign);
+		plugin.getStorage().save(teleportSign);
+		return teleportSign;
 	}
 
 	public static class TeleportSignCreationException extends Exception {
