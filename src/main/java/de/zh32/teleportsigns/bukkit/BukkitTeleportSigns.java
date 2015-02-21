@@ -32,6 +32,7 @@ public class BukkitTeleportSigns extends TeleportSigns {
 		Bukkit.getLogger().info(String.format("Loaded %d signs from database.", getTeleportSigns().size()));
 		Bukkit.getPluginManager().registerEvents(new BukkitSignCreator(this, plugin), plugin);
 		Bukkit.getPluginManager().registerEvents(new BukkitServerTeleporter(this, plugin), plugin);
+		Bukkit.getPluginManager().registerEvents(new BukkitSignDestroyer(this), plugin);
 	}
 
 	public void startUpdates() {
