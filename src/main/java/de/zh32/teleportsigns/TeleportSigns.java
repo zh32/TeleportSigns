@@ -41,7 +41,7 @@ public abstract class TeleportSigns {
 	public abstract ProxyTeleportEvent fireTeleportEvent(String player, GameServer server);
 
 
-	public abstract void updateSigns(List<TeleportSign> list);
+	public abstract void scheduleSignUpdates(List<TeleportSign> list);
 	
 	public void initialize() {
 		layouts = configuration.loadLayouts();
@@ -59,7 +59,7 @@ public abstract class TeleportSigns {
 						list.add(sign);
 					}
 				}
-				updateSigns(list);
+				scheduleSignUpdates(list);
 			}
 
 		});
