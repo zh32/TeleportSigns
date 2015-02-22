@@ -1,5 +1,6 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.event.ProxyTeleportEvent;
 import de.zh32.teleportsigns.server.GameServer;
 import org.junit.Test;
@@ -20,11 +21,11 @@ import static org.mockito.Mockito.when;
 public class ServerTeleporterTest {
 
 	private ServerTeleporter testee;
-	private TeleportSigns plugin;
+	private Application plugin;
 
 	@Before
 	public void setup() {
-		plugin = mock(TeleportSigns.class);
+		plugin = mock(Application.class);
 		when(plugin.getConfiguration()).thenReturn(new TestConfiguration());
 		testee = spy(new ServerTeleporter(plugin) {
 

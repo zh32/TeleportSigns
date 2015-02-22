@@ -1,5 +1,7 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.sign.TeleportSign;
+import de.zh32.teleportsigns.sign.SignLayout;
 import de.zh32.teleportsigns.configuration.ConfigurationAdapter;
 import de.zh32.teleportsigns.event.ProxyTeleportEvent;
 import de.zh32.teleportsigns.task.TaskFactory;
@@ -17,7 +19,7 @@ import lombok.Getter;
  * @author zh32
  */
 @Getter
-public abstract class TeleportSigns {
+public abstract class Application {
 
 	private TeleportSignStorage storage;
 
@@ -33,7 +35,7 @@ public abstract class TeleportSigns {
 
 	private Task serverTask;
 
-	public TeleportSigns(TaskFactory taskFactory, ConfigurationAdapter configuration) {
+	public Application(TaskFactory taskFactory, ConfigurationAdapter configuration) {
 		this.taskFactory = taskFactory;
 		this.configuration = configuration;
 	}

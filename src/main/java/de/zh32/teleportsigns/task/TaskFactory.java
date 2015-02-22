@@ -1,6 +1,6 @@
 package de.zh32.teleportsigns.task;
 
-import de.zh32.teleportsigns.TeleportSign;
+import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.server.GameServer;
 import java.util.List;
 

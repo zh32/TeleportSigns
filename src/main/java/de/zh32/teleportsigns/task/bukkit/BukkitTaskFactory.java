@@ -1,6 +1,6 @@
 package de.zh32.teleportsigns.task.bukkit;
 
-import de.zh32.teleportsigns.TeleportSign;
+import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.task.ServerUpdateTask;
 import de.zh32.teleportsigns.task.SignUpdateTask;

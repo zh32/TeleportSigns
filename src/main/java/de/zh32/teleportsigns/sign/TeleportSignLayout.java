@@ -1,6 +1,5 @@
-package de.zh32.teleportsigns.configuration;
+package de.zh32.teleportsigns.sign;
 
-import de.zh32.teleportsigns.SignLayout;
 import de.zh32.teleportsigns.server.GameServer;
 import lombok.Data;
 import lombok.experimental.Accessors;

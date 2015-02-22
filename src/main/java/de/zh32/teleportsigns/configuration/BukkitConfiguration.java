@@ -1,8 +1,8 @@
 package de.zh32.teleportsigns.configuration;
 
-import de.zh32.teleportsigns.SignLayout;
-import de.zh32.teleportsigns.configuration.TeleportSignLayout.TeleportSignLayoutBuilder;
 import de.zh32.teleportsigns.server.GameServer;
+import de.zh32.teleportsigns.sign.SignLayout;
+import de.zh32.teleportsigns.sign.TeleportSignLayout;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class BukkitConfiguration implements ConfigurationAdapter {
 	}
 
 	private SignLayout signFromConfigurationSection(ConfigurationSection cs, String layout) {
-		return new TeleportSignLayoutBuilder()
+		return TeleportSignLayout.builder()
 				.name(layout)
 				.layout(cs.getStringList("layout").toArray(new String[0]))
 				.numberPlaceHolder(cs.getString("offline-int"))

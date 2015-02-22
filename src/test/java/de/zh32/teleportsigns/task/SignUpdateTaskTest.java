@@ -1,6 +1,6 @@
 package de.zh32.teleportsigns.task;
 
-import de.zh32.teleportsigns.TeleportSign;
+import de.zh32.teleportsigns.sign.TeleportSign;
 import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,5 +1,6 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.sign.SignLayout;
 import de.zh32.teleportsigns.server.GameServer;
 
 /**

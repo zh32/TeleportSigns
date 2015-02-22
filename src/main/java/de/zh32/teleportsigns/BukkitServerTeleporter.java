@@ -1,7 +1,7 @@
-package de.zh32.teleportsigns.bukkit;
+package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.ServerTeleporter;
-import de.zh32.teleportsigns.TeleportSign.TeleportSignLocation;
+import de.zh32.teleportsigns.sign.TeleportSign.TeleportSignLocation;
 import de.zh32.teleportsigns.utility.MessageHelper;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -22,7 +22,7 @@ public class BukkitServerTeleporter extends ServerTeleporter implements Listener
 	private static final String TELEPORT_PERMISION = "teleportsigns.use";
 	private final Plugin bukkitPlugin;
 
-	public BukkitServerTeleporter(BukkitTeleportSigns teleportSigns, Plugin bukkitPlugin) {
+	public BukkitServerTeleporter(BukkitApplication teleportSigns, Plugin bukkitPlugin) {
 		super(teleportSigns);
 		this.bukkitPlugin = bukkitPlugin;
 	}

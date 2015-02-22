@@ -1,9 +1,9 @@
-package de.zh32.teleportsigns.bukkit;
+package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.SignCreator;
-import de.zh32.teleportsigns.TeleportSign;
-import de.zh32.teleportsigns.TeleportSign.TeleportSignLocation;
-import de.zh32.teleportsigns.TeleportSigns;
+import de.zh32.teleportsigns.sign.TeleportSign;
+import de.zh32.teleportsigns.sign.TeleportSign.TeleportSignLocation;
+import de.zh32.teleportsigns.Application;
 import de.zh32.teleportsigns.utility.MessageHelper;
 import java.util.Arrays;
 import org.bukkit.Bukkit;
@@ -20,7 +20,7 @@ public class BukkitSignCreator extends SignCreator implements Listener {
 	private static final String CREATE_PERMISSION = "teleportsigns.create";
 	private final Plugin bukkitPlugin;
 
-	public BukkitSignCreator(TeleportSigns tsigns, Plugin plugin) {
+	public BukkitSignCreator(Application tsigns, Plugin plugin) {
 		super(tsigns);
 		this.bukkitPlugin = plugin;
 	}

@@ -1,5 +1,6 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.event.ProxyTeleportEvent;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.utility.Cooldown;
@@ -13,9 +14,9 @@ import lombok.Getter;
 public abstract class ServerTeleporter {
 
 	private final Cooldown cooldown;
-	private final TeleportSigns plugin;
+	private final Application plugin;
 
-	public ServerTeleporter(TeleportSigns plugin) {
+	public ServerTeleporter(Application plugin) {
 		this.cooldown = new Cooldown(plugin.getConfiguration().getTeleportCooldown());
 		this.plugin = plugin;
 	}

@@ -1,4 +1,4 @@
-package de.zh32.teleportsigns.bukkit;
+package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.utility.MessageHelper;
 import java.io.File;
@@ -20,13 +20,13 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author zh32
  */
-public class TeleportSignsPlugin extends JavaPlugin {
+public class BukkitPlugin extends JavaPlugin {
 
-	private BukkitTeleportSigns teleportSigns;
+	private BukkitApplication teleportSigns;
 
 	@Override
 	public void onEnable() {
-		teleportSigns = new BukkitTeleportSigns(this);
+		teleportSigns = new BukkitApplication(this);
 		teleportSigns.initialize();
 		teleportSigns.startUpdates();
 		loadMessages();

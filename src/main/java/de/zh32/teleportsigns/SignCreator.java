@@ -1,5 +1,7 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.sign.TeleportSign;
+import de.zh32.teleportsigns.sign.SignLayout;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.utility.MessageHelper;
 import java.util.Arrays;
@@ -17,9 +19,9 @@ public class SignCreator {
 	protected static final int SERVER_LINE = 1;
 	protected static final int LAYOUT_LINE = 2;
 	@Getter
-	private final TeleportSigns plugin;
+	private final Application plugin;
 
-	public SignCreator(TeleportSigns plugin) {
+	public SignCreator(Application plugin) {
 		this.plugin = plugin;
 	}
 

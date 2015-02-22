@@ -1,5 +1,6 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.sign.TeleportSign;
 import lombok.Getter;
 
 /**
@@ -9,9 +10,9 @@ import lombok.Getter;
 public class SignDestroyer {
 	
 	@Getter
-	private final TeleportSigns teleportSigns;
+	private final Application teleportSigns;
 
-	public SignDestroyer(TeleportSigns teleportSigns) {
+	public SignDestroyer(Application teleportSigns) {
 		this.teleportSigns = teleportSigns;
 	}
 	

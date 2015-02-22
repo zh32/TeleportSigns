@@ -1,10 +1,10 @@
-package de.zh32.teleportsigns.bukkit;
+package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.configuration.BukkitConfiguration;
-import de.zh32.teleportsigns.TeleportSign;
+import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.event.BukkitProxyTeleportEvent;
 import de.zh32.teleportsigns.event.ProxyTeleportEvent;
-import de.zh32.teleportsigns.TeleportSigns;
+import de.zh32.teleportsigns.Application;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.task.Callback;
 import de.zh32.teleportsigns.task.bukkit.BukkitServerUpdateTask;
@@ -19,11 +19,11 @@ import org.bukkit.scheduler.BukkitTask;
  *
  * @author zh32
  */
-public class BukkitTeleportSigns extends TeleportSigns {
+public class BukkitApplication extends Application {
 	private final Plugin plugin;
 	private BukkitTask serverUpdateBukkitTask;
 
-	public BukkitTeleportSigns(Plugin plugin) {
+	public BukkitApplication(Plugin plugin) {
 		super(new BukkitTaskFactory(plugin), new BukkitConfiguration(plugin));
 		this.plugin = plugin;
 	}

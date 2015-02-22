@@ -1,6 +1,6 @@
 package de.zh32.teleportsigns.task.bukkit;
 
-import de.zh32.teleportsigns.TeleportSign;
+import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.task.SignUpdateTask;
 import java.util.List;
 import org.bukkit.Bukkit;

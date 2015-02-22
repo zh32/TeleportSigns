@@ -1,7 +1,6 @@
-package de.zh32.teleportsigns;
+package de.zh32.teleportsigns.sign;
 
 import de.zh32.teleportsigns.server.GameServer;
-import de.zh32.teleportsigns.SignLayout;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +13,7 @@ import lombok.experimental.Builder;
  */
 @Data
 @Builder
+@AllArgsConstructor
 public class TeleportSign {
 	
 	private GameServer server;

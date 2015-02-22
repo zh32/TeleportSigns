@@ -1,6 +1,6 @@
 package de.zh32.teleportsigns.storage;
 
-import de.zh32.teleportsigns.TeleportSign;
+import de.zh32.teleportsigns.sign.TeleportSign;
 import java.util.List;
 
 /**
