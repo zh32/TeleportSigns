@@ -32,7 +32,7 @@ public class TeleportSignSQLiteStorageTest {
 		when(plugin.layoutByName("default")).thenReturn(new TestLayout());
 		when(plugin.serverByName("testserver")).thenReturn(new GameServer().setName("testserver"));
 		deleteTestDB();
-		testee = new TeleportSignSQLiteStorage(plugin);
+		testee = new TeleportSignSQLiteStorage("./", plugin);
 	}
 
 	@Test

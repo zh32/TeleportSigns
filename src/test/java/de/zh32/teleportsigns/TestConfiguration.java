@@ -31,4 +31,9 @@ public class TestConfiguration implements ConfigurationAdapter {
 		return 2000;
 	}
 
+	@Override
+	public String getDatabasePath() {
+		return "./";
+	}
+
 }

@@ -21,8 +21,10 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 	public static final String DATABASE_NAME = "teleportsigns.db";
 	
 	private final TeleportSigns plugin;
+	private final String databasePath;
 
-	public TeleportSignSQLiteStorage(TeleportSigns plugin) {
+	public TeleportSignSQLiteStorage(String databasePath, TeleportSigns plugin) {
+		this.databasePath = databasePath;
 		this.plugin = plugin;
 	}
 
@@ -90,7 +92,7 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 
 	private Connection getConnection() throws SQLException, ClassNotFoundException {
 		Class.forName("org.sqlite.JDBC");
-		return DriverManager.getConnection(String.format("jdbc:sqlite:%s", DATABASE_NAME));
+		return DriverManager.getConnection(String.format("jdbc:sqlite:%s/%s", databasePath, DATABASE_NAME));
 	}
 
 	private TeleportSign signFromResultSet(ResultSet rs) throws SQLException {

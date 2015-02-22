@@ -46,7 +46,7 @@ public abstract class TeleportSigns {
 	public void initialize() {
 		layouts = configuration.loadLayouts();
 		servers = configuration.loadServers();
-		storage = new TeleportSignSQLiteStorage(this);
+		storage = new TeleportSignSQLiteStorage(configuration.getDatabasePath(), this);
 		storage.initialize();
 		teleportSigns = storage.loadAll();
 		serverTask = taskFactory.serverUpdateTaskWith(servers).onFinish(new Callback<List<GameServer>>() {

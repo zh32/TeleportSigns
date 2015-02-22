@@ -73,4 +73,9 @@ public class BukkitConfiguration implements ConfigurationAdapter {
 		return plugin.getConfig().getInt("teleport-cooldown", 2000);
 	}
 
+	@Override
+	public String getDatabasePath() {
+		return plugin.getDataFolder().getPath();
+	}
+
 }

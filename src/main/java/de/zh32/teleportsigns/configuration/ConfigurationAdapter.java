@@ -18,4 +18,6 @@ public interface ConfigurationAdapter {
 
 	public int getTeleportCooldown();
 
+	public String getDatabasePath();
+
 }
