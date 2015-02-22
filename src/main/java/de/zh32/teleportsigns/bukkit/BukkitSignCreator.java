@@ -51,10 +51,10 @@ public class BukkitSignCreator extends SignCreator implements Listener {
 					getPlugin().getTaskFactory().signUpdateTaskWith(Arrays.asList(sign)).execute();
 				}
 			}, 1L);
+			event.getPlayer().sendMessage(MessageHelper.getMessage("create.success"));
 		} catch (TeleportSignCreationException ex) {
 			event.getPlayer().sendMessage(ex.getMessage());
-		} finally {
-			event.getPlayer().sendMessage(MessageHelper.getMessage("create.success"));
+			event.getBlock().breakNaturally();
 		}
 	}
 

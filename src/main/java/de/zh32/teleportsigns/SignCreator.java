@@ -30,11 +30,11 @@ public class SignCreator {
 	public TeleportSign createSign(String[] content, TeleportSign.TeleportSignLocation location) throws TeleportSignCreationException {
 		GameServer gameServer = plugin.serverByName(content[SERVER_LINE]);
 		if (gameServer == null) {
-			throw new TeleportSignCreationException("server.notfound");
+			throw new TeleportSignCreationException(MessageHelper.getMessage("server.notfound", content[SERVER_LINE]));
 		}
 		SignLayout layout = plugin.layoutByName(content[LAYOUT_LINE]);
 		if (layout == null) {
-			throw new TeleportSignCreationException("layout.notfound");
+			throw new TeleportSignCreationException(MessageHelper.getMessage("layout.notfound", content[LAYOUT_LINE]));
 		}
 		TeleportSign teleportSign = TeleportSign.builder().layout(layout).server(gameServer).location(location).build();
 		plugin.getTeleportSigns().add(teleportSign);
