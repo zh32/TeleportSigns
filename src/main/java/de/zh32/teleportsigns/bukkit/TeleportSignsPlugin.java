@@ -12,6 +12,8 @@ import java.util.Properties;
 import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -28,6 +30,22 @@ public class TeleportSignsPlugin extends JavaPlugin {
 		teleportSigns.initialize();
 		teleportSigns.startUpdates();
 		loadMessages();
+	}
+
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		if (command.getName().equalsIgnoreCase("tsreload")) {
+			if (!sender.hasPermission("teleportsigns.reload")) {
+				sender.sendMessage(MessageHelper.getMessage("reload.nopermission"));
+			}
+			reloadConfig();
+			teleportSigns.stopUpdates();
+			teleportSigns.initialize();
+			teleportSigns.startUpdates();
+			sender.sendMessage(MessageHelper.getMessage("reload.success"));
+			return true;
+		};
+		return false;
 	}
 
 	private void loadMessages() {

@@ -13,6 +13,7 @@ import de.zh32.teleportsigns.task.bukkit.BukkitTaskFactory;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
 /**
  *
@@ -20,6 +21,7 @@ import org.bukkit.plugin.Plugin;
  */
 public class BukkitTeleportSigns extends TeleportSigns {
 	private final Plugin plugin;
+	private BukkitTask serverUpdateBukkitTask;
 
 	public BukkitTeleportSigns(Plugin plugin) {
 		super(new BukkitTaskFactory(plugin), new BukkitConfiguration(plugin));
@@ -36,7 +38,11 @@ public class BukkitTeleportSigns extends TeleportSigns {
 	}
 
 	public void startUpdates() {
-		Bukkit.getScheduler().runTaskAsynchronously(plugin, (BukkitServerUpdateTask) getServerTask());
+		serverUpdateBukkitTask = Bukkit.getScheduler().runTaskAsynchronously(plugin, (BukkitServerUpdateTask) getServerTask());
+	}
+	
+	public void stopUpdates() {
+		serverUpdateBukkitTask.cancel();
 	}
 
 	@Override
@@ -50,7 +56,7 @@ public class BukkitTeleportSigns extends TeleportSigns {
 	}
 
 	@Override
-	public void updateSigns(List<TeleportSign> list) {
+	public void scheduleSignUpdates(List<TeleportSign> list) {
 		BukkitSignUpdateTask task = (BukkitSignUpdateTask) getTaskFactory().signUpdateTaskWith(list);
 		task.onFinish(new Callback() {
 
