@@ -1,7 +1,7 @@
 package de.zh32.teleportsigns.storage;
 
 import de.zh32.teleportsigns.sign.TeleportSign;
-import de.zh32.teleportsigns.Application;
+import de.zh32.teleportsigns.DataContainer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,10 +20,10 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 	public static final String TABLE_NAME = "teleportsign";
 	public static final String DATABASE_NAME = "teleportsigns.db";
 	
-	private final Application plugin;
+	private final DataContainer plugin;
 	private final String databasePath;
 
-	public TeleportSignSQLiteStorage(String databasePath, Application plugin) {
+	public TeleportSignSQLiteStorage(String databasePath, DataContainer plugin) {
 		this.databasePath = databasePath;
 		this.plugin = plugin;
 	}

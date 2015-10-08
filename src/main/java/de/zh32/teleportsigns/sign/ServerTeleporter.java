@@ -1,5 +1,7 @@
-package de.zh32.teleportsigns;
+package de.zh32.teleportsigns.sign;
 
+import de.zh32.teleportsigns.DataContainer;
+import de.zh32.teleportsigns.event.EventAdapter;
 import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.event.ProxyTeleportEvent;
 import de.zh32.teleportsigns.server.GameServer;
@@ -14,11 +16,13 @@ import lombok.Getter;
 public abstract class ServerTeleporter {
 
 	private final Cooldown cooldown;
-	private final Application plugin;
+	private final DataContainer dataFinder;
+	private final EventAdapter eventFactory;
 
-	public ServerTeleporter(Application plugin) {
-		this.cooldown = new Cooldown(plugin.getConfiguration().getTeleportCooldown());
-		this.plugin = plugin;
+	public ServerTeleporter(DataContainer dataFinder, EventAdapter eventFactory) {
+		this.cooldown = new Cooldown(dataFinder.getConfiguration().getTeleportCooldown());
+		this.dataFinder = dataFinder;
+		this.eventFactory = eventFactory;
 	}
 	
 	public void teleportPlayer(String player, TeleportSign.TeleportSignLocation location) {
@@ -26,14 +30,14 @@ public abstract class ServerTeleporter {
 			return;
 		}
 		cooldown.setDefaultCooldown(player);
-		GameServer server = plugin.signAtLocation(location).getServer();
+		GameServer server = dataFinder.signAtLocation(location).getServer();
 		if (server == null) {
 			return;
 		}
 		if (server.isOnline()) {
-			ProxyTeleportEvent proxyTeleportEvent = plugin.fireTeleportEvent(player, server);
+			ProxyTeleportEvent proxyTeleportEvent = eventFactory.callTeleportEvent(player, server);
 			if (!proxyTeleportEvent.isCancelled()) {
-				teleportToServer(proxyTeleportEvent.getPlayer(), proxyTeleportEvent.getServerInfo().getName());
+				teleportToServer(proxyTeleportEvent.getPlayerName(), proxyTeleportEvent.getServer().getName());
 			}
 		} else {
 			//event.getPlayer().sendMessage(MessageHelper.getMessage("server.offline", server.getName()));

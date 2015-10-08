@@ -28,6 +28,7 @@ public abstract class ServerUpdateTask extends Task<List<GameServer>> {
 			}
 		}
 		finish(updatedServers);
+		System.out.println("updated servers: " + updatedServers.size());
 	}
 
 }

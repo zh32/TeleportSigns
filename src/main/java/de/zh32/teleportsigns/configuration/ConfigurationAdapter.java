@@ -20,4 +20,6 @@ public interface ConfigurationAdapter {
 
 	public String getDatabasePath();
 
+	public int getUpdatePerTicks();
+
 }

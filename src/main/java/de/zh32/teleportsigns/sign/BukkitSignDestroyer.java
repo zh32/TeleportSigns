@@ -1,8 +1,9 @@
-package de.zh32.teleportsigns;
+package de.zh32.teleportsigns.sign;
 
-import de.zh32.teleportsigns.SignDestroyer;
+import de.zh32.teleportsigns.sign.SignDestroyer;
 import de.zh32.teleportsigns.sign.TeleportSign;
-import de.zh32.teleportsigns.Application;
+import de.zh32.teleportsigns.DataContainer;
+import de.zh32.teleportsigns.DataContainer;
 import de.zh32.teleportsigns.utility.MessageHelper;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 public class BukkitSignDestroyer extends SignDestroyer implements Listener {
 	private static final String DESTROY_PERMISSION = "teleportsigns.destroy";
 
-	public BukkitSignDestroyer(Application teleportSigns) {
+	public BukkitSignDestroyer(DataContainer teleportSigns) {
 		super(teleportSigns);
 	}
 	

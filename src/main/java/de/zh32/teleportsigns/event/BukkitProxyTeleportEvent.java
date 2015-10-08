@@ -14,9 +14,9 @@ import org.bukkit.event.player.PlayerEvent;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class BukkitProxyTeleportEvent extends PlayerEvent implements Cancellable {
+public class BukkitProxyTeleportEvent extends PlayerEvent implements Cancellable, ProxyTeleportEvent {
 	private boolean cancelled;
-    private String server;
+    private GameServer server;
     private static final HandlerList handlers = new HandlerList();
 	
 	public BukkitProxyTeleportEvent(String player, GameServer server) {
@@ -31,5 +31,10 @@ public class BukkitProxyTeleportEvent extends PlayerEvent implements Cancellable
     public static HandlerList getHandlerList() {
             return handlers;
     }
+
+	@Override
+	public String getPlayerName() {
+		return getPlayer().getName();
+	}
 
 }

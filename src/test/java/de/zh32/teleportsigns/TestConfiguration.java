@@ -37,4 +37,9 @@ public class TestConfiguration implements ConfigurationAdapter {
 		return "./";
 	}
 
+	@Override
+	public int getUpdatePerTicks() {
+		return 10;
+	}
+
 }

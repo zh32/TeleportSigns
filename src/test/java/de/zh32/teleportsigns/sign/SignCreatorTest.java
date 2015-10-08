@@ -1,16 +1,21 @@
-package de.zh32.teleportsigns;
+package de.zh32.teleportsigns.sign;
 
-import de.zh32.teleportsigns.sign.TeleportSign;
+import de.zh32.teleportsigns.DataContainer;
+import de.zh32.teleportsigns.TestLayout;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.sign.TeleportSign.TeleportSignLocation;
 import de.zh32.teleportsigns.storage.TeleportSignStorage;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -19,12 +24,12 @@ import static org.mockito.Mockito.*;
 public class SignCreatorTest {
 
 	private SignCreator testee;
-	private Application plugin;
+	private DataContainer plugin;
 	private TeleportSignLocation location;
 
 	@Before
 	public void setup() {
-		plugin = mock(Application.class);
+		plugin = mock(DataContainer.class);
 		when(plugin.layoutByName("default")).thenReturn(new TestLayout());
 		when(plugin.serverByName("testserver")).thenReturn(new GameServer().setName("testserver"));
 		when(plugin.getStorage()).thenReturn(mock(TeleportSignStorage.class));

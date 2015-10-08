@@ -1,9 +1,9 @@
-package de.zh32.teleportsigns;
+package de.zh32.teleportsigns.sign;
 
-import de.zh32.teleportsigns.SignCreator;
+import de.zh32.teleportsigns.DataContainer;
 import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.sign.TeleportSign.TeleportSignLocation;
-import de.zh32.teleportsigns.Application;
+import de.zh32.teleportsigns.task.bukkit.BukkitSignUpdateTask;
 import de.zh32.teleportsigns.utility.MessageHelper;
 import java.util.Arrays;
 import org.bukkit.Bukkit;
@@ -20,7 +20,7 @@ public class BukkitSignCreator extends SignCreator implements Listener {
 	private static final String CREATE_PERMISSION = "teleportsigns.create";
 	private final Plugin bukkitPlugin;
 
-	public BukkitSignCreator(Application tsigns, Plugin plugin) {
+	public BukkitSignCreator(DataContainer tsigns, Plugin plugin) {
 		super(tsigns);
 		this.bukkitPlugin = plugin;
 	}
@@ -48,7 +48,7 @@ public class BukkitSignCreator extends SignCreator implements Listener {
 
 				@Override
 				public void run() {
-					getPlugin().getTaskFactory().signUpdateTaskWith(Arrays.asList(sign)).execute();
+					new BukkitSignUpdateTask(Arrays.asList(sign), 1, bukkitPlugin).execute();
 				}
 			}, 1L);
 			event.getPlayer().sendMessage(MessageHelper.getMessage("create.success"));

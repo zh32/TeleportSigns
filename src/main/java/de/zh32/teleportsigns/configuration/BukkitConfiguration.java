@@ -78,4 +78,9 @@ public class BukkitConfiguration implements ConfigurationAdapter {
 		return plugin.getDataFolder().getPath();
 	}
 
+	@Override
+	public int getUpdatePerTicks() {
+		return plugin.getConfig().getInt("updates-per-tick", 20);
+	}
+
 }

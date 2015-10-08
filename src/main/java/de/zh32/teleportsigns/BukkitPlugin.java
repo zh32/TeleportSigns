@@ -1,5 +1,10 @@
 package de.zh32.teleportsigns;
 
+import de.zh32.teleportsigns.sign.BukkitSignCreator;
+import de.zh32.teleportsigns.sign.BukkitSignDestroyer;
+import de.zh32.teleportsigns.sign.BukkitServerTeleporter;
+import de.zh32.teleportsigns.configuration.BukkitConfiguration;
+import de.zh32.teleportsigns.configuration.ConfigurationAdapter;
 import de.zh32.teleportsigns.utility.MessageHelper;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,14 +27,22 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class BukkitPlugin extends JavaPlugin {
 
-	private BukkitApplication teleportSigns;
+	private DataContainer dataContainer;
+	private ConfigurationAdapter configuration;
+	private BukkitUpdateLoop updateLoop;
 
 	@Override
 	public void onEnable() {
-		teleportSigns = new BukkitApplication(this);
-		teleportSigns.initialize();
-		teleportSigns.startUpdates();
+		configuration = new BukkitConfiguration(this);
+		dataContainer = new DataContainer(configuration);
+		dataContainer.initialize();
+		updateLoop = new BukkitUpdateLoop(this, configuration, dataContainer.getServers(), dataContainer.getTeleportSigns());
+		updateLoop.initialize();
+		updateLoop.startUpdateLoop();
 		loadMessages();
+		Bukkit.getPluginManager().registerEvents(new BukkitSignCreator(dataContainer, this), this);
+		Bukkit.getPluginManager().registerEvents(new BukkitServerTeleporter(dataContainer, this), this);
+		Bukkit.getPluginManager().registerEvents(new BukkitSignDestroyer(dataContainer), this);
 	}
 
 	@Override
@@ -39,9 +52,10 @@ public class BukkitPlugin extends JavaPlugin {
 				sender.sendMessage(MessageHelper.getMessage("reload.nopermission"));
 			}
 			reloadConfig();
-			teleportSigns.stopUpdates();
-			teleportSigns.initialize();
-			teleportSigns.startUpdates();
+			updateLoop.stopUpdateLoop();
+			dataContainer.initialize();
+			updateLoop.initialize();
+			updateLoop.startUpdateLoop();
 			sender.sendMessage(MessageHelper.getMessage("reload.success"));
 			return true;
 		};
