@@ -1,7 +1,7 @@
 # TeleportSigns
 Use signs to teleport between servers and display server status on them.
 
-[Developement Builds](http://ci.zh32.de/job/TeleportSigns)
+Development [![Build Status](https://travis-ci.org/zh32/TeleportSigns.svg)](https://travis-ci.org/zh32/TeleportSigns)
 
 ![Example](http://i.imgur.com/O731Xgs.png)
 
