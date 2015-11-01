@@ -41,8 +41,8 @@ public class BukkitServerTeleporter extends ServerTeleporter implements Listener
 				event.getPlayer().getName(),
 				new TeleportSignLocation(
 						event.getClickedBlock().getX(),
-						event.getClickedBlock().getX(),
-						event.getClickedBlock().getX(),
+						event.getClickedBlock().getY(),
+						event.getClickedBlock().getZ(),
 						event.getClickedBlock().getWorld().getName()
 				)
 		);
