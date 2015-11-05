@@ -40,6 +40,7 @@ public class BukkitPlugin extends JavaPlugin {
 		updateLoop.initialize();
 		updateLoop.startUpdateLoop();
 		loadMessages();
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		Bukkit.getPluginManager().registerEvents(new BukkitSignCreator(dataContainer, this), this);
 		Bukkit.getPluginManager().registerEvents(new BukkitServerTeleporter(dataContainer, this), this);
 		Bukkit.getPluginManager().registerEvents(new BukkitSignDestroyer(dataContainer), this);
