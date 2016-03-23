@@ -22,4 +22,5 @@ public interface ConfigurationAdapter {
 
 	public int getUpdatePerTicks();
 
+  public boolean getDebugMode();
 }

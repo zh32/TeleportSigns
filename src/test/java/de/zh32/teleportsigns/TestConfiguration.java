@@ -42,4 +42,9 @@ public class TestConfiguration implements ConfigurationAdapter {
 		return 10;
 	}
 
+  @Override
+  public boolean getDebugMode() {
+    return false;
+  }
+
 }

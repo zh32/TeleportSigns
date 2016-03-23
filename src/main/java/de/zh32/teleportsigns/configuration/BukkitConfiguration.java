@@ -83,4 +83,8 @@ public class BukkitConfiguration implements ConfigurationAdapter {
 		return plugin.getConfig().getInt("updates-per-tick", 20);
 	}
 
+  @Override
+  public boolean getDebugMode(){
+    return plugin.getConfig().getBoolean("debug", false);
+  }
 }

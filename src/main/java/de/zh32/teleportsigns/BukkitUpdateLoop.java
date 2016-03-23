@@ -12,7 +12,7 @@ import org.bukkit.plugin.Plugin;
 
 
 public class BukkitUpdateLoop extends UpdateLoop {
-	
+
 	private final Plugin plugin;
 	private final ConfigurationAdapter configuration;
 	private int bukkitTaskId;
@@ -28,13 +28,15 @@ public class BukkitUpdateLoop extends UpdateLoop {
 		bukkitTaskId = Bukkit.getScheduler().runTaskAsynchronously(plugin, (BukkitServerUpdateTask) getServerUpdateTask()).getTaskId();
 		System.out.println("start id: " + bukkitTaskId);
 	}
-	
+
 	@Override
 	public void rerunUpdateLoop() {
 		bukkitTaskId = Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, (BukkitServerUpdateTask) getServerUpdateTask(), configuration.getUpdateInterval()).getTaskId();
-		System.out.println("reschedule id: " + bukkitTaskId);
+    if(configuration.getDebugMode()) {
+      System.out.println("reschedule id: " + bukkitTaskId);
+    }
 	}
-	
+
 	@Override
 	public void stopUpdateLoop() {
 		Bukkit.getScheduler().cancelTask(bukkitTaskId);

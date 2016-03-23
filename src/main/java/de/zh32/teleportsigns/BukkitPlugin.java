@@ -28,7 +28,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class BukkitPlugin extends JavaPlugin {
 
 	private DataContainer dataContainer;
-	private ConfigurationAdapter configuration;
+
+  public ConfigurationAdapter getConfiguration() {
+    return configuration;
+  }
+
+  private ConfigurationAdapter configuration;
 	private BukkitUpdateLoop updateLoop;
 
 	@Override
