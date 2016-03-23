@@ -51,7 +51,7 @@ public class BukkitServerTeleporter extends ServerTeleporter implements Listener
 	private boolean isTeleportSignAction(PlayerInteractEvent event) {
 		return event.hasBlock()
 				&& event.getClickedBlock().getState() instanceof Sign
-				&& event.getAction() == Action.RIGHT_CLICK_BLOCK;
+				&& event.getAction() == Action.RIGHT_CLICK_BLOCK && ((Sign) event.getClickedBlock().getState()).getLine(0).equalsIgnoreCase(SignCreator.IDENTIFIER);
 	}
 
 	@Override
