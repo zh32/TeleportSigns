@@ -44,6 +44,7 @@ public class QueryHandler {
 		byte[] responseData = new byte[stringLength];
 		connection.getDataInputStream().readFully(responseData);
 		String jsonString = new String(responseData, Charset.forName("utf-8"));
+		System.out.println(jsonString);
 		StatusResponse response = gson.fromJson(jsonString, StatusResponse.class);
 		return response;
 	}
