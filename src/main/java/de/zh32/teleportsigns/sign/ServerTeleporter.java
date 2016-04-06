@@ -37,7 +37,7 @@ public abstract class ServerTeleporter {
 		if (server.isOnline()) {
 			ProxyTeleportEvent proxyTeleportEvent = eventFactory.callTeleportEvent(player, server);
 			if (!proxyTeleportEvent.isCancelled()) {
-				teleportToServer(proxyTeleportEvent.getPlayerName(), proxyTeleportEvent.getServer().getName());
+				teleportToServer(proxyTeleportEvent.getPlayerName(), server.getName());
 			}
 		} else {
 			//event.getPlayer().sendMessage(MessageHelper.getMessage("server.offline", server.getName()));
