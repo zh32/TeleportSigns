@@ -1,7 +1,9 @@
 # TeleportSigns
 Use signs to teleport between servers and display server status on them.
 
-Development [![Build Status](https://travis-ci.org/zh32/TeleportSigns.svg)](https://travis-ci.org/zh32/TeleportSigns)
+**Development** [![Build Status](http://mclive.eu:8080/buildStatus/icon?job=TeleportSigns%20-%20Development%20Builds&build=1)](http://freecraft.eu:8080/job/TeleportSigns%20-%20Development%20Builds/)
+
+**Stable** [![Build Status](http://mclive.eu:8080/buildStatus/icon?job=TeleportSigns)](http://freecraft.eu:8080/job/TeleportSigns/)
 
 ![Example](http://i.imgur.com/O731Xgs.png)
 
