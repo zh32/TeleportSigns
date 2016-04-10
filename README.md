@@ -1,8 +1,7 @@
 # TeleportSigns
 Use signs to teleport between servers and display server status on them.
 
-Stable [![Build Status](http://mclive.eu:8080/job/TeleportSigns/4/badge/icon)](http://mclive.eu:8080/job/TeleportSigns/4/)
-Development [![Build Status](http://mclive.eu:8080/job/TeleportSigns%20-%20Development%20Builds/1/badge/icon)](http://mclive.eu:8080/job/TeleportSigns%20-%20Development%20Builds/1/)
+Development [![Build Status](https://travis-ci.org/zh32/TeleportSigns.svg)](https://travis-ci.org/zh32/TeleportSigns)
 
 ![Example](http://i.imgur.com/O731Xgs.png)
 
