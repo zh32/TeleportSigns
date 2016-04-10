@@ -1,24 +1,25 @@
 package de.zh32.teleportsigns.storage;
 
-import de.zh32.teleportsigns.TestLayout;
-import de.zh32.teleportsigns.sign.TeleportSign;
-import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.DataContainer;
+import de.zh32.teleportsigns.TestLayout;
+import de.zh32.teleportsigns.server.GameServer;
+import de.zh32.teleportsigns.sign.TeleportSign;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- *
  * @author zh32
  */
 public class TeleportSignSQLiteStorageTest {
@@ -57,7 +58,7 @@ public class TeleportSignSQLiteStorageTest {
 	private void deleteTestDB() throws IOException {
 		Files.deleteIfExists(new File(TeleportSignSQLiteStorage.DATABASE_NAME).toPath());
 	}
-	
+
 	private TeleportSign testSign() {
 		TeleportSign teleportSign = TeleportSign.builder()
 				.layout(new TestLayout())
@@ -67,5 +68,5 @@ public class TeleportSignSQLiteStorageTest {
 		return teleportSign;
 	}
 
-	
+
 }

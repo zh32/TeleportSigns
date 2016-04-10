@@ -3,15 +3,15 @@ package de.zh32.teleportsigns.configuration;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.sign.SignLayout;
 import de.zh32.teleportsigns.sign.TeleportSignLayout;
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author zh32
  */
 public class BukkitConfiguration implements ConfigurationAdapter {
@@ -20,7 +20,7 @@ public class BukkitConfiguration implements ConfigurationAdapter {
 
 	public BukkitConfiguration(Plugin plugin) {
 		this.plugin = plugin;
-        plugin.saveDefaultConfig();
+		plugin.saveDefaultConfig();
 	}
 
 	@Override

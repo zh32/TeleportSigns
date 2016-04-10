@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * @author zh32
  */
 public class Cooldown {

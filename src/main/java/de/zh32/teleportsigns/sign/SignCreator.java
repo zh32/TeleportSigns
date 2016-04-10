@@ -1,20 +1,16 @@
 package de.zh32.teleportsigns.sign;
 
 import de.zh32.teleportsigns.DataContainer;
-import de.zh32.teleportsigns.sign.TeleportSign;
-import de.zh32.teleportsigns.sign.SignLayout;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.utility.MessageHelper;
-import java.util.Arrays;
 import lombok.Getter;
 
 
 /**
- *
  * @author zh32
  */
 public class SignCreator {
-	
+
 	public static final String IDENTIFIER = "[tsigns]";
 	protected static final int IDENTIFIER_LINE = 0;
 	protected static final int SERVER_LINE = 1;

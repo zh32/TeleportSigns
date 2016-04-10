@@ -1,11 +1,11 @@
 package de.zh32.teleportsigns.task;
 
 import de.zh32.teleportsigns.sign.TeleportSign;
+
 import java.util.Iterator;
 import java.util.List;
 
 /**
- *
  * @author zh32
  */
 public abstract class SignUpdateTask extends Task {

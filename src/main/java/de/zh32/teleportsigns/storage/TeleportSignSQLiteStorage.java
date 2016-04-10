@@ -1,25 +1,20 @@
 package de.zh32.teleportsigns.storage;
 
-import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.DataContainer;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import de.zh32.teleportsigns.sign.TeleportSign;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author zh32
  */
 public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 
 	public static final String TABLE_NAME = "teleportsign";
 	public static final String DATABASE_NAME = "teleportsigns.db";
-	
+
 	private final DataContainer plugin;
 	private final String databasePath;
 
@@ -118,13 +113,13 @@ public class TeleportSignSQLiteStorage implements TeleportSignStorage {
 			c = getConnection();
 			stmt = c.prepareStatement(String.format(
 					"CREATE TABLE IF NOT EXISTS %s "
-					+ "(ID INT PRIMARY KEY ,"
-					+ " x           INT    NOT NULL,"
-					+ " y           INT    NOT NULL,"
-					+ " z           INT    NOT NULL,"
-					+ " server           CHAR(255)    NOT NULL,"
-					+ " layout            CHAR(255)     NOT NULL,"
-					+ " world        CHAR(255))", TABLE_NAME));
+							+ "(ID INT PRIMARY KEY ,"
+							+ " x           INT    NOT NULL,"
+							+ " y           INT    NOT NULL,"
+							+ " z           INT    NOT NULL,"
+							+ " server           CHAR(255)    NOT NULL,"
+							+ " layout            CHAR(255)     NOT NULL,"
+							+ " world        CHAR(255))", TABLE_NAME));
 			stmt.executeUpdate();
 			stmt.close();
 			c.close();

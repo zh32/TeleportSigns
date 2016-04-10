@@ -6,13 +6,14 @@ import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.task.Callback;
 import de.zh32.teleportsigns.task.bukkit.BukkitServerUpdateTask;
 import de.zh32.teleportsigns.task.bukkit.BukkitSignUpdateTask;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 
 public class BukkitUpdateLoop extends UpdateLoop {
-	
+
 	private final Plugin plugin;
 	private final ConfigurationAdapter configuration;
 	private int bukkitTaskId;
@@ -27,12 +28,12 @@ public class BukkitUpdateLoop extends UpdateLoop {
 	public void startUpdateLoop() {
 		bukkitTaskId = Bukkit.getScheduler().runTaskAsynchronously(plugin, (BukkitServerUpdateTask) getServerUpdateTask()).getTaskId();
 	}
-	
+
 	@Override
 	public void rerunUpdateLoop() {
 		bukkitTaskId = Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, (BukkitServerUpdateTask) getServerUpdateTask(), configuration.getUpdateInterval()).getTaskId();
 	}
-	
+
 	@Override
 	public void stopUpdateLoop() {
 		Bukkit.getScheduler().cancelTask(bukkitTaskId);

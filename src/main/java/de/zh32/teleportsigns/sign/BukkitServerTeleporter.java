@@ -4,9 +4,6 @@ import de.zh32.teleportsigns.DataContainer;
 import de.zh32.teleportsigns.event.BukkitEventAdapter;
 import de.zh32.teleportsigns.sign.TeleportSign.TeleportSignLocation;
 import de.zh32.teleportsigns.utility.MessageHelper;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
@@ -15,8 +12,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
- *
  * @author zh32
  */
 public class BukkitServerTeleporter extends ServerTeleporter implements Listener {
@@ -47,7 +47,7 @@ public class BukkitServerTeleporter extends ServerTeleporter implements Listener
 				)
 		);
 	}
-	
+
 	private boolean isTeleportSignAction(PlayerInteractEvent event) {
 		return event.hasBlock()
 				&& event.getClickedBlock().getState() instanceof Sign

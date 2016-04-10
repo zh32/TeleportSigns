@@ -1,11 +1,12 @@
 package de.zh32.teleportsigns.utility;
 
-import java.util.HashMap;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- *
  * @author zh32
  */
 public class MessageHelperTest {
@@ -17,5 +18,5 @@ public class MessageHelperTest {
 		MessageHelper.setMessages(messages);
 		assertEquals(MessageHelper.getMessage("message.test", "this"), "This is a test message with \"this\"parameter");
 	}
-	
+
 }

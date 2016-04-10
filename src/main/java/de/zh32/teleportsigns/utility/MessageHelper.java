@@ -1,19 +1,11 @@
 package de.zh32.teleportsigns.utility;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 /**
- *
  * @author zh32
  */
 public class MessageHelper {

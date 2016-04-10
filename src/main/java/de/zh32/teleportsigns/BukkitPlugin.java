@@ -1,28 +1,24 @@
 package de.zh32.teleportsigns;
 
-import de.zh32.teleportsigns.sign.BukkitSignCreator;
-import de.zh32.teleportsigns.sign.BukkitSignDestroyer;
-import de.zh32.teleportsigns.sign.BukkitServerTeleporter;
 import de.zh32.teleportsigns.configuration.BukkitConfiguration;
 import de.zh32.teleportsigns.configuration.ConfigurationAdapter;
+import de.zh32.teleportsigns.sign.BukkitServerTeleporter;
+import de.zh32.teleportsigns.sign.BukkitSignCreator;
+import de.zh32.teleportsigns.sign.BukkitSignDestroyer;
 import de.zh32.teleportsigns.utility.MessageHelper;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+
 /**
- *
  * @author zh32
  */
 public class BukkitPlugin extends JavaPlugin {
@@ -59,7 +55,8 @@ public class BukkitPlugin extends JavaPlugin {
 			updateLoop.startUpdateLoop();
 			sender.sendMessage(MessageHelper.getMessage("reload.success"));
 			return true;
-		};
+		}
+		;
 		return false;
 	}
 

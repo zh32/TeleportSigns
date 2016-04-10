@@ -7,17 +7,12 @@ import de.zh32.teleportsigns.event.ProxyTeleportEvent;
 import de.zh32.teleportsigns.server.GameServer;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
- *
  * @author zh32
  */
 public class ServerTeleporterTest {
@@ -46,7 +41,7 @@ public class ServerTeleporterTest {
 		TeleportSign.TeleportSignLocation teleportSignLocation = new TeleportSign.TeleportSignLocation(1, 1, 1, "world");
 		final GameServer gameServer = new GameServer().setName("SERVER").setOnline(true);
 		TeleportSign teleportSign = new TeleportSign(gameServer, null, teleportSignLocation);
-		when(eventAdapter.callTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent(){
+		when(eventAdapter.callTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent() {
 
 			@Override
 			public boolean isCancelled() {
@@ -73,7 +68,7 @@ public class ServerTeleporterTest {
 		TeleportSign.TeleportSignLocation teleportSignLocation = new TeleportSign.TeleportSignLocation(1, 1, 1, "world");
 		final GameServer gameServer = new GameServer().setName("SERVER").setOnline(false);
 		TeleportSign teleportSign = new TeleportSign(gameServer, null, teleportSignLocation);
-		when(eventAdapter.callTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent(){
+		when(eventAdapter.callTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent() {
 
 			@Override
 			public boolean isCancelled() {
@@ -100,7 +95,7 @@ public class ServerTeleporterTest {
 		TeleportSign.TeleportSignLocation teleportSignLocation = new TeleportSign.TeleportSignLocation(1, 1, 1, "world");
 		final GameServer gameServer = new GameServer().setName("SERVER").setOnline(true);
 		TeleportSign teleportSign = new TeleportSign(gameServer, null, teleportSignLocation);
-		when(eventAdapter.callTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent(){
+		when(eventAdapter.callTeleportEvent(anyString(), any(GameServer.class))).thenReturn(new ProxyTeleportEvent() {
 
 			@Override
 			public boolean isCancelled() {

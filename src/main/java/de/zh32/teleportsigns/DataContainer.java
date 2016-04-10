@@ -1,16 +1,16 @@
 package de.zh32.teleportsigns;
 
-import de.zh32.teleportsigns.sign.TeleportSign;
-import de.zh32.teleportsigns.sign.SignLayout;
 import de.zh32.teleportsigns.configuration.ConfigurationAdapter;
 import de.zh32.teleportsigns.server.GameServer;
+import de.zh32.teleportsigns.sign.SignLayout;
+import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.storage.TeleportSignSQLiteStorage;
 import de.zh32.teleportsigns.storage.TeleportSignStorage;
-import java.util.List;
 import lombok.Getter;
 
+import java.util.List;
+
 /**
- *
  * @author zh32
  */
 @Getter

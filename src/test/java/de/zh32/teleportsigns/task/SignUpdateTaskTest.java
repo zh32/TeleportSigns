@@ -1,17 +1,18 @@
 package de.zh32.teleportsigns.task;
 
 import de.zh32.teleportsigns.sign.TeleportSign;
-import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.mockito.Mockito.*;
 
 /**
- *
  * @author zh32
  */
 public class SignUpdateTaskTest {
-	
+
 	private SignUpdateTask testee;
 	private final int expectedRuns = 10;
 	private final int signUpdatesPerTick = 8;
@@ -24,7 +25,7 @@ public class SignUpdateTaskTest {
 		for (int i = 0; i < signsToUpdate; i++) {
 			teleportSigns.add(sign);
 		}
-		
+
 		testee = spy(new SignUpdateTask(teleportSigns, signUpdatesPerTick) {
 
 			@Override
@@ -34,11 +35,11 @@ public class SignUpdateTaskTest {
 
 			@Override
 			public void updateSign(TeleportSign next) {
-				
+
 			}
 		});
 	}
-	
+
 	@Test
 	public void can_update_in_multiple_ticks() {
 		testee.execute();

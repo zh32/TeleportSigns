@@ -2,11 +2,11 @@ package de.zh32.teleportsigns.task.bukkit;
 
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.task.ServerUpdateTask;
-import java.util.List;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 /**
- *
  * @author zh32
  */
 public class BukkitServerUpdateTask extends ServerUpdateTask implements Runnable {

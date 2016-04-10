@@ -4,12 +4,12 @@ import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.task.Callback;
 import de.zh32.teleportsigns.task.ServerUpdateTask;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author zh32
  */
 public abstract class UpdateLoop {

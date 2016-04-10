@@ -1,19 +1,18 @@
 package de.zh32.teleportsigns.sign;
 
 import de.zh32.teleportsigns.DataContainer;
-import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.sign.TeleportSign.TeleportSignLocation;
 import de.zh32.teleportsigns.task.bukkit.BukkitSignUpdateTask;
 import de.zh32.teleportsigns.utility.MessageHelper;
-import java.util.Arrays;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Arrays;
+
 /**
- *
  * @author zh32
  */
 public class BukkitSignCreator extends SignCreator implements Listener {
@@ -24,7 +23,7 @@ public class BukkitSignCreator extends SignCreator implements Listener {
 		super(tsigns);
 		this.bukkitPlugin = plugin;
 	}
-	
+
 	@EventHandler
 	public void onSignChanged(SignChangeEvent event) {
 		if (!isTeleportSignCreated(event.getLines())) {

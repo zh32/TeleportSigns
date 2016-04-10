@@ -2,11 +2,11 @@ package de.zh32.teleportsigns.task;
 
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.server.status.ServerListPing;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author zh32
  */
 public abstract class ServerUpdateTask extends Task<List<GameServer>> {

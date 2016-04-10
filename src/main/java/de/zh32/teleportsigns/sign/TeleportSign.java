@@ -8,14 +8,13 @@ import lombok.experimental.Accessors;
 import lombok.experimental.Builder;
 
 /**
- *
  * @author zh32
  */
 @Data
 @Builder
 @AllArgsConstructor
 public class TeleportSign {
-	
+
 	private GameServer server;
 
 	private SignLayout layout;
@@ -32,12 +31,12 @@ public class TeleportSign {
 		private int z;
 		private String worldName;
 	}
-	
+
 	public boolean equals(Object object) {
 		if (!(object instanceof TeleportSign)) {
 			return false;
-			
-			
+
+
 		}
 		TeleportSign teleportSign = (TeleportSign) object;
 		if (teleportSign.getLocation().equals(this.location)) {

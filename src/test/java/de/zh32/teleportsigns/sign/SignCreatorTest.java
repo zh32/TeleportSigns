@@ -5,20 +5,17 @@ import de.zh32.teleportsigns.TestLayout;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.sign.TeleportSign.TeleportSignLocation;
 import de.zh32.teleportsigns.storage.TeleportSignStorage;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- *
  * @author zh32
  */
 public class SignCreatorTest {

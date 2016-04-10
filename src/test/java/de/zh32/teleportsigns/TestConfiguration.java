@@ -1,13 +1,13 @@
 package de.zh32.teleportsigns;
 
-import de.zh32.teleportsigns.sign.SignLayout;
 import de.zh32.teleportsigns.configuration.ConfigurationAdapter;
 import de.zh32.teleportsigns.server.GameServer;
+import de.zh32.teleportsigns.sign.SignLayout;
+
 import java.util.Collections;
 import java.util.List;
 
 /**
- *
  * @author zh32
  */
 public class TestConfiguration implements ConfigurationAdapter {

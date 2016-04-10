@@ -2,14 +2,12 @@ package de.zh32.teleportsigns.sign;
 
 import de.zh32.teleportsigns.DataContainer;
 import de.zh32.teleportsigns.event.EventAdapter;
-import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.event.ProxyTeleportEvent;
 import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.utility.Cooldown;
 import lombok.Getter;
 
 /**
- *
  * @author zh32
  */
 @Getter
@@ -24,7 +22,7 @@ public abstract class ServerTeleporter {
 		this.dataFinder = dataFinder;
 		this.eventFactory = eventFactory;
 	}
-	
+
 	public void teleportPlayer(String player, TeleportSign.TeleportSignLocation location) {
 		if (cooldown.hasCooldown(player)) {
 			return;

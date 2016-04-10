@@ -2,15 +2,15 @@ package de.zh32.teleportsigns.task.bukkit;
 
 import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.task.SignUpdateTask;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 /**
- *
  * @author zh32
  */
 public class BukkitSignUpdateTask extends SignUpdateTask implements Runnable {
