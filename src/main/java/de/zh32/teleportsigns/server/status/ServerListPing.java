@@ -29,7 +29,7 @@ public class ServerListPing {
 			StatusResponse response = queryHandler.doStatusQuery();
 			connection.disconnect();
 			server
-					.setMotd(response.getDescription())
+					.setMotd(response.getDescription().getText())
 					.setMaxPlayers(response.getPlayers().getMax())
 					.setPlayersOnline(response.getPlayers().getOnline())
 					.setOnline(true);
