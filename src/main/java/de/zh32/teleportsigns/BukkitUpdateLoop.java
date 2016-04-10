@@ -26,19 +26,16 @@ public class BukkitUpdateLoop extends UpdateLoop {
 	@Override
 	public void startUpdateLoop() {
 		bukkitTaskId = Bukkit.getScheduler().runTaskAsynchronously(plugin, (BukkitServerUpdateTask) getServerUpdateTask()).getTaskId();
-		System.out.println("start id: " + bukkitTaskId);
 	}
 	
 	@Override
 	public void rerunUpdateLoop() {
 		bukkitTaskId = Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, (BukkitServerUpdateTask) getServerUpdateTask(), configuration.getUpdateInterval()).getTaskId();
-		System.out.println("reschedule id: " + bukkitTaskId);
 	}
 	
 	@Override
 	public void stopUpdateLoop() {
 		Bukkit.getScheduler().cancelTask(bukkitTaskId);
-		System.out.println("stop id: " + bukkitTaskId);
 	}
 
 	@Override
