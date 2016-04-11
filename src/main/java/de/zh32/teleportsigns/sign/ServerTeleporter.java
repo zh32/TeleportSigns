@@ -28,20 +28,23 @@ public abstract class ServerTeleporter {
 			return;
 		}
 		cooldown.setDefaultCooldown(player);
-		GameServer server = dataFinder.signAtLocation(location).getServer();
-		if (server == null) {
-			return;
-		}
-		if (server.isOnline()) {
-			ProxyTeleportEvent proxyTeleportEvent = eventFactory.callTeleportEvent(player, server);
-			if (!proxyTeleportEvent.isCancelled()) {
-				teleportToServer(proxyTeleportEvent.getPlayerName(), proxyTeleportEvent.getServer().getName());
-			}
-		} else {
-			//event.getPlayer().sendMessage(MessageHelper.getMessage("server.offline", server.getName()));
-			//throw Exception
-		}
-	}
+    if(dataFinder.signAtLocation(location) != null){
+      GameServer server = dataFinder.signAtLocation(location).getServer();
+      if (server == null) {
+        return;
+      }
+      if (server.isOnline()) {
+        ProxyTeleportEvent proxyTeleportEvent = eventFactory.callTeleportEvent(player, server);
+        if (!proxyTeleportEvent.isCancelled()) {
+//				teleportToServer(proxyTeleportEvent.getPlayerName(), proxyTeleportEvent.getServer().getName());
+          teleportToServer(proxyTeleportEvent.getPlayerName(), server.getName());
+        }
+      } else {
+        //event.getPlayer().sendMessage(MessageHelper.getMessage("server.offline", server.getName()));
+        //throw Exception
+      }
+    }
+  }
 
 	public abstract void teleportToServer(String player, String server);
 }
