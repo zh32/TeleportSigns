@@ -60,7 +60,6 @@ public class BukkitServerTeleporter extends ServerTeleporter implements Listener
 
 	@Override
 	public void teleportToServer(String player, String serverName) {
-		System.out.println("akk");
 		ByteArrayOutputStream b = new ByteArrayOutputStream();
 		DataOutputStream out = new DataOutputStream(b);
 		try {
