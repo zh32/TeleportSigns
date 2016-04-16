@@ -59,7 +59,7 @@ public class ServerTeleporterTest {
 			}
 		});
 		when(plugin.signAtLocation(teleportSignLocation)).thenReturn(teleportSign);
-		testee.teleportPlayer("TESTER", teleportSignLocation);
+		testee.teleportPlayer("TESTER", teleportSign);
 		verify(testee, times(1)).teleportToServer("player", "SERVER");
 	}
 
@@ -86,7 +86,7 @@ public class ServerTeleporterTest {
 			}
 		});
 		when(plugin.signAtLocation(teleportSignLocation)).thenReturn(teleportSign);
-		testee.teleportPlayer("TESTER", teleportSignLocation);
+		testee.teleportPlayer("TESTER", teleportSign);
 		verify(testee, never()).teleportToServer("player", "SERVER");
 	}
 
@@ -113,8 +113,8 @@ public class ServerTeleporterTest {
 			}
 		});
 		when(plugin.signAtLocation(teleportSignLocation)).thenReturn(teleportSign);
-		testee.teleportPlayer("TESTER", teleportSignLocation);
-		testee.teleportPlayer("TESTER", teleportSignLocation);
+		testee.teleportPlayer("TESTER", teleportSign);
+		testee.teleportPlayer("TESTER", teleportSign);
 		verify(testee, times(1)).teleportToServer("player", "SERVER");
 	}
 

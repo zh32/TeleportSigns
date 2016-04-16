@@ -3,7 +3,6 @@ package de.zh32.teleportsigns.sign;
 import de.zh32.teleportsigns.DataContainer;
 import de.zh32.teleportsigns.event.EventAdapter;
 import de.zh32.teleportsigns.event.ProxyTeleportEvent;
-import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.utility.Cooldown;
 import lombok.Getter;
 
@@ -23,23 +22,16 @@ public abstract class ServerTeleporter {
 		this.eventFactory = eventFactory;
 	}
 
-	public void teleportPlayer(String player, TeleportSign.TeleportSignLocation location) {
+	public void teleportPlayer(String player, TeleportSign teleportSign) {
 		if (cooldown.hasCooldown(player)) {
 			return;
 		}
 		cooldown.setDefaultCooldown(player);
-		GameServer server = dataFinder.signAtLocation(location).getServer();
-		if (server == null) {
-			return;
-		}
-		if (server.isOnline()) {
-			ProxyTeleportEvent proxyTeleportEvent = eventFactory.callTeleportEvent(player, server);
+		if (teleportSign.getServer().isOnline()) {
+			ProxyTeleportEvent proxyTeleportEvent = eventFactory.callTeleportEvent(player, teleportSign.getServer());
 			if (!proxyTeleportEvent.isCancelled()) {
 				teleportToServer(proxyTeleportEvent.getPlayerName(), proxyTeleportEvent.getServer().getName());
 			}
-		} else {
-			//event.getPlayer().sendMessage(MessageHelper.getMessage("server.offline", server.getName()));
-			//throw Exception
 		}
 	}
 

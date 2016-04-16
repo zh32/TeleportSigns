@@ -37,25 +37,30 @@ public class BukkitServerTeleporter extends ServerTeleporter implements Listener
 			event.getPlayer().sendMessage(MessageHelper.getMessage("teleport.nopermission"));
 			return;
 		}
-		teleportPlayer(
-				event.getPlayer().getName(),
-				new TeleportSignLocation(
-						event.getClickedBlock().getX(),
-						event.getClickedBlock().getY(),
-						event.getClickedBlock().getZ(),
-						event.getClickedBlock().getWorld().getName()
-				)
-		);
+		TeleportSign teleportSign = findTeleportSign(event);
+		if (teleportSign != null) {
+			teleportPlayer(event.getPlayer().getName(), teleportSign);
+		}
 	}
 
 	private boolean isTeleportSignAction(PlayerInteractEvent event) {
 		return event.hasBlock()
 				&& event.getClickedBlock().getState() instanceof Sign
-				&& event.getAction() == Action.RIGHT_CLICK_BLOCK && ((Sign) event.getClickedBlock().getState()).getLine(0).equalsIgnoreCase(SignCreator.IDENTIFIER);
+				&& event.getAction() == Action.RIGHT_CLICK_BLOCK;
+	}
+
+	private TeleportSign findTeleportSign(PlayerInteractEvent event) {
+		return getDataFinder().signAtLocation(new TeleportSignLocation(
+				event.getClickedBlock().getX(),
+				event.getClickedBlock().getY(),
+				event.getClickedBlock().getZ(),
+				event.getClickedBlock().getWorld().getName()
+		));
 	}
 
 	@Override
 	public void teleportToServer(String player, String serverName) {
+		System.out.println("akk");
 		ByteArrayOutputStream b = new ByteArrayOutputStream();
 		DataOutputStream out = new DataOutputStream(b);
 		try {
