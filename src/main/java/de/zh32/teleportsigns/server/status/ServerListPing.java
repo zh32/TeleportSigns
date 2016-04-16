@@ -13,8 +13,6 @@ import java.net.Socket;
  */
 public class ServerListPing {
 
-	private final static Gson gson = new Gson();
-
 	public boolean updateStatus(GameServer server) {
 		GameServer oldState = server.clone();
 		try {
