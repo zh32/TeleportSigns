@@ -1,17 +1,23 @@
 package de.zh32.teleportsigns.server.status;
 
-import com.google.gson.Gson;
 import de.zh32.teleportsigns.server.GameServer;
 import lombok.Getter;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 /**
  * @author zh32
  */
 public class ServerListPing {
+
+	private final Logger logger;
+
+	public ServerListPing(Logger logger) {
+		this.logger = logger;
+	}
 
 	public boolean updateStatus(GameServer server) {
 		GameServer oldState = server.clone();
@@ -27,7 +33,13 @@ public class ServerListPing {
 					.setMaxPlayers(response.getOnlinePlayers())
 					.setPlayersOnline(response.getMaxPlayers())
 					.setOnline(true);
-		} catch (Exception ex) {
+		} catch (InvalidResponseException e) {
+			logger.warning(String.format(
+					"The response from server '%s' with host '%s' is invalid.",
+					server.getName(), server.getAddress().toString()
+			));
+			server.setOnline(false);
+		} catch (IOException e) {
 			server.setOnline(false);
 		}
 		return hasStatusChanged(oldState, server);
