@@ -29,7 +29,7 @@ public class ServerListPing {
 					.setMaxPlayers(response.getPlayers().getMax())
 					.setPlayersOnline(response.getPlayers().getOnline())
 					.setOnline(true);
-		} catch (IOException ex) {
+		} catch (Exception ex) {
 			server.setOnline(false);
 		}
 		return hasStatusChanged(oldState, server);

@@ -30,7 +30,7 @@ public class QueryHandler {
 		sendPacket(bs.toByteArray());
 	}
 
-	public StatusResponse doStatusQuery() throws IOException {
+	public StatusResponse doStatusQuery() throws Exception {
 		sendPacket(new byte[]{0x00});
 		int size = readVarInt(connection.getDataInputStream());
 		int packetId = readVarInt(connection.getDataInputStream());
