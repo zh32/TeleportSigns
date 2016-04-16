@@ -50,7 +50,7 @@ public class QueryHandlerTest {
 	}
 
 	@Test
-	public void can_handle_minecraft_protocol() throws IOException {
+	public void can_handle_minecraft_protocol() throws Exception {
 		testee.doHandShake();
 		StatusResponse response = testee.doStatusQuery();
 		assertThat(
