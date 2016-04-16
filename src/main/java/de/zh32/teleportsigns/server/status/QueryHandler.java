@@ -44,8 +44,7 @@ public class QueryHandler {
 		byte[] responseData = new byte[stringLength];
 		connection.getDataInputStream().readFully(responseData);
 		String jsonString = new String(responseData, Charset.forName("utf-8"));
-		StatusResponse response = gson.fromJson(jsonString, StatusResponse.class);
-		return response;
+		return gson.fromJson(jsonString, StatusResponse.class);
 	}
 
 	private void sendPacket(byte[] data) throws IOException {
