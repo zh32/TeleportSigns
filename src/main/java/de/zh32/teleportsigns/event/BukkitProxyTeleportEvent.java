@@ -20,6 +20,7 @@ public class BukkitProxyTeleportEvent extends PlayerEvent implements Cancellable
 
 	public BukkitProxyTeleportEvent(String player, GameServer server) {
 		super(Bukkit.getPlayer(player));
+		this.server = server;
 	}
 
 	@Override
