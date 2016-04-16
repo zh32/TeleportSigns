@@ -30,8 +30,8 @@ public class ServerListPing {
 			connection.disconnect();
 			server
 					.setMotd(response.getDescription())
-					.setMaxPlayers(response.getOnlinePlayers())
-					.setPlayersOnline(response.getMaxPlayers())
+					.setMaxPlayers(response.getMaxPlayers())
+					.setPlayersOnline(response.getOnlinePlayers())
 					.setOnline(true);
 		} catch (InvalidResponseException e) {
 			logger.warning(String.format(
