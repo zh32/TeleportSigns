@@ -43,6 +43,11 @@ public class BukkitPlugin extends JavaPlugin {
 	}
 
 	@Override
+	public void onDisable() {
+		updateLoop.stopUpdateLoop();
+	}
+
+	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (command.getName().equalsIgnoreCase("tsreload")) {
 			if (!sender.hasPermission("teleportsigns.reload")) {
