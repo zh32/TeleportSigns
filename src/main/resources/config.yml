@@ -17,7 +17,7 @@ servers:
     address: '127.0.0.1:25566'
     displayname: '&cPVP'
   survival:
-    address: '127.0.0.1:25567'
+    address: '127.0.0.1:25565'
     displayname: '&aSurvival'
 
 
