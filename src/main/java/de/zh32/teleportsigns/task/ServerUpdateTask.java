@@ -14,9 +14,9 @@ public abstract class ServerUpdateTask extends Task<List<GameServer>> {
 	private final List<GameServer> servers;
 	private final ServerListPing ping;
 
-	public ServerUpdateTask(List<GameServer> servers) {
+	public ServerUpdateTask(List<GameServer> servers, ServerListPing slp) {
 		this.servers = servers;
-		this.ping = new ServerListPing();
+		this.ping = slp;
 	}
 
 	@Override

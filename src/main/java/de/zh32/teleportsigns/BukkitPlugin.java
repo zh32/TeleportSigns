@@ -2,9 +2,11 @@ package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.configuration.BukkitConfiguration;
 import de.zh32.teleportsigns.configuration.ConfigurationAdapter;
+import de.zh32.teleportsigns.server.status.ServerListPing;
 import de.zh32.teleportsigns.sign.BukkitServerTeleporter;
 import de.zh32.teleportsigns.sign.BukkitSignCreator;
 import de.zh32.teleportsigns.sign.BukkitSignDestroyer;
+import de.zh32.teleportsigns.task.bukkit.BukkitServerUpdateTask;
 import de.zh32.teleportsigns.utility.MessageHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +34,15 @@ public class BukkitPlugin extends JavaPlugin {
 		configuration = new BukkitConfiguration(this);
 		dataContainer = new DataContainer(configuration);
 		dataContainer.initialize();
-		updateLoop = new BukkitUpdateLoop(this, configuration, dataContainer.getServers(), dataContainer.getTeleportSigns());
+		updateLoop = new BukkitUpdateLoop(
+				this,
+				configuration,
+				dataContainer.getTeleportSigns(),
+				new BukkitServerUpdateTask(
+						dataContainer.getServers(),
+						new ServerListPing(getLogger())
+				)
+		);
 		updateLoop.initialize();
 		updateLoop.startUpdateLoop();
 		loadMessages();

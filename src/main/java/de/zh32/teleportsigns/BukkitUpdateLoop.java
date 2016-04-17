@@ -1,9 +1,9 @@
 package de.zh32.teleportsigns;
 
 import de.zh32.teleportsigns.configuration.ConfigurationAdapter;
-import de.zh32.teleportsigns.server.GameServer;
 import de.zh32.teleportsigns.sign.TeleportSign;
 import de.zh32.teleportsigns.task.Callback;
+import de.zh32.teleportsigns.task.ServerUpdateTask;
 import de.zh32.teleportsigns.task.bukkit.BukkitServerUpdateTask;
 import de.zh32.teleportsigns.task.bukkit.BukkitSignUpdateTask;
 import org.bukkit.Bukkit;
@@ -18,8 +18,8 @@ public class BukkitUpdateLoop extends UpdateLoop {
 	private final ConfigurationAdapter configuration;
 	private int bukkitTaskId;
 
-	public BukkitUpdateLoop(Plugin plugin, ConfigurationAdapter configuration, List<GameServer> servers, List<TeleportSign> teleportSigns) {
-		super(new BukkitServerUpdateTask(servers, plugin), teleportSigns);
+	public BukkitUpdateLoop(Plugin plugin, ConfigurationAdapter configuration, List<TeleportSign> teleportSigns, ServerUpdateTask updateTask) {
+		super(updateTask, teleportSigns);
 		this.plugin = plugin;
 		this.configuration = configuration;
 	}
