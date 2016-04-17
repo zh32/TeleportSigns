@@ -1,7 +1,9 @@
 # TeleportSigns
 Use signs to teleport between servers and display server status on them.
 
-[Developement Builds](http://ci.zh32.de/job/TeleportSigns)
+[![Build Status](https://build.cmdr.tk/buildStatus/icon?job=TeleportSigns%20-%20Development)](https://build.cmdr.tk/job/TeleportSigns%20-%20Development/) **Development** 
+
+[![Build Status](https://build.cmdr.tk/buildStatus/icon?job=TeleportSigns%20-%20Stable)](https://build.cmdr.tk/job/TeleportSigns%20-%20Stable/) **Stable** 
 
 ![Example](http://i.imgur.com/O731Xgs.png)
 
