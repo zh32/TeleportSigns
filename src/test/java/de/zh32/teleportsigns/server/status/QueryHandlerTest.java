@@ -56,7 +56,7 @@ public class QueryHandlerTest {
 		assertThat(
 				response,
 				allOf(
-						hasProperty("description",
+						hasProperty("descrisfption",
 								hasProperty("text",
 										is(equalTo("A Minecraft Server"))
 								)
