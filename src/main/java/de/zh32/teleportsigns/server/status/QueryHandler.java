@@ -1,6 +1,7 @@
 package de.zh32.teleportsigns.server.status;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -30,7 +31,7 @@ public class QueryHandler {
 		sendPacket(bs.toByteArray());
 	}
 
-	public StatusResponse doStatusQuery() throws Exception {
+	public StatusResponse doStatusQuery() throws IOException, InvalidResponseException {
 		sendPacket(new byte[]{0x00});
 		int size = readVarInt(connection.getDataInputStream());
 		int packetId = readVarInt(connection.getDataInputStream());
@@ -44,7 +45,13 @@ public class QueryHandler {
 		byte[] responseData = new byte[stringLength];
 		connection.getDataInputStream().readFully(responseData);
 		String jsonString = new String(responseData, Charset.forName("utf-8"));
-		return gson.fromJson(jsonString, StatusResponse.class);
+		try {
+			return gson.fromJson(jsonString, StatusResponse19.class);
+		} catch (JsonSyntaxException ignored) {}
+		try {
+			return gson.fromJson(jsonString, StatusResponse17.class);
+		} catch (JsonSyntaxException ignored) {}
+		throw new InvalidResponseException();
 	}
 
 	private void sendPacket(byte[] data) throws IOException {
