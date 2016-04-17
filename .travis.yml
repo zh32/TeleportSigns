@@ -1,2 +1,10 @@
 language: java
-script: mvn test
+script: mvn clean package
+deploy:
+  provider: releases
+  api_key:
+    secure: "lFOSTkMDQ8Tb1Ky0wFMPxgtffUKTLgCA2WqLhOC2IfTcBoa3DTMldta7WQTcDi28j7u7CffF9LffuFIMNyYTvJF+SpGTFVbhyaPE+lcxDhGdEutMRdnTeWvv4SWGgWfICrKzkVfVbGzbJqbjtXnOj0CYZhVVh9/3eBZvoocGwbwrbk9x07PCtFGh0LO15BGfup7KS5SOKI3UcoRwOeuqZpp7nJsygxWo4+EhYRBJ0Z+o05ble+Xn4rEyqMkZJr+pwqbfo/tUC0xIbyRx08xdhrvoeplPwZIjV742NJLiJMVJW3WckvGGfGnaCggaOPI6jlMWwsfBg6YAKICirZVKxifSwH0PpI2it3lpxbQNhrLyu62eWXAgEugbp19wYm5JnAd7Qw0oIbDxwgh74LKntoo7mIXgR3PgFlJkF7/4wNa/Y0kohLegHL7z01sD5TWV3QpL3+TXYOEa6vugGUeSpvn803yml+fJvePWuf4LC1ExOf1PP92loZ0RBfyNsoO9DrOoc51alsQJ/F9f8UE2f3HUWRv1shc7SbBj9+t6Q9S1HgvmIu2Z8mvp/TE4FrD1M8qFsJeOsRIN9Z2URb4T6ZtYED3n0q7+YdTOrvouRrcZ8jnd3zoJfNEJaqBeqnRiYlI3wwMfckk/+EyFta9580bamxBc3FC6M1rs8ljHNRE="
+  file: "target/TeleportSigns.jar"
+  skip_cleanup: true
+  on:
+    tags: true
