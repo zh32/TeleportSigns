@@ -1,9 +1,9 @@
 # TeleportSigns
 Use signs to teleport between servers and display server status on them.
 
-[![Build Status](https://build.cmdr.tk/buildStatus/icon?job=TeleportSigns%20-%20Development)](https://build.cmdr.tk/job/TeleportSigns%20-%20Development/) **Development** 
+[![Build Status](https://travis-ci.org/zh32/TeleportSigns.svg?branch=development)](https://travis-ci.org/zh32/TeleportSigns) **Development** 
 
-[![Build Status](https://build.cmdr.tk/buildStatus/icon?job=TeleportSigns%20-%20Stable)](https://build.cmdr.tk/job/TeleportSigns%20-%20Stable/) **Stable** 
+[![Build Status](https://travis-ci.org/zh32/TeleportSigns.svg?branch=master)](https://travis-ci.org/zh32/TeleportSigns) **Stable** 
 
 ![Example](http://i.imgur.com/O731Xgs.png)
 
